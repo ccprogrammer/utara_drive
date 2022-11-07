@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "170108110737",
+    "project_id": "utara-drive",
+    "storage_bucket": "utara-drive.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:170108110737:android:a9f5a132bf687fe53cfc30",
+        "android_client_info": {
+          "package_name": "com.example.utara_drive"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "170108110737-rahjsqnk4d0fkee1h89nisr0r6vtpqep.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.utara_drive",
+            "certificate_hash": "9b1d0ed58ec36174e107612c5c3c0733e1cb5e36"
+          }
+        },
+        {
+          "client_id": "170108110737-7i3pgqclookdd19k5akv9iu8opb8s1i8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBu0KhnOkaT1aB3RfiH0q54ZtAffkGtXUs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "170108110737-7i3pgqclookdd19k5akv9iu8opb8s1i8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
