@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:utara_drive/ui/screen/home_screen/home_screen.dart';
 import 'package:utara_drive/ui/screen/initial_screen.dart';
-import 'package:utara_drive/ui/screen/login_screen/login_screen.dart';
+import 'package:utara_drive/ui/screen/auth_screen/auth_screen.dart';
 import 'package:utara_drive/ui/screen/page_not_found.dart';
 
 abstract class AppRoute {
   static const pageNotFound = '/';
   static const initial = '/initial';
   static const register = '/register';
-  static const login = '/login';
+  static const auth = '/auth';
   static const home = '/home';
 }
 
@@ -24,8 +24,8 @@ class GetRoute {
       case AppRoute.home:
         return CupertinoPageRoute(builder: (context) => const HomeScreen());
 
-      case AppRoute.login:
-        return CupertinoPageRoute(builder: (context) => const LoginScreen());
+      case AppRoute.auth:
+        return CupertinoPageRoute(builder: (context) => const AuthScreen());
 
       default:
         return CupertinoPageRoute(

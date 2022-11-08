@@ -16,6 +16,7 @@ class AuthProvider with ChangeNotifier {
   var usernameC = TextEditingController();
   var passwordC = TextEditingController();
 
+  // switch log in to sign up
   switchLogin() {
     isLogin = !isLogin;
     notifyListeners();
@@ -55,17 +56,17 @@ class AuthProvider with ChangeNotifier {
 
     try {
       credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailC.text,
-        password: passwordC.text,
+        email: emailC.text.toLowerCase(),
+        password: passwordC.text.toLowerCase(),
       );
 
       // add user info to cloud firestore
-      final users = await FirebaseFirestore.instance
+      await FirebaseFirestore.instance
           .collection('users')
           .doc(credential.user?.uid)
           .set({
-            'email': emailC.text,
-            'username': usernameC.text,
+            'email': emailC.text.toLowerCase(),
+            'username': usernameC.text.toLowerCase(),
           })
           .then((value) => log("User Added"))
           .catchError((error) => log("Failed to add user: $error"));
@@ -87,26 +88,24 @@ class AuthProvider with ChangeNotifier {
   }
 
   // sign out function
-  signOut() async {
-    isLoading = true;
-    notifyListeners();
-
-    await FirebaseAuth.instance.signOut();
-
-    isLoading = false;
-    notifyListeners();
+  signOut(context) {
+    Helper().showAlertDialog(
+      context: context,
+      text: 'Are you sure want to log out?',
+      onYes: () async => await FirebaseAuth.instance.signOut(),
+    );
   }
 
   // check auth state
   authState(context) async {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      print(user);
+      log('authStateChanges === $user');
       if (user == null) {
-        Navigator.pushNamed(context, AppRoute.login);
-        print('User is currently signed out!');
+        Navigator.pushNamed(context, AppRoute.auth);
+        log('User is currently signed out!');
       } else {
         Navigator.pushNamed(context, AppRoute.home);
-        print('User is signed in!');
+        log('User is signed in!');
       }
     });
   }
@@ -127,7 +126,7 @@ class AuthProvider with ChangeNotifier {
     }
 
     if (!isValid) {
-      helper(context: context).showNotif(title: 'Alert', message: message);
+      Helper(context: context).showNotif(title: 'Alert', message: message);
     }
 
     log(message.toString());

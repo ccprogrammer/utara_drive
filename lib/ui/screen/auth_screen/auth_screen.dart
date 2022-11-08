@@ -6,27 +6,33 @@ import 'package:utara_drive/themes/my_themes.dart';
 import 'package:utara_drive/ui/Components/custom_button_gradient.dart';
 import 'package:utara_drive/ui/Components/custom_text_field.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class AuthScreen extends StatefulWidget {
+  const AuthScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<AuthScreen> createState() => _AuthScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Consumer<AuthProvider>(builder: (context, provider, child) {
+      backgroundColor: MyTheme.colorCyan,
+      body: Consumer<AuthProvider>(builder: (context, provider, _) {
         return SafeArea(
           child: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/image_background.png"),
-                fit: BoxFit.cover,
+              // image: DecorationImage(
+              //   image: AssetImage("assets/images/image_background.png"),
+              //   fit: BoxFit.cover,
+              // ),
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xff56CCF2),
+                  Color(0xff2F80ED),
+                ],
               ),
             ),
             child: Center(

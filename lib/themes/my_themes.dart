@@ -5,11 +5,12 @@ class MyTheme {
 
   static const Color colorWhite = Color(0xffffffff);
   static const Color colorBlack = Color(0xff000000);
-  static const Color colorGrey = Color(0xffD1D1D1);
-  static const Color colorDarkGrey = Color(0xffE5E5E5);
+  static const Color colorGrey = Color(0xffE5E5E5);
+  static const Color colorDarkGrey = Color(0xffD1D1D1);
   static const Color colorCyan = Color(0xff56CCF2);
   static const Color colorBlue = Color(0xff2F80ED);
   static const Color colorRed = Color(0xffFF1E00);
+  static const Color colorPurple = Color(0xff7970B1);
 
   static const FontWeight light = FontWeight.w300;
   static const FontWeight medium = FontWeight.w500;
