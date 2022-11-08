@@ -1,27 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+ import 'package:provider/provider.dart';
 import 'package:utara_drive/providers/auth_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
+import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _buildAppBar(),
-      body: const Center(
-        child: Text('Home Screen'),
-      ),
-    );
-  }
-
-  PreferredSizeWidget _buildAppBar() {
+PreferredSizeWidget appBar() {
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: MyTheme.colorWhite,
@@ -78,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Center(
                   child: TextFormField(
                     decoration: const InputDecoration.collapsed(
-                        hintText: 'Search Photo',
+                        hintText: 'Search',
                         hintStyle: TextStyle(color: MyTheme.colorDarkGrey)),
                   ),
                 ),
@@ -106,4 +88,3 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-}

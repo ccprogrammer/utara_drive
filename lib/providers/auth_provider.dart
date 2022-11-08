@@ -55,10 +55,12 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
 
     try {
+      // registering new account
       credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailC.text.toLowerCase(),
         password: passwordC.text.toLowerCase(),
       );
+      await credential.user?.updateDisplayName(usernameC.text);
 
       // add user info to cloud firestore
       await FirebaseFirestore.instance
@@ -104,7 +106,7 @@ class AuthProvider with ChangeNotifier {
         Navigator.pushNamed(context, AppRoute.auth);
         log('User is currently signed out!');
       } else {
-        Navigator.pushNamed(context, AppRoute.home);
+        Navigator.pushNamed(context, AppRoute.mainScreen);
         log('User is signed in!');
       }
     });
