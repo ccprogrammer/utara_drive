@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:utara_drive/providers/auth_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
-import 'package:utara_drive/ui/Components/CustomButtonGradient.dart';
-import 'package:utara_drive/ui/Components/CustomTextField.dart';
+import 'package:utara_drive/ui/Components/custom_button_gradient.dart';
+import 'package:utara_drive/ui/Components/custom_text_field.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -93,10 +93,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding: const EdgeInsets.only(top: 24),
                             child: Custombutton(
                               label: provider.isLogin ? 'log in' : 'sign up',
+                              isLoading: provider.isLoading,
                               onPressed: () {
                                 provider.isLogin
-                                    ? provider.logIn()
-                                    : provider.signUp();
+                                    ? provider.logIn(context)
+                                    : provider.signUp(context);
                               },
                               radius: 50,
                             ),

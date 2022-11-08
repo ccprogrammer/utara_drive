@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:utara_drive/routes/routes.dart';
+import 'package:provider/provider.dart';
+import 'package:utara_drive/providers/auth_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 
 class InitialScreen extends StatefulWidget {
@@ -10,13 +11,18 @@ class InitialScreen extends StatefulWidget {
 }
 
 class _InitialScreenState extends State<InitialScreen> {
+  authState() async {
+    Future.delayed(
+      const Duration(milliseconds: 1200),
+      () async => await Provider.of<AuthProvider>(context, listen: false)
+          .authState(context),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
-    Future.delayed(
-      const Duration(milliseconds: 2200),
-      () => Navigator.pushNamed(context, AppRoute.login),
-    );
+    authState();
   }
 
   @override
