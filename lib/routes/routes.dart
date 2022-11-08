@@ -1,9 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:utara_drive/ui/screen/home_screen/home_screen.dart';
 import 'package:utara_drive/ui/screen/initial_screen.dart';
-import 'package:utara_drive/ui/screen/no_screen.dart';
+import 'package:utara_drive/ui/screen/login_screen/login_screen.dart';
+import 'package:utara_drive/ui/screen/page_not_found.dart';
 
 abstract class AppRoute {
-  static const noScreen = '/';
+  static const pageNotFound = '/';
   static const initial = '/initial';
   static const register = '/register';
   static const login = '/login';
@@ -13,15 +15,22 @@ abstract class AppRoute {
 class GetRoute {
   Route generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case AppRoute.noScreen:
-        return MaterialPageRoute(builder: (context) => const NoScreen());
+      case AppRoute.pageNotFound:
+        return CupertinoPageRoute(builder: (context) => const PageNotFound());
+
 
       case AppRoute.initial:
-        return MaterialPageRoute(builder: (context) => const InitialScreen());
+        return CupertinoPageRoute(builder: (context) => const InitialScreen());
+
+      case AppRoute.home:
+        return CupertinoPageRoute(builder: (context) => const HomeScreen());
+
+      case AppRoute.login:
+        return CupertinoPageRoute(builder: (context) => const LoginScreen());
 
       default:
-        return MaterialPageRoute(
-          builder: (context) => const InitialScreen(),
+        return CupertinoPageRoute(
+          builder: (context) => const PageNotFound(),
         );
     }
   }

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class NoScreen extends StatelessWidget {
-  const NoScreen({super.key});
+class PageNotFound extends StatelessWidget {
+  const PageNotFound({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: const Center(
+    return const Scaffold(
+      body: Center(
         child: Text('No Page Found'),
       ),
     );
