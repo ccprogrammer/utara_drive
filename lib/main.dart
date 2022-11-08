@@ -4,7 +4,8 @@ import 'package:utara_drive/providers/auth_provider.dart';
 import 'package:utara_drive/routes/routes.dart';
 import 'package:utara_drive/ui/screen/page_not_found.dart';
 
-void main() {
+void main()async {
+  
   runApp(const MyApp());
 }
 

@@ -18,7 +18,6 @@ class GetRoute {
       case AppRoute.pageNotFound:
         return CupertinoPageRoute(builder: (context) => const PageNotFound());
 
-
       case AppRoute.initial:
         return CupertinoPageRoute(builder: (context) => const InitialScreen());
 
