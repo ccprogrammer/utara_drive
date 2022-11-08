@@ -16,6 +16,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,28 +31,30 @@ class _MainScreenState extends State<MainScreen> {
         onTap: (value) => setState(() {
           currentIndex = value;
         }),
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.image_outlined),
-            label: 'Image',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.video_collection_outlined),
-            label: 'Video',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.photo_library_outlined),
-            label: 'Album',
-          ),
-        ],
+        items: navBarItem,
       ),
       body: _body(),
     );
   }
+
+  List<BottomNavigationBarItem> navBarItem = const [
+    BottomNavigationBarItem(
+      icon: Icon(Icons.home_outlined),
+      label: 'Home',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.image_outlined),
+      label: 'Image',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.video_collection_outlined),
+      label: 'Video',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.photo_library_outlined),
+      label: 'Album',
+    ),
+  ];
 
   _body() {
     switch (currentIndex) {
@@ -67,5 +70,4 @@ class _MainScreenState extends State<MainScreen> {
     }
     return const PageNotFound();
   }
-
- }
+}

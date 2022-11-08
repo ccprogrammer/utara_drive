@@ -39,11 +39,9 @@ class Helper {
                   color: MyTheme.colorRed,
                 ),
                 const SizedBox(height: 24),
-                Container(
-                  child: Text(
-                    text,
-                    style: const TextStyle(),
-                  ),
+                Text(
+                  text,
+                  style: const TextStyle(),
                 ),
                 const SizedBox(height: 24),
                 Row(
