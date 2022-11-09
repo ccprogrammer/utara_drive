@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/widgets.dart';
@@ -20,10 +21,14 @@ class AddImageProvider with ChangeNotifier {
     isLoading = true;
     notifyListeners();
 
+    // get user uid
     User user = FirebaseAuth.instance.currentUser as User;
+
+    // get image file and name
     File image = File(xImage.path);
     String imageName = removeString(xImage.name);
 
+    // upload image to cloud storage
     var ref = FirebaseStorage.instance
         .ref()
         .child('${user.displayName!}_${user.uid}')
@@ -36,18 +41,41 @@ class AddImageProvider with ChangeNotifier {
       log('FirebaseException storage === $e');
     }
 
+    // upload to cloud firestore
     final url = await ref.getDownloadURL();
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection('images')
+        .doc()
+        .set({
+          'username': user.displayName,
+          'uid': user.uid,
+          'image_name': imageName,
+          'description': descriptionC.text,
+          'location': locationC.text,
+          'tag': tagList,
+          'type': 'image',
+          'date': DateTime.now(),
+          'image_url': url,
+        })
+        .then((value) => log("Image Added"))
+        .catchError((error) => log("Failed to add image: $error"));
 
-    log('ref.getDownloadURL() === $url');
+    // month/day/year time
+    // DateFormat.yMd().add_jm().format(DateTime.now())
 
     isLoading = false;
     notifyListeners();
+
+    clearData();
+    Navigator.pop(context);
   }
 
   // handle tag
   addTag() {
     if (tagC.text.isNotEmpty) {
-      tagList.add(tagC.text);
+      tagList.add(tagC.text.trim());
       tagC.clear();
       log('tagList === $tagList');
       notifyListeners();
@@ -62,5 +90,11 @@ class AddImageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  //...
+  // clear data
+  clearData() {
+    descriptionC.clear();
+    locationC.clear();
+    tagC.clear();
+    tagList.clear();
+  }
 }

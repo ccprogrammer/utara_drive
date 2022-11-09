@@ -1,10 +1,10 @@
-import 'dart:developer';
-import 'dart:io';
 
 import 'package:another_flushbar/flushbar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:utara_drive/themes/my_themes.dart';
+import 'package:utara_drive/ui/screen/add_screen/add_screen.dart';
 
 class Helper {
   Helper({this.context});
@@ -94,8 +94,6 @@ class Helper {
     final XFile? pickedImage =
         await picker.pickImage(source: ImageSource.gallery);
 
-    log('XFILE Image === $pickedImage');
-
     return pickedImage;
   }
 
@@ -103,36 +101,89 @@ class Helper {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedImage =
         await picker.pickVideo(source: ImageSource.gallery);
-    File image = File(pickedImage!.path);
 
-    log('XFILE Image === $pickedImage');
-    log('FILE Image === $image');
-
-    return image;
+    return pickedImage;
   }
 
   Future openCameraPhoto() async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedImage =
         await picker.pickImage(source: ImageSource.camera);
-    File image = File(pickedImage!.path);
 
-    log('XFILE Image === $pickedImage');
-    log('FILE Image === $image');
-
-    return image;
+    return pickedImage;
   }
 
   Future openCameraVideo() async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedImage =
         await picker.pickVideo(source: ImageSource.camera);
-    File image = File(pickedImage!.path);
 
-    log('XFILE Image === $pickedImage');
-    log('FILE Image === $image');
-
-    return image;
+    return pickedImage;
   }
-  // ...
+
+  Future showImageDialog({
+    required BuildContext context,
+  }) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      openGalleryPhoto().then(
+                        (image) {
+                          if (image != null) {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) =>
+                                    AddScreen(image: image, imageType: 'image'),
+                              ),
+                            );
+                          }
+                        },
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: MyTheme.colorCyan,
+                    ),
+                    child: const Text('Gallery Image'),
+                  ),
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      openGalleryVideo().then(
+                        (image) {
+                          if (image != null) {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) =>
+                                    AddScreen(image: image, imageType: 'video'),
+                              ),
+                            );
+                          }
+                        },
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: MyTheme.colorCyan,
+                    ),
+                    child: const Text('Gallery Video'),
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
+  }
 }

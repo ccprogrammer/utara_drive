@@ -9,8 +9,13 @@ import 'dart:io';
 import 'package:utara_drive/ui/Components/loading_fallback.dart';
 
 class AddScreen extends StatefulWidget {
-  const AddScreen(this.image, {super.key});
+  const AddScreen({
+    super.key,
+    required this.imageType,
+    required this.image,
+  });
   final XFile image;
+  final String imageType;
 
   @override
   State<AddScreen> createState() => _AddScreenState();
@@ -20,7 +25,6 @@ class _AddScreenState extends State<AddScreen> {
   @override
   Widget build(BuildContext context) {
     return LoadingFallback(
-      context: context,
       isLoading: Provider.of<AddImageProvider>(context).isLoading,
       loadingLabel: 'Loading ...',
       child: Scaffold(
@@ -56,13 +60,14 @@ class _AddScreenState extends State<AddScreen> {
             ),
             if (provider.tagList.isNotEmpty)
               Padding(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
+                padding: const EdgeInsets.fromLTRB(16, 6, 16, 4),
                 child: Wrap(
                   spacing: 16,
                   children: [
                     for (var tag in provider.tagList)
                       Container(
                         padding: const EdgeInsets.fromLTRB(4, 6, 12, 6),
+                        margin: const EdgeInsets.only(top: 12),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(24),
                           color: MyTheme.colorGrey,

@@ -26,8 +26,10 @@ class _ImageTabState extends State<ImageTab> {
               fontSize: 32,
             ),
           ),
-          for (var i = 0; i < 1; i++)
+          const SizedBox(height: 24),
+          for (var i = 0; i < 3; i++)
             PhotosGrid(gridNumber: Random().nextInt(9)),
+          const SizedBox(height: 120),
         ],
       ),
     );

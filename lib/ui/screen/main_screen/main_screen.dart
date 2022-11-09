@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_arc_speed_dial/flutter_speed_dial_menu_button.dart';
 import 'package:flutter_arc_speed_dial/main_menu_floating_action_button.dart';
 import 'package:utara_drive/helper/helper.dart';
-import 'package:utara_drive/routes/routes.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 import 'package:utara_drive/ui/Components/app_bar.dart';
 import 'package:utara_drive/ui/screen/add_screen/add_screen.dart';
@@ -27,26 +26,37 @@ class _MainScreenState extends State<MainScreen> {
   addNew(String type) {
     switch (type) {
       case 'gallery':
-        Helper().openGalleryPhoto().then(
-              (image) => Navigator.push(
-                context,
-                CupertinoPageRoute(
-                  builder: (context) => AddScreen(image),
-                ),
-              ),
-            );
+        Helper(context: context).showImageDialog(context: context);
         break;
       case 'photo':
         Helper().openCameraPhoto().then(
-              (image) =>
-                  Navigator.pushNamed(context, AppRoute.add, arguments: image),
-            );
+          (image) {
+            if (image != null) {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) =>
+                      AddScreen(image: image, imageType: 'image'),
+                ),
+              );
+            }
+          },
+        );
         break;
       case 'video':
         Helper().openCameraVideo().then(
-              (image) =>
-                  Navigator.pushNamed(context, AppRoute.add, arguments: image),
-            );
+          (image) {
+            if (image != null) {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) =>
+                      AddScreen(image: image, imageType: 'video'),
+                ),
+              );
+            }
+          },
+        );
         break;
       default:
     }
@@ -78,10 +88,16 @@ class _MainScreenState extends State<MainScreen> {
       paddingBtwSpeedDialButton: 30.0,
       mainMenuFloatingActionButton: MainMenuFloatingActionButton(
         mini: false,
-        child: const Icon(Icons.menu),
+        child: const Icon(
+          Icons.file_upload_outlined,
+          size: 28,
+        ),
         onPressed: () {},
         backgroundColor: MyTheme.colorCyan,
-        closeMenuChild: const Icon(Icons.close),
+        closeMenuChild: const Icon(
+          Icons.close,
+          size: 28,
+        ),
         closeMenuForegroundColor: Colors.white,
         closeMenuBackgroundColor: MyTheme.colorRed,
       ),

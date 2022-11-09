@@ -3,18 +3,16 @@ import 'package:loading_overlay/loading_overlay.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 
 class LoadingFallback extends StatelessWidget {
-  const LoadingFallback(
-      {required this.isLoading,
-      required this.child,
-      required this.loadingLabel,
-      Key? key,
-      required this.context})
-      : super(key: key);
+  const LoadingFallback({
+    required this.isLoading,
+    required this.child,
+    required this.loadingLabel,
+    Key? key,
+  }) : super(key: key);
 
   final bool isLoading;
   final Widget child;
   final String loadingLabel;
-  final BuildContext context;
 
   @override
   Widget build(BuildContext context) {
