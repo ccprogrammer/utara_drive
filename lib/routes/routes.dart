@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:utara_drive/ui/screen/add_screen/add_screen.dart';
 import 'package:utara_drive/ui/screen/main_screen/home_tab/home_tab.dart';
 import 'package:utara_drive/ui/screen/initial_screen.dart';
 import 'package:utara_drive/ui/screen/auth_screen/auth_screen.dart';
@@ -32,9 +31,6 @@ class GetRoute {
 
       case AppRoute.auth:
         return CupertinoPageRoute(builder: (context) => const AuthScreen());
-
-      case AppRoute.add:
-        return CupertinoPageRoute(builder: (context) => const AddScreen());
 
       default:
         return CupertinoPageRoute(

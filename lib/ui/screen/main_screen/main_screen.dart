@@ -1,9 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_arc_speed_dial/flutter_speed_dial_menu_button.dart';
 import 'package:flutter_arc_speed_dial/main_menu_floating_action_button.dart';
+import 'package:utara_drive/helper/helper.dart';
 import 'package:utara_drive/routes/routes.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 import 'package:utara_drive/ui/Components/app_bar.dart';
+import 'package:utara_drive/ui/screen/add_screen/add_screen.dart';
 import 'package:utara_drive/ui/screen/main_screen/album_tab/album_tab.dart';
 import 'package:utara_drive/ui/screen/main_screen/home_tab/home_tab.dart';
 import 'package:utara_drive/ui/screen/main_screen/image_tab/image_tab.dart';
@@ -21,8 +24,32 @@ class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
   bool _isShowDial = false;
 
-  addNew() {
-    Navigator.pushNamed(context, AppRoute.add);
+  addNew(String type) {
+    switch (type) {
+      case 'gallery':
+        Helper().openGalleryPhoto().then(
+              (image) => Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => AddScreen(image),
+                ),
+              ),
+            );
+        break;
+      case 'photo':
+        Helper().openCameraPhoto().then(
+              (image) =>
+                  Navigator.pushNamed(context, AppRoute.add, arguments: image),
+            );
+        break;
+      case 'video':
+        Helper().openCameraVideo().then(
+              (image) =>
+                  Navigator.pushNamed(context, AppRoute.add, arguments: image),
+            );
+        break;
+      default:
+    }
   }
 
   @override
@@ -64,7 +91,7 @@ class _MainScreenState extends State<MainScreen> {
           heroTag: 'video',
           mini: true,
           onPressed: () {
-            addNew();
+            addNew('video');
             _isShowDial = false;
             setState(() {});
           },
@@ -72,11 +99,10 @@ class _MainScreenState extends State<MainScreen> {
           child: const Icon(Icons.video_call),
         ),
         FloatingActionButton(
-          heroTag: 'album',
+          heroTag: 'photo',
           mini: true,
           onPressed: () {
-            addNew();
-
+            addNew('photo');
             _isShowDial = false;
             setState(() {});
           },
@@ -87,8 +113,7 @@ class _MainScreenState extends State<MainScreen> {
           heroTag: 'image',
           mini: true,
           onPressed: () {
-            addNew();
-
+            addNew('gallery');
             _isShowDial = false;
             setState(() {});
           },
@@ -111,28 +136,26 @@ class _MainScreenState extends State<MainScreen> {
       onTap: (value) => setState(() {
         currentIndex = value;
       }),
-      items: navBarItem,
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home_outlined),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.image_outlined),
+          label: 'Image',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.ondemand_video),
+          label: 'Video',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.photo_library_outlined),
+          label: 'Album',
+        ),
+      ],
     );
   }
-
-  List<BottomNavigationBarItem> navBarItem = const [
-    BottomNavigationBarItem(
-      icon: Icon(Icons.home_outlined),
-      label: 'Home',
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.image_outlined),
-      label: 'Image',
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.video_collection_outlined),
-      label: 'Video',
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.photo_library_outlined),
-      label: 'Album',
-    ),
-  ];
 
   Widget _buildBody() {
     switch (currentIndex) {

@@ -15,6 +15,7 @@ class _ImageTabState extends State<ImageTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: MyTheme.colorWhite,
       body: ListView(
         children: [
           const Text(

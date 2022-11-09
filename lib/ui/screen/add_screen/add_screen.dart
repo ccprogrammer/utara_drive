@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 
 class AddScreen extends StatefulWidget {
-  const AddScreen({super.key});
+  const AddScreen(this.image, {super.key});
+  final File image;
 
   @override
   State<AddScreen> createState() => _AddScreenState();
@@ -11,14 +14,17 @@ class AddScreen extends StatefulWidget {
 class _AddScreenState extends State<AddScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: _buildAppBar(), body: _buildBody());
+    return Scaffold(
+      appBar: _buildAppBar(),
+      body: _buildBody(),
+    );
   }
 
   Widget _buildBody() {
     return ListView(
       children: [
-        Image.network(
-          'https://images.unsplash.com/photo-1488161628813-04466f872be2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80',
+        Image.file(
+          widget.image,
           width: double.infinity,
           height: 250,
           fit: BoxFit.cover,

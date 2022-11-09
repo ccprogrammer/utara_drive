@@ -1,5 +1,9 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 
 class Helper {
@@ -81,5 +85,53 @@ class Helper {
             ),
           );
         }).then((value) => onClose != null ? onClose() : null);
+  }
+
+  Future openGalleryPhoto() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedImage =
+        await picker.pickImage(source: ImageSource.gallery);
+    File image = File(pickedImage!.path);
+
+    log('XFILE Image === $pickedImage');
+    log('FILE Image === $image');
+
+    return image;
+  }
+
+  Future openGalleryVideo() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedImage =
+        await picker.pickVideo(source: ImageSource.gallery);
+    File image = File(pickedImage!.path);
+
+    log('XFILE Image === $pickedImage');
+    log('FILE Image === $image');
+
+    return image;
+  }
+
+  Future openCameraPhoto() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedImage =
+        await picker.pickImage(source: ImageSource.camera);
+    File image = File(pickedImage!.path);
+
+    log('XFILE Image === $pickedImage');
+    log('FILE Image === $image');
+
+    return image;
+  }
+
+  Future openCameraVideo() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedImage =
+        await picker.pickVideo(source: ImageSource.camera);
+    File image = File(pickedImage!.path);
+
+    log('XFILE Image === $pickedImage');
+    log('FILE Image === $image');
+
+    return image;
   }
 }
