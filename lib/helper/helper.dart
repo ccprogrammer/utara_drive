@@ -10,7 +10,7 @@ class Helper {
   Helper({this.context});
   BuildContext? context;
 
-  // show alert notification
+  // show alert notification/flushbar
   showNotif({required String title, required String message}) {
     Flushbar(
       title: title,
@@ -21,6 +21,7 @@ class Helper {
     ).show(context!);
   }
 
+  // show alert dialog
   Future showAlertDialog({
     required BuildContext context,
     text = 'dialog label',
@@ -87,6 +88,7 @@ class Helper {
         }).then((value) => onClose != null ? onClose() : null);
   }
 
+  //  handle camera/gallery
   Future openGalleryPhoto() async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedImage =
@@ -134,4 +136,5 @@ class Helper {
 
     return image;
   }
+  // ...
 }

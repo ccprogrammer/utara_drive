@@ -8,8 +8,8 @@ import 'package:utara_drive/routes/routes.dart';
 
 class AuthProvider with ChangeNotifier {
   late UserCredential credential;
-  bool isLogin = true;
 
+  bool isLogin = true;
   bool isLoading = false;
 
   var emailC = TextEditingController();
