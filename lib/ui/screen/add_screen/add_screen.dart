@@ -1,14 +1,16 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:utara_drive/providers/add_image_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 import 'package:utara_drive/ui/Components/custom_text_field2.dart';
+import 'dart:io';
+
+import 'package:utara_drive/ui/Components/loading_fallback.dart';
 
 class AddScreen extends StatefulWidget {
   const AddScreen(this.image, {super.key});
-  final File image;
+  final XFile image;
 
   @override
   State<AddScreen> createState() => _AddScreenState();
@@ -17,19 +19,25 @@ class AddScreen extends StatefulWidget {
 class _AddScreenState extends State<AddScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _buildAppBar(),
-      body: _buildBody(),
+    return LoadingFallback(
+      context: context,
+      isLoading: Provider.of<AddImageProvider>(context).isLoading,
+      loadingLabel: 'Loading ...',
+      child: Scaffold(
+        appBar: _buildAppBar(),
+        body: _buildBody(),
+      ),
     );
   }
 
   Widget _buildBody() {
+    File image = File(widget.image.path);
     return Consumer<AddImageProvider>(
       builder: (context, provider, _) {
         return ListView(
           children: [
             Image.file(
-              widget.image,
+              image,
               width: double.infinity,
               height: 250,
               fit: BoxFit.cover,
@@ -53,22 +61,33 @@ class _AddScreenState extends State<AddScreen> {
                   spacing: 16,
                   children: [
                     for (var tag in provider.tagList)
-                      Chip(
-                        backgroundColor: MyTheme.colorGrey,
-                        label: Text(
-                          tag,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: MyTheme.colorBlack.withOpacity(0.6),
-                          ),
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(4, 6, 12, 6),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(24),
+                          color: MyTheme.colorGrey,
                         ),
-                        padding: const EdgeInsets.all(8),
-                        deleteIconColor: MyTheme.colorRed,
-                        onDeleted: () => provider.deleteTag(tag),
-                        deleteIcon: Icon(
-                          Icons.close,
-                          color: MyTheme.colorRed.withOpacity(0.6),
-                          size: 16,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            GestureDetector(
+                              onTap: () => provider.deleteTag(tag),
+                              child: Icon(
+                                Icons.close,
+                                color: MyTheme.colorRed.withOpacity(0.6),
+                                size: 16,
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              tag,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: MyTheme.colorBlack.withOpacity(0.6),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                   ],
@@ -102,7 +121,7 @@ class _AddScreenState extends State<AddScreen> {
           builder: (context, provider, _) {
             return IconButton(
               onPressed: () {
-                provider.addImage();
+                provider.addImage(context, widget.image);
               },
               constraints: const BoxConstraints(),
               padding: EdgeInsets.zero,

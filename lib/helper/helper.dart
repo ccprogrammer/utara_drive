@@ -93,12 +93,10 @@ class Helper {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedImage =
         await picker.pickImage(source: ImageSource.gallery);
-    File image = File(pickedImage!.path);
 
     log('XFILE Image === $pickedImage');
-    log('FILE Image === $image');
 
-    return image;
+    return pickedImage;
   }
 
   Future openGalleryVideo() async {
