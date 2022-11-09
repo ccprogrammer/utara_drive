@@ -14,18 +14,21 @@ class PhotosGrid extends StatefulWidget {
 class _PhotosGridState extends State<PhotosGrid> {
   @override
   Widget build(BuildContext context) {
-    return StaggeredGrid.count(
-      crossAxisCount: 4,
-      mainAxisSpacing: 4,
-      crossAxisSpacing: 4,
-      children: [
-        for (var item in MyGrid.gridModel[widget.gridNumber])
-          StaggeredGridTile.count(
-            crossAxisCellCount: item['cross'],
-            mainAxisCellCount: item['main'],
-            child: const ImageGrid(),
-          )
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: StaggeredGrid.count(
+        crossAxisCount: 4,
+        mainAxisSpacing: 4,
+        crossAxisSpacing: 4,
+        children: [
+          for (var item in MyGrid.gridModel[widget.gridNumber])
+            StaggeredGridTile.count(
+              crossAxisCellCount: item['cross'],
+              mainAxisCellCount: item['main'],
+              child: const ImageGrid(),
+            )
+        ],
+      ),
     );
   }
 }
