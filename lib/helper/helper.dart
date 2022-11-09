@@ -21,8 +21,11 @@ class Helper {
     required BuildContext context,
     text = 'dialog label',
     icon = Icons.warning,
+    String titleLeft = 'No',
+    String titleRight = 'Yes',
     Function? onClose,
     Function? onYes,
+    Function? onNo,
   }) {
     return showDialog(
         context: context,
@@ -50,12 +53,13 @@ class Helper {
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () {
+                          onNo != null ? onNo() : null;
                           Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: MyTheme.colorCyan,
                         ),
-                        child: const Text('Close'),
+                        child: Text(titleLeft),
                       ),
                     ),
                     const SizedBox(width: 24),
@@ -68,7 +72,7 @@ class Helper {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: MyTheme.colorRed,
                         ),
-                        child: const Text('Log Out'),
+                        child: Text(titleRight),
                       ),
                     ),
                   ],
