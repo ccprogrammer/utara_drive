@@ -10,7 +10,7 @@ import 'package:utara_drive/helper/helper.dart';
 import 'package:utara_drive/helper/remove_string.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 
-class AddImageProvider with ChangeNotifier {
+class AddGalleryProvider with ChangeNotifier {
   bool isLoading = false;
   List tagList = [];
 
@@ -19,8 +19,8 @@ class AddImageProvider with ChangeNotifier {
   var locationC = TextEditingController();
   var tagC = TextEditingController();
 
-  // upload image to firebase
-  Future addImage(context, XFile xImage) async {
+  // upload gallery to firebase
+  Future addGallery(context, XFile xImage) async {
     isLoading = true;
     notifyListeners();
 

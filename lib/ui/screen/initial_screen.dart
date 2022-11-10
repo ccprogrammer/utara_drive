@@ -1,6 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:utara_drive/providers/auth_provider.dart';
+import 'package:utara_drive/providers/gallery_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 
 class InitialScreen extends StatefulWidget {
@@ -15,7 +17,13 @@ class _InitialScreenState extends State<InitialScreen> {
     Future.delayed(
       const Duration(milliseconds: 1200),
       () async => await Provider.of<AuthProvider>(context, listen: false)
-          .authState(context),
+          .authState(context)
+          .then((user) async {
+        if (user != null) {
+          await Provider.of<GalleryProvider>(context, listen: false)
+              .getGallery();
+        }
+      }),
     );
   }
 

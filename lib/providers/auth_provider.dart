@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:utara_drive/helper/helper.dart';
 import 'package:utara_drive/routes/routes.dart';
+import 'package:utara_drive/themes/my_themes.dart';
 
 class AuthProvider with ChangeNotifier {
   late UserCredential credential;
@@ -35,13 +36,36 @@ class AuthProvider with ChangeNotifier {
         password: passwordC.text,
       );
 
+      Helper(context: context).showNotif(
+        title: 'Success',
+        message: 'Log in successfully, ',
+        color: MyTheme.colorCyan,
+      );
+
       log('log in succeed === $credential');
     } on FirebaseAuthException catch (e) {
+      String title = 'Failed';
+      String message = '';
       if (e.code == 'user-not-found') {
+        message = 'No user found for that email.';
         log('No user found for that email.');
       } else if (e.code == 'wrong-password') {
+        message = 'Wrong password provided for that user.';
         log('Wrong password provided for that user.');
       }
+
+      Helper(context: context).showNotif(
+        title: title,
+        message: message,
+        color: MyTheme.colorRed,
+      );
+    } catch (e) {
+      log(e.toString());
+      Helper(context: context).showNotif(
+        title: 'Failed',
+        message: e.toString(),
+        color: MyTheme.colorRed,
+      );
     }
 
     isLoading = false;
@@ -73,16 +97,35 @@ class AuthProvider with ChangeNotifier {
           .then((value) => log("User Added"))
           .catchError((error) => log("Failed to add user: $error"));
 
-      // Navigator.pushNamed(context, AppRoute.home);
+      Helper(context: context).showNotif(
+        title: 'Success',
+        message: 'Sign Up successfully, ',
+        color: MyTheme.colorCyan,
+      );
       log('sign up succeed === $credential');
     } on FirebaseAuthException catch (e) {
+      String title = 'Failed';
+      String message = '';
       if (e.code == 'weak-password') {
+        message = 'The password provided is too weak.';
         log('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
+        message = 'The account already exists for that email.';
         log('The account already exists for that email.');
       }
+
+      Helper(context: context).showNotif(
+        title: title,
+        message: message,
+        color: MyTheme.colorRed,
+      );
     } catch (e) {
       log(e.toString());
+      Helper(context: context).showNotif(
+        title: 'Failed',
+        message: e.toString(),
+        color: MyTheme.colorRed,
+      );
     }
 
     isLoading = false;
@@ -99,8 +142,8 @@ class AuthProvider with ChangeNotifier {
   }
 
   // check auth state
-  authState(context) async {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+  Future authState(context) async {
+    return FirebaseAuth.instance.authStateChanges().listen((User? user) {
       log('authStateChanges === $user');
       if (user == null) {
         Navigator.pushNamed(context, AppRoute.auth);

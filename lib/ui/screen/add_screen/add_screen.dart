@@ -25,7 +25,7 @@ class _AddScreenState extends State<AddScreen> {
   @override
   Widget build(BuildContext context) {
     return LoadingFallback(
-      isLoading: Provider.of<AddImageProvider>(context).isLoading,
+      isLoading: Provider.of<AddGalleryProvider>(context).isLoading,
       loadingLabel: 'Loading ...',
       child: Scaffold(
         appBar: _buildAppBar(),
@@ -36,7 +36,7 @@ class _AddScreenState extends State<AddScreen> {
 
   Widget _buildBody() {
     File image = File(widget.image.path);
-    return Consumer<AddImageProvider>(
+    return Consumer<AddGalleryProvider>(
       builder: (context, provider, _) {
         return ListView(
           children: [
@@ -126,11 +126,11 @@ class _AddScreenState extends State<AddScreen> {
         ),
       ),
       actions: [
-        Consumer<AddImageProvider>(
+        Consumer<AddGalleryProvider>(
           builder: (context, provider, _) {
             return IconButton(
               onPressed: () {
-                provider.addImage(context, widget.image);
+                provider.addGallery(context, widget.image);
               },
               constraints: const BoxConstraints(),
               padding: EdgeInsets.zero,

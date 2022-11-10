@@ -1,4 +1,9 @@
+import 'dart:developer';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:utara_drive/ui/Components/skeleton.dart';
 
 class ImageGrid extends StatelessWidget {
   const ImageGrid({super.key, this.data});
@@ -6,12 +11,31 @@ class ImageGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(
-      data['image_url'] ??
-          'https://images.unsplash.com/photo-1488161628813-04466f872be2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80',
-      height: MediaQuery.of(context).size.height * 0.4,
-      fit: BoxFit.cover,
-      alignment: Alignment.center,
+    return CachedNetworkImage(
+      imageUrl: data['image_url'],
+      imageBuilder: (context, imageProvider) => Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            alignment: Alignment.center,
+            image: imageProvider,
+          ),
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () {
+              log('GALLERY DATA === ${data.data()}');
+            },
+          ),
+        ),
+      ),
+      placeholder: (context, url) => Shimmer.fromColors(
+        baseColor: Colors.grey[500]!,
+        highlightColor: Colors.grey[300]!,
+        child: const Skeleton(),
+      ),
+      errorWidget: (context, url, error) => const Icon(Icons.error),
     );
   }
 }

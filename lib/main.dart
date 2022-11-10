@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
           create: (context) => AuthProvider(),
         ),
         ChangeNotifierProvider(
-          create: (context) => AddImageProvider(),
+          create: (context) => AddGalleryProvider(),
         ),
         ChangeNotifierProvider(
           create: (context) => GalleryProvider(),

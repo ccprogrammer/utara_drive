@@ -6,43 +6,47 @@ import 'package:flutter/widgets.dart';
 import 'package:utara_drive/helper/helper.dart';
 
 class GalleryProvider with ChangeNotifier {
-  List galleryist = [];
+  List galleryList = [];
 
   bool isLoading = false;
+  bool isLoadingMore = false;
 
-  // getGallery() async {
-  //   User user = Helper().getUser();
-  //   List docList = [];
 
-  //   await FirebaseFirestore.instance
-  //       .collection('users')
-  //       .doc(user.uid)
-  //       .collection('gallery')
-  //       .get()
-  //       .then((QuerySnapshot querySnapshot) {
-  //     for (var doc in querySnapshot.docs) {
-  //       docList.add(doc.data());
-  //     }
+  User user = Helper().getUser();
 
-  //     galleryist = docList;
-  //     log('querySnapshot === $galleryist');
-  //     notifyListeners();
-  //   }).catchError((onError) {
-  //     log('onError === $onError');
-  //   });
+  Future getGallery() async {
+    isLoading = true;
+    isLoadingMore = true;
+    notifyListeners();
 
-  //   return docList;
-  // }
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection('gallery')
+        .where('type', isEqualTo: 'image')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      for (var doc in querySnapshot.docs) {
+        galleryList.add(doc);
+      }
+      isLoading = false;
+      isLoadingMore = true;
 
-  Stream getGallery() {
+      log('Gallery List === ${galleryList.length}');
+      notifyListeners();
+    });
+  }
+
+  Stream getImage() {
     User user = Helper().getUser();
     int i = 0;
-    log("${i++}");
+    log("getImage === ${i++}");
 
     return FirebaseFirestore.instance
         .collection('users')
         .doc(user.uid)
         .collection('gallery')
+        .where('type', isEqualTo: 'image')
         .snapshots();
   }
 }
