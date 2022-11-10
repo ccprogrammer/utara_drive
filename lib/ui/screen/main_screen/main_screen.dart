@@ -6,6 +6,7 @@ import 'package:flutter_arc_speed_dial/main_menu_floating_action_button.dart';
 import 'package:utara_drive/helper/helper.dart';
 import 'package:utara_drive/routes/routes.dart';
 import 'package:utara_drive/themes/my_themes.dart';
+import 'package:utara_drive/ui/Components/app_bar.dart';
 import 'package:utara_drive/ui/screen/main_screen/album_tab/album_tab.dart';
 import 'package:utara_drive/ui/screen/main_screen/home_tab/home_tab.dart';
 import 'package:utara_drive/ui/screen/main_screen/image_tab/image_tab.dart';
@@ -45,6 +46,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: appBar(),
       floatingActionButton: _getFloatingActionButton(),
       bottomNavigationBar: _buildNavBar(),
       body: _buildBody(),

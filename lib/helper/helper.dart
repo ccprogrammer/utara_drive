@@ -1,5 +1,4 @@
 import 'package:another_flushbar/flushbar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -229,11 +228,5 @@ class Helper {
             ),
           );
         });
-  }
-
-  getUser() {
-    User user = FirebaseAuth.instance.currentUser as User;
-
-    return user;
   }
 }

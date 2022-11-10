@@ -142,7 +142,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   // check auth state
-  Future authState(context) async {
+  authState(context) async {
     return FirebaseAuth.instance.authStateChanges().listen((User? user) {
       log('authStateChanges === $user');
       if (user == null) {

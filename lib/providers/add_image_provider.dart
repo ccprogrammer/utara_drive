@@ -25,7 +25,7 @@ class AddGalleryProvider with ChangeNotifier {
     notifyListeners();
 
     // get user uid
-    User user = Helper().getUser();
+    User? user = FirebaseAuth.instance.currentUser;
 
     // get image file and name
     File image = File(xImage.path);
@@ -34,7 +34,7 @@ class AddGalleryProvider with ChangeNotifier {
     // upload image to cloud storage
     var ref = FirebaseStorage.instance
         .ref()
-        .child('${user.displayName!}_${user.uid}')
+        .child('${user!.displayName}_${user.uid}')
         .child('images')
         .child(imageName);
 

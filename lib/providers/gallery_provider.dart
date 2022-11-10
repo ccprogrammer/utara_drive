@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
-import 'package:utara_drive/helper/helper.dart';
 
 class GalleryProvider with ChangeNotifier {
   List galleryList = [];
@@ -11,12 +10,11 @@ class GalleryProvider with ChangeNotifier {
   List imageList = [];
 
   bool isLoading = false;
+  User user = FirebaseAuth.instance.currentUser as User;
 
-  User user = Helper().getUser();
-
-  Future initData() async {
-    await getGallery();
-    await getImage();
+  initData() {
+    getGallery();
+    getImage();
   }
 
   Future getGallery() async {
