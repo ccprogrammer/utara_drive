@@ -1,8 +1,10 @@
+import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:utara_drive/providers/auth_provider.dart';
 import 'package:utara_drive/providers/gallery_provider.dart';
+import 'package:utara_drive/routes/routes.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 
 class InitialScreen extends StatefulWidget {
@@ -13,15 +15,18 @@ class InitialScreen extends StatefulWidget {
 }
 
 class _InitialScreenState extends State<InitialScreen> {
-  authState() async {
+  authState() {
     Future.delayed(
       const Duration(milliseconds: 1200),
-      () async => await Provider.of<AuthProvider>(context, listen: false)
-          .authState(context)
-          .then((user) async {
-        if (user != null) {
-          await Provider.of<GalleryProvider>(context, listen: false)
-              .initData();
+      () => FirebaseAuth.instance.authStateChanges().listen((User? user) {
+        log('authStateChanges === $user');
+        if (user == null) {
+          Navigator.pushNamed(context, AppRoute.auth);
+          log('User is currently signed out!');
+        } else {
+          Provider.of<GalleryProvider>(context, listen: false).initData();
+          Navigator.pushNamed(context, AppRoute.mainScreen);
+          log('User is signed in!');
         }
       }),
     );

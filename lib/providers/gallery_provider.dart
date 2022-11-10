@@ -5,12 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 
 class GalleryProvider with ChangeNotifier {
+  late User user = FirebaseAuth.instance.currentUser as User;
   List galleryList = [];
 
   List imageList = [];
 
   bool isLoading = false;
-  User user = FirebaseAuth.instance.currentUser as User;
 
   initData() {
     getGallery();
@@ -38,7 +38,11 @@ class GalleryProvider with ChangeNotifier {
 
       log('Gallery List === ${galleryList.length}');
       notifyListeners();
-    });
+    }).onError(
+      (error, stackTrace) {
+        log('Failed to get gallery: $error');
+      },
+    );
   }
 
   Future getImage() async {
@@ -62,7 +66,11 @@ class GalleryProvider with ChangeNotifier {
 
       log('Image List === ${imageList.length}');
       notifyListeners();
-    });
+    }).onError(
+      (error, stackTrace) {
+        log('Failed to get image: $error');
+      },
+    );
   }
 
   Future getVideo() async {}

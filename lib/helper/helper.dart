@@ -2,12 +2,15 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:utara_drive/providers/add_album_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
+import 'package:utara_drive/ui/Components/custom_text_field2.dart';
 import 'package:utara_drive/ui/screen/add_screen/add_screen.dart';
 
 class Helper {
-  Helper({this.context});
-  BuildContext? context;
+  Helper({this.ctx});
+  BuildContext? ctx;
 
   // show alert notification/flushbar
   showNotif(
@@ -20,7 +23,7 @@ class Helper {
       duration: const Duration(seconds: 3),
       flushbarPosition: FlushbarPosition.TOP,
       backgroundColor: color,
-    ).show(context!);
+    ).show(ctx!);
   }
 
   // show alert dialog
@@ -226,6 +229,71 @@ class Helper {
                 ),
               ],
             ),
+          );
+        });
+  }
+
+  // handle album
+  Future showAlbumDialog({
+    bool isCamera = false,
+    required BuildContext context,
+  }) {
+    var labelC = TextEditingController();
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            content:
+                Consumer<AddAlbumProvider>(builder: (context, provider, _) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Create an album',
+                    style: TextStyle(
+                      color: MyTheme.colorBlack,
+                      fontSize: 16,
+                    ),
+                  ),
+                  CustomTextField2(
+                    hint: 'Enter label',
+                    controller: labelC,
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        provider.createAlbum(labelC.text).then((value) {
+                          Navigator.pop(context);
+                          Helper(ctx: context).showNotif(
+                              title: 'Success',
+                              message: 'New album added',
+                              color: MyTheme.colorCyan);
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: MyTheme.colorCyan,
+                      ),
+                      child: provider.isLoading
+                          ? const SizedBox(
+                              width: 16,
+                              height: 16,
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: MyTheme.colorWhite,
+                                  strokeWidth: 2,
+                                ),
+                              ),
+                            )
+                          : const Text('Create'),
+                    ),
+                  ),
+                ],
+              );
+            }),
           );
         });
   }

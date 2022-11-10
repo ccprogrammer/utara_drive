@@ -4,11 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:utara_drive/helper/helper.dart';
-import 'package:utara_drive/routes/routes.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 
 class AuthProvider with ChangeNotifier {
   late UserCredential credential;
+  late User user;
 
   bool isLogin = true;
   bool isLoading = false;
@@ -36,7 +36,7 @@ class AuthProvider with ChangeNotifier {
         password: passwordC.text,
       );
 
-      Helper(context: context).showNotif(
+      Helper(ctx: context).showNotif(
         title: 'Success',
         message: 'Log in successfully, ',
         color: MyTheme.colorCyan,
@@ -54,20 +54,21 @@ class AuthProvider with ChangeNotifier {
         log('Wrong password provided for that user.');
       }
 
-      Helper(context: context).showNotif(
+      Helper(ctx: context).showNotif(
         title: title,
         message: message,
         color: MyTheme.colorRed,
       );
     } catch (e) {
       log(e.toString());
-      Helper(context: context).showNotif(
+      Helper(ctx: context).showNotif(
         title: 'Failed',
         message: e.toString(),
         color: MyTheme.colorRed,
       );
     }
 
+    user = FirebaseAuth.instance.currentUser as User;
     isLoading = false;
     notifyListeners();
   }
@@ -97,11 +98,12 @@ class AuthProvider with ChangeNotifier {
           .then((value) => log("User Added"))
           .catchError((error) => log("Failed to add user: $error"));
 
-      Helper(context: context).showNotif(
+      Helper(ctx: context).showNotif(
         title: 'Success',
         message: 'Sign Up successfully, ',
         color: MyTheme.colorCyan,
       );
+
       log('sign up succeed === $credential');
     } on FirebaseAuthException catch (e) {
       String title = 'Failed';
@@ -114,20 +116,21 @@ class AuthProvider with ChangeNotifier {
         log('The account already exists for that email.');
       }
 
-      Helper(context: context).showNotif(
+      Helper(ctx: context).showNotif(
         title: title,
         message: message,
         color: MyTheme.colorRed,
       );
     } catch (e) {
       log(e.toString());
-      Helper(context: context).showNotif(
+      Helper(ctx: context).showNotif(
         title: 'Failed',
         message: e.toString(),
         color: MyTheme.colorRed,
       );
     }
 
+    user = FirebaseAuth.instance.currentUser as User;
     isLoading = false;
     notifyListeners();
   }
@@ -139,20 +142,6 @@ class AuthProvider with ChangeNotifier {
       text: 'Are you sure want to log out?',
       onYes: () async => await FirebaseAuth.instance.signOut(),
     );
-  }
-
-  // check auth state
-  authState(context) async {
-    return FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      log('authStateChanges === $user');
-      if (user == null) {
-        Navigator.pushNamed(context, AppRoute.auth);
-        log('User is currently signed out!');
-      } else {
-        Navigator.pushNamed(context, AppRoute.mainScreen);
-        log('User is signed in!');
-      }
-    });
   }
 
   // text field validation
@@ -171,7 +160,7 @@ class AuthProvider with ChangeNotifier {
     }
 
     if (!isValid) {
-      Helper(context: context).showNotif(title: 'Alert', message: message);
+      Helper(ctx: context).showNotif(title: 'Alert', message: message);
     }
 
     log(message.toString());

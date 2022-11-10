@@ -1,12 +1,11 @@
-import 'dart:developer';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_arc_speed_dial/flutter_speed_dial_menu_button.dart';
 import 'package:flutter_arc_speed_dial/main_menu_floating_action_button.dart';
+import 'package:provider/provider.dart';
 import 'package:utara_drive/helper/helper.dart';
-import 'package:utara_drive/routes/routes.dart';
+import 'package:utara_drive/providers/auth_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
-import 'package:utara_drive/ui/Components/app_bar.dart';
 import 'package:utara_drive/ui/screen/main_screen/album_tab/album_tab.dart';
 import 'package:utara_drive/ui/screen/main_screen/home_tab/home_tab.dart';
 import 'package:utara_drive/ui/screen/main_screen/image_tab/image_tab.dart';
@@ -27,18 +26,18 @@ class _MainScreenState extends State<MainScreen> {
   handleFab(String type) {
     switch (type) {
       case 'gallery':
-        Helper(context: context).showImageDialog(context: context);
-
+        Helper(ctx: context).showImageDialog(context: context);
         break;
+
       case 'camera':
-        Helper(context: context)
-            .showImageDialog(context: context, isCamera: true);
+        Helper(ctx: context).showImageDialog(context: context, isCamera: true);
+        break;
 
+      // Navigator.pushNamed(context, AppRoute.search);
+      case 'album':
+        Helper(ctx: context).showAlbumDialog(context: context);
         break;
-      case 'search':
-        Navigator.pushNamed(context, AppRoute.search);
-        log('SEARCH !!!');
-        break;
+
       default:
     }
   }
@@ -46,10 +45,48 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(),
+      appBar: _appBar(),
       floatingActionButton: _getFloatingActionButton(),
       bottomNavigationBar: _buildNavBar(),
       body: _buildBody(),
+    );
+  }
+
+  PreferredSizeWidget _appBar() {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    return AppBar(
+      automaticallyImplyLeading: false,
+      backgroundColor: MyTheme.colorWhite,
+      toolbarHeight: 82,
+      elevation: 0,
+      titleSpacing: 0,
+      title: Consumer<AuthProvider>(builder: (context, provider, _) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  '${user!.displayName}',
+                  style: const TextStyle(color: MyTheme.colorBlue),
+                ),
+              ),
+              // sign out button
+              IconButton(
+                onPressed: () {
+                  provider.signOut(context);
+                },
+                constraints: const BoxConstraints(),
+                padding: EdgeInsets.zero,
+                iconSize: 24,
+                icon: const Icon(Icons.logout),
+                color: MyTheme.colorCyan,
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 
@@ -85,6 +122,17 @@ class _MainScreenState extends State<MainScreen> {
 
       floatingActionButtonWidgetChildren: [
         FloatingActionButton(
+          heroTag: 'album',
+          mini: true,
+          onPressed: () {
+            handleFab('album');
+            _isShowDial = false;
+            setState(() {});
+          },
+          backgroundColor: Colors.orange,
+          child: const Icon(Icons.add_to_photos_rounded),
+        ),
+        FloatingActionButton(
           heroTag: 'camera',
           mini: true,
           onPressed: () {
@@ -94,17 +142,6 @@ class _MainScreenState extends State<MainScreen> {
           },
           backgroundColor: Colors.pink,
           child: const Icon(Icons.add_a_photo),
-        ),
-        FloatingActionButton(
-          heroTag: 'search',
-          mini: true,
-          onPressed: () {
-            handleFab('search');
-            _isShowDial = false;
-            setState(() {});
-          },
-          backgroundColor: Colors.orange,
-          child: const Icon(Icons.search),
         ),
         FloatingActionButton(
           heroTag: 'gallery',
