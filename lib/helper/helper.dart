@@ -126,6 +126,7 @@ class Helper {
 
   Future showImageDialog({
     required BuildContext context,
+    bool isCamera = false,
   }) {
     return showDialog(
         context: context,
@@ -136,54 +137,92 @@ class Helper {
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                Text(
+                  isCamera ? 'Take from camera' : 'Take from gallery',
+                  style: const TextStyle(
+                    color: MyTheme.colorBlack,
+                    fontSize: 16,
+                  ),
+                ),
+                const SizedBox(height: 16),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      openGalleryPhoto().then(
-                        (image) {
-                          Navigator.pop(context);
-                          if (image != null) {
-                            Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) =>
-                                    AddScreen(image: image, imageType: 'image'),
-                              ),
+                      isCamera
+                          ? openCameraPhoto().then(
+                              (image) {
+                                Navigator.pop(context);
+                                if (image != null) {
+                                  Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                      builder: (context) => AddScreen(
+                                          image: image, imageType: 'image'),
+                                    ),
+                                  );
+                                }
+                              },
+                            )
+                          : openGalleryPhoto().then(
+                              (image) {
+                                Navigator.pop(context);
+                                if (image != null) {
+                                  Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                      builder: (context) => AddScreen(
+                                          image: image, imageType: 'image'),
+                                    ),
+                                  );
+                                }
+                              },
                             );
-                          }
-                        },
-                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: MyTheme.colorCyan,
                     ),
-                    child: const Text('Gallery Image'),
+                    child: const Text('Image'),
                   ),
                 ),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      openGalleryVideo().then(
-                        (image) {
-                          Navigator.pop(context);
-                          if (image != null) {
-                            Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) =>
-                                    AddScreen(image: image, imageType: 'video'),
-                              ),
+                      isCamera
+                          ? openCameraVideo().then(
+                              (image) {
+                                Navigator.pop(context);
+                                if (image != null) {
+                                  Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                      builder: (context) => AddScreen(
+                                          image: image, imageType: 'video'),
+                                    ),
+                                  );
+                                }
+                              },
+                            )
+                          : openGalleryVideo().then(
+                              (image) {
+                                Navigator.pop(context);
+                                if (image != null) {
+                                  Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                      builder: (context) => AddScreen(
+                                          image: image, imageType: 'video'),
+                                    ),
+                                  );
+                                }
+                              },
                             );
-                          }
-                        },
-                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: MyTheme.colorCyan,
                     ),
-                    child: const Text('Gallery Video'),
+                    child: const Text('Video'),
                   ),
                 ),
               ],

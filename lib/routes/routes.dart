@@ -4,6 +4,7 @@ import 'package:utara_drive/ui/screen/initial_screen.dart';
 import 'package:utara_drive/ui/screen/auth_screen/auth_screen.dart';
 import 'package:utara_drive/ui/screen/main_screen/main_screen.dart';
 import 'package:utara_drive/ui/screen/page_not_found.dart';
+import 'package:utara_drive/ui/screen/search_screen/search_screen.dart';
 
 abstract class AppRoute {
   static const pageNotFound = '/';
@@ -12,6 +13,7 @@ abstract class AppRoute {
   static const mainScreen = '/main-screen';
   static const home = '/home';
   static const add = '/add';
+  static const search = '/search';
 }
 
 class GetRoute {
@@ -31,6 +33,9 @@ class GetRoute {
 
       case AppRoute.auth:
         return CupertinoPageRoute(builder: (context) => const AuthScreen());
+
+      case AppRoute.search:
+        return CupertinoPageRoute(builder: (context) => const SearchScreen());
 
       default:
         return CupertinoPageRoute(

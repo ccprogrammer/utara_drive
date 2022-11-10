@@ -1,11 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_arc_speed_dial/flutter_speed_dial_menu_button.dart';
 import 'package:flutter_arc_speed_dial/main_menu_floating_action_button.dart';
 import 'package:utara_drive/helper/helper.dart';
+import 'package:utara_drive/routes/routes.dart';
 import 'package:utara_drive/themes/my_themes.dart';
-import 'package:utara_drive/ui/Components/app_bar.dart';
-import 'package:utara_drive/ui/screen/add_screen/add_screen.dart';
 import 'package:utara_drive/ui/screen/main_screen/album_tab/album_tab.dart';
 import 'package:utara_drive/ui/screen/main_screen/home_tab/home_tab.dart';
 import 'package:utara_drive/ui/screen/main_screen/image_tab/image_tab.dart';
@@ -23,38 +23,20 @@ class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
   bool _isShowDial = false;
 
-  toAddScreen(image, String type) {
-    Navigator.push(
-      context,
-      CupertinoPageRoute(
-        builder: (context) => AddScreen(image: image, imageType: type),
-      ),
-    );
-  }
-
-  addNew(String type) {
+  handleFab(String type) {
     switch (type) {
       case 'gallery':
         Helper(context: context).showImageDialog(context: context);
 
         break;
-      case 'photo':
-        Helper().openCameraPhoto().then(
-          (image) {
-            if (image != null) {
-              toAddScreen(image, 'image');
-            }
-          },
-        );
+      case 'camera':
+        Helper(context: context)
+            .showImageDialog(context: context, isCamera: true);
+
         break;
-      case 'video':
-        Helper().openCameraVideo().then(
-          (image) {
-            if (image != null) {
-              toAddScreen(image, 'video');
-            }
-          },
-        );
+      case 'search':
+        Navigator.pushNamed(context, AppRoute.search);
+        log('SEARCH !!!');
         break;
       default:
     }
@@ -63,7 +45,6 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(),
       floatingActionButton: _getFloatingActionButton(),
       bottomNavigationBar: _buildNavBar(),
       body: _buildBody(),
@@ -87,7 +68,7 @@ class _MainScreenState extends State<MainScreen> {
       mainMenuFloatingActionButton: MainMenuFloatingActionButton(
         mini: false,
         child: const Icon(
-          Icons.file_upload_outlined,
+          Icons.menu,
           size: 28,
         ),
         onPressed: () {},
@@ -102,21 +83,10 @@ class _MainScreenState extends State<MainScreen> {
 
       floatingActionButtonWidgetChildren: [
         FloatingActionButton(
-          heroTag: 'video',
+          heroTag: 'camera',
           mini: true,
           onPressed: () {
-            addNew('video');
-            _isShowDial = false;
-            setState(() {});
-          },
-          backgroundColor: Colors.orange,
-          child: const Icon(Icons.video_call),
-        ),
-        FloatingActionButton(
-          heroTag: 'photo',
-          mini: true,
-          onPressed: () {
-            addNew('photo');
+            handleFab('camera');
             _isShowDial = false;
             setState(() {});
           },
@@ -124,10 +94,21 @@ class _MainScreenState extends State<MainScreen> {
           child: const Icon(Icons.add_a_photo),
         ),
         FloatingActionButton(
-          heroTag: 'image',
+          heroTag: 'search',
           mini: true,
           onPressed: () {
-            addNew('gallery');
+            handleFab('search');
+            _isShowDial = false;
+            setState(() {});
+          },
+          backgroundColor: Colors.orange,
+          child: const Icon(Icons.search),
+        ),
+        FloatingActionButton(
+          heroTag: 'gallery',
+          mini: true,
+          onPressed: () {
+            handleFab('gallery');
             _isShowDial = false;
             setState(() {});
           },
