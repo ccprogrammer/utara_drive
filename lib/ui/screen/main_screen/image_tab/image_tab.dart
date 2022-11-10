@@ -36,59 +36,61 @@ class _ImageTabState extends State<ImageTab> {
     return Consumer<GalleryProvider>(builder: (context, provider, _) {
       return Scaffold(
         backgroundColor: MyTheme.colorWhite,
-        body: SmartRefresher(
-          controller: refreshController,
-          onRefresh: onRefresh,
-          onLoading: onLoading,
-          header: const TwoLevelHeader(
-            decoration: BoxDecoration(color: MyTheme.colorCyan),
-            textStyle: TextStyle(color: MyTheme.colorWhite),
-            refreshingIcon: SizedBox(
-              height: 24,
-              width: 24,
-              child: CircularProgressIndicator(
+        body: SafeArea(
+          child: SmartRefresher(
+            controller: refreshController,
+            onRefresh: onRefresh,
+            onLoading: onLoading,
+            header: const TwoLevelHeader(
+              decoration: BoxDecoration(color: MyTheme.colorCyan),
+              textStyle: TextStyle(color: MyTheme.colorWhite),
+              refreshingIcon: SizedBox(
+                height: 24,
+                width: 24,
+                child: CircularProgressIndicator(
+                  color: MyTheme.colorWhite,
+                  strokeWidth: 3,
+                ),
+              ),
+              idleIcon: Icon(
+                Icons.refresh,
                 color: MyTheme.colorWhite,
-                strokeWidth: 3,
+              ),
+              completeIcon: Icon(
+                Icons.check,
+                color: MyTheme.colorWhite,
+              ),
+              releaseIcon: Icon(
+                Icons.arrow_upward,
+                color: MyTheme.colorWhite,
               ),
             ),
-            idleIcon: Icon(
-              Icons.refresh,
-              color: MyTheme.colorWhite,
-            ),
-            completeIcon: Icon(
-              Icons.check,
-              color: MyTheme.colorWhite,
-            ),
-            releaseIcon: Icon(
-              Icons.arrow_upward,
-              color: MyTheme.colorWhite,
-            ),
-          ),
-          child: GridView.custom(
-            gridDelegate: SliverQuiltedGridDelegate(
-              crossAxisCount: 4,
-              mainAxisSpacing: 4,
-              crossAxisSpacing: 4,
-              repeatPattern: QuiltedGridRepeatPattern.mirrored,
-              pattern: [
-                const QuiltedGridTile(2, 2),
-                const QuiltedGridTile(1, 1),
-                const QuiltedGridTile(1, 1),
-                const QuiltedGridTile(1, 1),
-                const QuiltedGridTile(1, 1),
-                const QuiltedGridTile(1, 1),
-                const QuiltedGridTile(1, 1),
-                const QuiltedGridTile(2, 2),
-                const QuiltedGridTile(1, 1),
-                const QuiltedGridTile(1, 1),
-              ],
-            ),
-            childrenDelegate: SliverChildBuilderDelegate(
-              childCount: provider.galleryList.length,
-              (context, index) {
-                var item = provider.galleryList[index];
-                return ImageGrid(data: item);
-              },
+            child: GridView.custom(
+              gridDelegate: SliverQuiltedGridDelegate(
+                crossAxisCount: 4,
+                mainAxisSpacing: 4,
+                crossAxisSpacing: 4,
+                repeatPattern: QuiltedGridRepeatPattern.mirrored,
+                pattern: [
+                  const QuiltedGridTile(2, 2),
+                  const QuiltedGridTile(1, 1),
+                  const QuiltedGridTile(1, 1),
+                  const QuiltedGridTile(1, 1),
+                  const QuiltedGridTile(1, 1),
+                  const QuiltedGridTile(1, 1),
+                  const QuiltedGridTile(1, 1),
+                  const QuiltedGridTile(2, 2),
+                  const QuiltedGridTile(1, 1),
+                  const QuiltedGridTile(1, 1),
+                ],
+              ),
+              childrenDelegate: SliverChildBuilderDelegate(
+                childCount: provider.galleryList.length,
+                (context, index) {
+                  var item = provider.galleryList[index];
+                  return ImageGrid(data: item);
+                },
+              ),
             ),
           ),
         ),

@@ -59,6 +59,7 @@ class AddGalleryProvider with ChangeNotifier {
         'location': locationC.text,
         'tag': tagList,
         'type': 'image',
+        'created_at': Timestamp.now(),
         'date': DateTime.now(),
         'image_url': url,
       });

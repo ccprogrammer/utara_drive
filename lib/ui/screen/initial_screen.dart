@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:utara_drive/providers/auth_provider.dart';
@@ -20,8 +19,7 @@ class _InitialScreenState extends State<InitialScreen> {
           .authState(context)
           .then((user) async {
         if (user != null) {
-          await Provider.of<GalleryProvider>(context, listen: false)
-              .getGallery();
+          await Provider.of<GalleryProvider>(context, listen: false).initData();
         }
       }),
     );

@@ -182,7 +182,7 @@ class Helper {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: MyTheme.colorCyan,
                     ),
-                    child: const Text('Image'),
+                    child: Text(isCamera ? 'Photo' : 'Image'),
                   ),
                 ),
                 SizedBox(
