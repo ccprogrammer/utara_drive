@@ -23,22 +23,26 @@ class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
   bool _isShowDial = false;
 
+  toAddScreen(image, String type) {
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => AddScreen(image: image, imageType: type),
+      ),
+    );
+  }
+
   addNew(String type) {
     switch (type) {
       case 'gallery':
         Helper(context: context).showImageDialog(context: context);
+
         break;
       case 'photo':
         Helper().openCameraPhoto().then(
           (image) {
             if (image != null) {
-              Navigator.push(
-                context,
-                CupertinoPageRoute(
-                  builder: (context) =>
-                      AddScreen(image: image, imageType: 'image'),
-                ),
-              );
+              toAddScreen(image, 'image');
             }
           },
         );
@@ -47,13 +51,7 @@ class _MainScreenState extends State<MainScreen> {
         Helper().openCameraVideo().then(
           (image) {
             if (image != null) {
-              Navigator.push(
-                context,
-                CupertinoPageRoute(
-                  builder: (context) =>
-                      AddScreen(image: image, imageType: 'video'),
-                ),
-              );
+              toAddScreen(image, 'video');
             }
           },
         );

@@ -49,7 +49,11 @@ class _AddScreenState extends State<AddScreen> {
             ),
             const SizedBox(height: 24),
             CustomTextField2(
-              hint: 'Write a description...',
+              hint: 'Add label',
+              controller: provider.labelC,
+            ),
+            CustomTextField2(
+              hint: 'Write a description',
               controller: provider.descriptionC,
               maxLines: null,
             ),

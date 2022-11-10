@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:utara_drive/firebase_options.dart';
 import 'package:utara_drive/providers/add_image_provider.dart';
 import 'package:utara_drive/providers/auth_provider.dart';
+import 'package:utara_drive/providers/gallery_provider.dart';
 import 'package:utara_drive/routes/routes.dart';
 import 'package:utara_drive/ui/screen/page_not_found.dart';
 
@@ -26,8 +27,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => AuthProvider(),
         ),
-          ChangeNotifierProvider(
+        ChangeNotifierProvider(
           create: (context) => AddImageProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => GalleryProvider(),
         ),
       ],
       child: MaterialApp(

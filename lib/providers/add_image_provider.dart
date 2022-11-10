@@ -6,23 +6,26 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:utara_drive/helper/helper.dart';
 import 'package:utara_drive/helper/remove_string.dart';
+import 'package:utara_drive/themes/my_themes.dart';
 
 class AddImageProvider with ChangeNotifier {
   bool isLoading = false;
   List tagList = [];
 
+  var labelC = TextEditingController();
   var descriptionC = TextEditingController();
   var locationC = TextEditingController();
   var tagC = TextEditingController();
 
   // upload image to firebase
-  addImage(context, XFile xImage) async {
+  Future addImage(context, XFile xImage) async {
     isLoading = true;
     notifyListeners();
 
     // get user uid
-    User user = FirebaseAuth.instance.currentUser as User;
+    User user = Helper().getUser();
 
     // get image file and name
     File image = File(xImage.path);
@@ -37,39 +40,49 @@ class AddImageProvider with ChangeNotifier {
 
     try {
       await ref.putFile(image);
-    } on FirebaseException catch (e) {
-      log('FirebaseException storage === $e');
-    }
 
-    // upload to cloud firestore
-    final url = await ref.getDownloadURL();
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user.uid)
-        .collection('images')
-        .doc()
-        .set({
-          'username': user.displayName,
-          'uid': user.uid,
-          'image_name': imageName,
-          'description': descriptionC.text,
-          'location': locationC.text,
-          'tag': tagList,
-          'type': 'image',
-          'date': DateTime.now(),
-          'image_url': url,
-        })
-        .then((value) => log("Image Added"))
-        .catchError((error) => log("Failed to add image: $error"));
+      // get image download url
+      final url = await ref.getDownloadURL();
+
+      // upload to cloud firestore
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .collection('gallery')
+          .doc()
+          .set({
+        'username': user.displayName,
+        'uid': user.uid,
+        'label': labelC.text,
+        'image_name': imageName,
+        'description': descriptionC.text,
+        'location': locationC.text,
+        'tag': tagList,
+        'type': 'image',
+        'date': DateTime.now(),
+        'image_url': url,
+      });
+
+      isLoading = false;
+      clearData();
+      notifyListeners();
+      Navigator.pop(context);
+
+      Helper(context: context).showNotif(
+        title: 'Success',
+        message: 'Image has been uploaded',
+        color: MyTheme.colorCyan,
+      );
+    } on FirebaseException catch (e) {
+      log('FirebaseException  === $e');
+      Helper(context: context).showNotif(
+        title: 'Failed',
+        message: 'An error occurred, $e',
+      );
+    }
 
     // month/day/year time
     // DateFormat.yMd().add_jm().format(DateTime.now())
-
-    isLoading = false;
-    notifyListeners();
-
-    clearData();
-    Navigator.pop(context);
   }
 
   // handle tag
@@ -92,6 +105,7 @@ class AddImageProvider with ChangeNotifier {
 
   // clear data
   clearData() {
+    labelC.clear();
     descriptionC.clear();
     locationC.clear();
     tagC.clear();

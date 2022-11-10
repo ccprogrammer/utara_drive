@@ -1,5 +1,5 @@
-
 import 'package:another_flushbar/flushbar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,13 +11,16 @@ class Helper {
   BuildContext? context;
 
   // show alert notification/flushbar
-  showNotif({required String title, required String message}) {
-    Flushbar(
+  showNotif(
+      {required String title,
+      required String message,
+      Color color = MyTheme.colorRed}) {
+    return Flushbar(
       title: title,
       message: message,
       duration: const Duration(seconds: 3),
       flushbarPosition: FlushbarPosition.TOP,
-      backgroundColor: MyTheme.colorRed,
+      backgroundColor: color,
     ).show(context!);
   }
 
@@ -139,6 +142,7 @@ class Helper {
                     onPressed: () {
                       openGalleryPhoto().then(
                         (image) {
+                          Navigator.pop(context);
                           if (image != null) {
                             Navigator.push(
                               context,
@@ -163,6 +167,7 @@ class Helper {
                     onPressed: () {
                       openGalleryVideo().then(
                         (image) {
+                          Navigator.pop(context);
                           if (image != null) {
                             Navigator.push(
                               context,
@@ -185,5 +190,11 @@ class Helper {
             ),
           );
         });
+  }
+
+  getUser() {
+    User user = FirebaseAuth.instance.currentUser as User;
+
+    return user;
   }
 }
