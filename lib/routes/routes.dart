@@ -40,7 +40,8 @@ class GetRoute {
         return CupertinoPageRoute(builder: (context) => const SearchScreen());
 
       case AppRoute.detail:
-        return CupertinoPageRoute(builder: (context) => const DetailScreen());
+        return CupertinoPageRoute(
+            builder: (context) => DetailScreen(data: settings.arguments));
 
       default:
         return CupertinoPageRoute(

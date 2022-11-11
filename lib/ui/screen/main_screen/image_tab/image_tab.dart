@@ -86,8 +86,7 @@ class _ImageTabState extends State<ImageTab> {
               ),
               childrenDelegate: SliverChildBuilderDelegate(
                 childCount: provider.galleryList.length,
-                (context, index) {
-                  var item = provider.galleryList[index];
+                (context, item) {
                   return ImageGrid(data: item);
                 },
               ),
