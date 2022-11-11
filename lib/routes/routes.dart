@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:utara_drive/ui/screen/detail_screen/detail_screen.dart';
 import 'package:utara_drive/ui/screen/main_screen/home_tab/home_tab.dart';
 import 'package:utara_drive/ui/screen/initial_screen.dart';
 import 'package:utara_drive/ui/screen/auth_screen/auth_screen.dart';
@@ -14,6 +15,7 @@ abstract class AppRoute {
   static const home = '/home';
   static const add = '/add';
   static const search = '/search';
+  static const detail = '/detail';
 }
 
 class GetRoute {
@@ -36,6 +38,9 @@ class GetRoute {
 
       case AppRoute.search:
         return CupertinoPageRoute(builder: (context) => const SearchScreen());
+
+      case AppRoute.detail:
+        return CupertinoPageRoute(builder: (context) => const DetailScreen());
 
       default:
         return CupertinoPageRoute(

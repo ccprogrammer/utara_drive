@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:utara_drive/routes/routes.dart';
 import 'package:utara_drive/ui/Components/skeleton.dart';
 
 class ImageGrid extends StatelessWidget {
@@ -26,6 +27,7 @@ class ImageGrid extends StatelessWidget {
           child: InkWell(
             onTap: () {
               log('GALLERY DATA === ${data.data()}');
+              Navigator.pushNamed(context, AppRoute.detail);
             },
           ),
         ),

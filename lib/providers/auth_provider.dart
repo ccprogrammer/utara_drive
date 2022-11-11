@@ -8,14 +8,13 @@ import 'package:utara_drive/themes/my_themes.dart';
 
 class AuthProvider with ChangeNotifier {
   late UserCredential credential;
-  late User user;
 
   bool isLogin = true;
   bool isLoading = false;
 
-  var emailC = TextEditingController();
-  var usernameC = TextEditingController();
-  var passwordC = TextEditingController();
+  var emailC = TextEditingController(text: 'test@test.com');
+  var usernameC = TextEditingController(text: 'tester');
+  var passwordC = TextEditingController(text: '12345678');
 
   // switch log in to sign up
   switchLogin() {
@@ -68,7 +67,6 @@ class AuthProvider with ChangeNotifier {
       );
     }
 
-    user = FirebaseAuth.instance.currentUser as User;
     isLoading = false;
     notifyListeners();
   }
@@ -130,7 +128,6 @@ class AuthProvider with ChangeNotifier {
       );
     }
 
-    user = FirebaseAuth.instance.currentUser as User;
     isLoading = false;
     notifyListeners();
   }

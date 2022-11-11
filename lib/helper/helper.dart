@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:utara_drive/providers/add_album_provider.dart';
+import 'package:utara_drive/providers/gallery_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 import 'package:utara_drive/ui/Components/custom_text_field2.dart';
 import 'package:utara_drive/ui/screen/add_screen/add_screen.dart';
@@ -130,6 +131,18 @@ class Helper {
     required BuildContext context,
     bool isCamera = false,
   }) {
+    getGallery(image, String type) {
+      Navigator.push(
+        context,
+        CupertinoPageRoute(
+          builder: (context) => AddScreen(image: image, imageType: type),
+        ),
+      ).then(
+        (value) =>
+            Provider.of<GalleryProvider>(context, listen: false).getGallery(),
+      );
+    }
+
     return showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -156,13 +169,7 @@ class Helper {
                               (image) {
                                 Navigator.pop(context);
                                 if (image != null) {
-                                  Navigator.push(
-                                    context,
-                                    CupertinoPageRoute(
-                                      builder: (context) => AddScreen(
-                                          image: image, imageType: 'image'),
-                                    ),
-                                  );
+                                  getGallery(image, 'image');
                                 }
                               },
                             )
@@ -170,13 +177,7 @@ class Helper {
                               (image) {
                                 Navigator.pop(context);
                                 if (image != null) {
-                                  Navigator.push(
-                                    context,
-                                    CupertinoPageRoute(
-                                      builder: (context) => AddScreen(
-                                          image: image, imageType: 'image'),
-                                    ),
-                                  );
+                                  getGallery(image, 'image');
                                 }
                               },
                             );
@@ -196,13 +197,7 @@ class Helper {
                               (image) {
                                 Navigator.pop(context);
                                 if (image != null) {
-                                  Navigator.push(
-                                    context,
-                                    CupertinoPageRoute(
-                                      builder: (context) => AddScreen(
-                                          image: image, imageType: 'video'),
-                                    ),
-                                  );
+                                  getGallery(image, 'video');
                                 }
                               },
                             )
@@ -210,13 +205,7 @@ class Helper {
                               (image) {
                                 Navigator.pop(context);
                                 if (image != null) {
-                                  Navigator.push(
-                                    context,
-                                    CupertinoPageRoute(
-                                      builder: (context) => AddScreen(
-                                          image: image, imageType: 'video'),
-                                    ),
-                                  );
+                                  getGallery(image, 'video');
                                 }
                               },
                             );

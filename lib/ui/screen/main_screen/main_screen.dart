@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_arc_speed_dial/flutter_speed_dial_menu_button.dart';
 import 'package:flutter_arc_speed_dial/main_menu_floating_action_button.dart';
@@ -53,8 +52,6 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   PreferredSizeWidget _appBar() {
-    User? user = FirebaseAuth.instance.currentUser;
-
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: MyTheme.colorWhite,
@@ -66,10 +63,13 @@ class _MainScreenState extends State<MainScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Row(
             children: [
-              Expanded(
+              const Expanded(
                 child: Text(
-                  '${user!.displayName}',
-                  style: const TextStyle(color: MyTheme.colorBlue),
+                  'uDrive',
+                  style: TextStyle(
+                    color: MyTheme.colorBlue,
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
               ),
               // sign out button

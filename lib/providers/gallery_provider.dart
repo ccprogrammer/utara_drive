@@ -18,6 +18,7 @@ class GalleryProvider with ChangeNotifier {
   }
 
   Future getGallery() async {
+    log('UID NIH === ${user.uid}');
     isLoading = true;
     notifyListeners();
 
