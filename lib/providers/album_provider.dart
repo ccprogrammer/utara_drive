@@ -24,16 +24,15 @@ class AlbumProvider with ChangeNotifier {
         .doc(user.uid)
         .collection('albums')
         .orderBy('created_at', descending: true)
-        // .where('type', isEqualTo: 'image')
         .get()
         .then((QuerySnapshot querySnapshot) {
       for (var doc in querySnapshot.docs) {
         tmpAlbums.add(doc);
       }
       albumsList = tmpAlbums;
-      isLoading = false;
 
       log('Albums List === ${albumsList.length}');
+      isLoading = false;
       notifyListeners();
     }).onError(
       (error, stackTrace) {

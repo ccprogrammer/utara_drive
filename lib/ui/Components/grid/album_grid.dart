@@ -1,3 +1,4 @@
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
@@ -13,16 +14,16 @@ class AlbumGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       imageUrl: item['display_image'] ??
-          'https://www.kindpng.com/picc/m/355-3557482_flutter-logo-png-transparent-png.png',
+          'https://webcolours.ca/wp-content/uploads/2020/10/webcolours-unknown.png',
       imageBuilder: (context, imageProvider) => Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           boxShadow: const [
             BoxShadow(
-              offset: Offset(3, 3),
-              spreadRadius: -4,
+              offset: Offset(5, 7),
+              spreadRadius: -6,
               blurRadius: 10,
-              color: Color.fromRGBO(0, 0, 0, 1),
+              color: Colors.black38,
             )
           ],
           image: DecorationImage(
@@ -31,6 +32,7 @@ class AlbumGrid extends StatelessWidget {
             image: imageProvider,
           ),
         ),
+        clipBehavior: Clip.antiAlias,
         child: Material(
           color: Colors.transparent,
           child: InkWell(

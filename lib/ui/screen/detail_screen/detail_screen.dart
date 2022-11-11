@@ -6,6 +6,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:utara_drive/helper/helper.dart';
 import 'package:utara_drive/providers/gallery_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
+import 'package:utara_drive/ui/Components/add_album_modal.dart';
 import 'package:utara_drive/ui/Components/skeleton.dart';
 
 class DetailScreen extends StatefulWidget {
@@ -70,7 +71,12 @@ class _DetailScreenState extends State<DetailScreen> {
               icon: const Icon(Icons.share),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Helper(ctx: context).showCustomModal(
+                  context: context,
+                  child: AddAlbumModal(gallery: widget.data),
+                );
+              },
               icon: const Icon(Icons.add_to_photos),
             ),
             IconButton(

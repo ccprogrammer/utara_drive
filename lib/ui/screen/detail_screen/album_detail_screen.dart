@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 
@@ -11,6 +13,12 @@ class AlbumDetailScreen extends StatefulWidget {
 
 class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
   @override
+  void initState() {
+    super.initState();
+    log('DATA === ${widget.data.data()}');
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyTheme.colorWhite,
@@ -20,8 +28,6 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
       ),
     );
   }
-
-  
 
   PreferredSizeWidget appBar() {
     final item = widget.data;

@@ -90,6 +90,7 @@ class AuthProvider with ChangeNotifier {
           .collection('users')
           .doc(credential.user?.uid)
           .set({
+            'id': credential.user?.uid,
             'email': emailC.text.toLowerCase(),
             'username': usernameC.text.toLowerCase(),
           })

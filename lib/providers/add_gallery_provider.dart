@@ -54,8 +54,8 @@ class AddGalleryProvider with ChangeNotifier {
           .collection('gallery')
           .doc()
           .set({
+            'id': null,
             'username': user.displayName,
-            'uid': user.uid,
             'label': labelC.text,
             'image_name': imageName,
             'description': descriptionC.text,
