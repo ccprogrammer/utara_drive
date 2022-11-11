@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:utara_drive/firebase_options.dart';
 import 'package:utara_drive/providers/add_album_provider.dart';
 import 'package:utara_drive/providers/add_gallery_provider.dart';
+import 'package:utara_drive/providers/album_provider.dart';
 import 'package:utara_drive/providers/auth_provider.dart';
 import 'package:utara_drive/providers/gallery_provider.dart';
 import 'package:utara_drive/routes/routes.dart';
@@ -36,6 +37,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => AddAlbumProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AlbumProvider(),
         ),
       ],
       child: MaterialApp(

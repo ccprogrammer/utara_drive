@@ -55,7 +55,7 @@ class _MainScreenState extends State<MainScreen> {
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: MyTheme.colorWhite,
-      toolbarHeight: 82,
+      toolbarHeight: 80,
       elevation: 0,
       titleSpacing: 0,
       title: Consumer<AuthProvider>(builder: (context, provider, _) {
@@ -63,15 +63,20 @@ class _MainScreenState extends State<MainScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Row(
             children: [
-              const Expanded(
-                child: Text(
-                  'uDrive',
-                  style: TextStyle(
-                    color: MyTheme.colorBlue,
-                    fontStyle: FontStyle.italic,
-                  ),
+              Image.asset(
+                'assets/images/image_logo.png',
+                width: 42,
+              ),
+              const SizedBox(width: 4),
+              const Text(
+                'uDrive',
+                style: TextStyle(
+                  color: MyTheme.colorBlue,
+                  fontStyle: FontStyle.italic,
                 ),
               ),
+              const Spacer(),
+
               // sign out button
               IconButton(
                 onPressed: () {

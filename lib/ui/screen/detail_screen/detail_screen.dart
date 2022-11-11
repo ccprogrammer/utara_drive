@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:utara_drive/helper/helper.dart';
 import 'package:utara_drive/providers/gallery_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 import 'package:utara_drive/ui/Components/skeleton.dart';
@@ -21,7 +22,20 @@ class _DetailScreenState extends State<DetailScreen> {
   PhotoViewController controller = PhotoViewController();
 
   bool scaleAble = true;
-  bool seeDetail = false;
+  bool seeDetails = false;
+
+  double detailsHeight = 0;
+
+  handleDetails() {
+    setState(() {
+      seeDetails = !seeDetails;
+      if (seeDetails) {
+        detailsHeight = 0.6;
+      } else {
+        detailsHeight = 0.0;
+      }
+    });
+  }
 
   @override
   void initState() {
@@ -39,7 +53,6 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final item = widget.data;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: appBar(),
@@ -66,20 +79,22 @@ class _DetailScreenState extends State<DetailScreen> {
             ),
             IconButton(
               onPressed: () {
-                setState(() {
-                  seeDetail = !seeDetail;
-                });
+                handleDetails();
               },
               icon: Icon(
-                  seeDetail ? Icons.arrow_circle_down : Icons.arrow_circle_up),
+                  seeDetails ? Icons.arrow_circle_down : Icons.arrow_circle_up),
             ),
           ],
         ),
       ),
       body: Consumer<GalleryProvider>(
         builder: (context, provider, _) {
+          final item = widget.data;
+          final date = Helper().convertTimestamp(item['created_at']);
+
           return Stack(
             children: [
+              // gallery content
               CachedNetworkImage(
                 imageUrl: item['image_url'],
                 imageBuilder: (context, imageProvider) => PhotoView(
@@ -102,19 +117,82 @@ class _DetailScreenState extends State<DetailScreen> {
                 errorWidget: (context, url, error) =>
                     const Center(child: Icon(Icons.error)),
               ),
-              seeDetail
-                  ? Positioned(
-                      bottom: 0,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 150,
-                        color: MyTheme.colorWhite.withOpacity(0.3),
+
+              // details modal
+              Positioned(
+                bottom: 0,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 400),
+                  width: MediaQuery.of(context).size.width,
+                  color: MyTheme.colorWhite.withOpacity(0.3),
+                  constraints: BoxConstraints(
+                      maxHeight:
+                          MediaQuery.of(context).size.height * detailsHeight),
+                  padding: const EdgeInsets.all(16),
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: [
+                      buildDetails(
+                        label: 'Label',
+                        desc: item['label'],
+                        marginTop: 0,
                       ),
-                    )
-                  : const SizedBox(),
+                      buildDetails(
+                        label: 'Description',
+                        desc: item['description'],
+                      ),
+                      buildDetails(
+                        label: 'Name',
+                        desc: item['image_name'],
+                      ),
+                      buildDetails(
+                        label: 'Location',
+                        desc: item['location'],
+                      ),
+                      buildDetails(
+                        label: 'Tag',
+                        desc: 'Tagggggggg',
+                      ),
+                      buildDetails(
+                        label: 'Date',
+                        desc: date,
+                      ),
+                    ],
+                  ),
+                ),
+              )
             ],
           );
         },
+      ),
+    );
+  }
+
+  Widget buildDetails({
+    required String label,
+    required String desc,
+    double marginTop = 12,
+  }) {
+    return Container(
+      margin: EdgeInsets.only(top: marginTop),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: MyTheme.semiBold,
+            ),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            desc,
+            style: const TextStyle(
+              fontSize: 13,
+            ),
+          ),
+        ],
       ),
     );
   }

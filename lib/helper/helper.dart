@@ -1,7 +1,10 @@
+
 import 'package:another_flushbar/flushbar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:utara_drive/providers/add_album_provider.dart';
 import 'package:utara_drive/providers/gallery_provider.dart';
@@ -12,6 +15,14 @@ import 'package:utara_drive/ui/screen/add_screen/add_screen.dart';
 class Helper {
   Helper({this.ctx});
   BuildContext? ctx;
+
+  // convert timestamp
+  convertTimestamp(Timestamp timestamp) {
+    DateTime dateTime = timestamp.toDate();
+    final date = DateFormat.yMd().add_jm().format(dateTime);
+    
+    return date;
+  }
 
   // show alert notification/flushbar
   showNotif(
@@ -285,5 +296,120 @@ class Helper {
             }),
           );
         });
+  }
+
+  // show gallery detail modal
+  void showCustomModal({
+    double elevation = 1,
+    required BuildContext context,
+  }) {
+    showModalBottomSheet(
+      elevation: elevation,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(25.0),
+        ),
+      ),
+      backgroundColor: Colors.white,
+      context: context,
+      builder: (context) => Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Top Line
+          Container(
+            margin: const EdgeInsets.fromLTRB(0, 12, 0, 0),
+            width: 28,
+            height: 4,
+            decoration: BoxDecoration(
+              color: const Color(0xffE5E5E5),
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+
+          // Sheet Title
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              margin: const EdgeInsets.fromLTRB(24, 24, 24, 0),
+              child: const Text(
+                'Choose Language / Pilih Bahasa',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 18,
+                ),
+                textAlign: TextAlign.start,
+              ),
+            ),
+          ),
+          // Sheet Subtitle
+          Container(
+            margin: const EdgeInsets.fromLTRB(24, 12, 24, 0),
+            child: const Text(
+              'Which language do you prefer? / Bahasa mana yang Anda sukai?',
+              style: TextStyle(
+                fontSize: 13,
+              ),
+              textAlign: TextAlign.start,
+            ),
+          ),
+          // Sheet Button 1
+          Container(
+            margin: const EdgeInsets.fromLTRB(24, 24, 24, 0),
+            width: double.infinity,
+            height: 48,
+            child: ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                  side: const BorderSide(
+                    color: Colors.red,
+                    width: 1,
+                  ),
+                  backgroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  elevation: 0),
+              child: const Text(
+                'Lanjutkan menggunakan bahasa Indonesia',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red,
+                ),
+              ),
+            ),
+          ),
+
+          // Sheet Button 2
+          Container(
+            margin: const EdgeInsets.fromLTRB(24, 12, 24, 24),
+            width: double.infinity,
+            height: 48,
+            child: ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                  side: const BorderSide(
+                    color: Colors.red,
+                    width: 1,
+                  ),
+                  backgroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  elevation: 0),
+              child: const Text(
+                'Continue in English',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

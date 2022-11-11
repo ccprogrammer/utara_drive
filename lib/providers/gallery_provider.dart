@@ -76,7 +76,6 @@ class GalleryProvider with ChangeNotifier {
 
   Future getVideo() async {}
 
-  Future getAlbum() async {}
 
   // Stream getImage() {
   //   User user = Helper().getUser();

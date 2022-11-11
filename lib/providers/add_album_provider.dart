@@ -23,7 +23,6 @@ class AddAlbumProvider with ChangeNotifier {
           'label': label,
           'type': 'album',
           'created_at': Timestamp.now(),
-          'date': DateTime.now(),
           'display_image': null,
           'gallery': [],
         })

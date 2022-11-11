@@ -63,7 +63,6 @@ class AddGalleryProvider with ChangeNotifier {
             'tag': tagList,
             'type': 'image',
             'created_at': Timestamp.now(),
-            'date': DateTime.now(),
             'image_url': url,
           })
           .then((value) => log("gallery added"))
