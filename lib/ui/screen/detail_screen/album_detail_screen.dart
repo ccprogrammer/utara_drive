@@ -1,7 +1,10 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:provider/provider.dart';
+import 'package:utara_drive/providers/album_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
+import 'package:utara_drive/ui/Components/grid/image_grid.dart';
 
 class AlbumDetailScreen extends StatefulWidget {
   const AlbumDetailScreen({super.key, this.data});
@@ -13,19 +16,52 @@ class AlbumDetailScreen extends StatefulWidget {
 
 class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
   @override
-  void initState() {
-    super.initState();
-    log('DATA === ${widget.data.data()}');
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyTheme.colorWhite,
       appBar: appBar(),
-      body: const Center(
-        child: Text('Album Detail'),
-      ),
+      body: buildBody(),
+    );
+  }
+
+  Widget buildBody() {
+    return Consumer<AlbumProvider>(
+      builder: (context, provider, _) {
+        // select album from provider album list where selected album QuerySnapshot id from previous screen equal to album id in provider
+        dynamic albums = provider.albumsList
+            .where((element) => element.id == widget.data.id)
+            .toList()[0];
+
+        List galleryList = albums['gallery'];
+
+        return GridView.custom(
+          gridDelegate: SliverQuiltedGridDelegate(
+            crossAxisCount: 4,
+            mainAxisSpacing: 4,
+            crossAxisSpacing: 4,
+            repeatPattern: QuiltedGridRepeatPattern.mirrored,
+            pattern: [
+              const QuiltedGridTile(2, 2),
+              const QuiltedGridTile(1, 1),
+              const QuiltedGridTile(1, 1),
+              const QuiltedGridTile(1, 1),
+              const QuiltedGridTile(1, 1),
+              const QuiltedGridTile(1, 1),
+              const QuiltedGridTile(1, 1),
+              const QuiltedGridTile(2, 2),
+              const QuiltedGridTile(1, 1),
+              const QuiltedGridTile(1, 1),
+            ],
+          ),
+          childrenDelegate: SliverChildBuilderDelegate(
+            childCount: galleryList.length,
+            (context, index) {
+              var item = albums['gallery'][index];
+              return ImageGrid(data: item);
+            },
+          ),
+        );
+      },
     );
   }
 

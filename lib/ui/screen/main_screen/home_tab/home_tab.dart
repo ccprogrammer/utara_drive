@@ -87,7 +87,11 @@ class _HomeTabState extends State<HomeTab> {
               childrenDelegate: SliverChildBuilderDelegate(
                 childCount: provider.galleryList.length,
                 (context, index) {
-                  var item = provider.galleryList[index];
+                  dynamic item = provider.galleryList
+                      .where((element) =>
+                          element.id == provider.galleryList[index].id)
+                      .toList()[0];
+                      
                   return ImageGrid(data: item);
                 },
               ),

@@ -6,13 +6,13 @@ class LoadingFallback extends StatelessWidget {
   const LoadingFallback({
     required this.isLoading,
     required this.child,
-    required this.loadingLabel,
+     this.loadingLabel,
     Key? key,
   }) : super(key: key);
 
   final bool isLoading;
   final Widget child;
-  final String loadingLabel;
+  final String? loadingLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class LoadingFallback extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                   color: Colors.black),
               child: Text(
-                loadingLabel,
+                loadingLabel ?? 'Loading',
               ),
             ),
           ],

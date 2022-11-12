@@ -37,57 +37,51 @@ class AddGalleryProvider with ChangeNotifier {
         .child('images')
         .child(imageName);
 
-    try {
-      await ref
-          .putFile(image)
-          .then((value) => log("gallery uploaded to cloud storage"))
-          .catchError((error) =>
-              log("Failed to uploaded gallery to cloud storage: $error"));
+    await ref
+        .putFile(image)
+        .then((value) => log("gallery uploaded to cloud storage"))
+        .catchError((error) =>
+            log("Failed to uploaded gallery to cloud storage: $error"));
 
-      // get image download url
-      final url = await ref.getDownloadURL();
+    // get image download url
+    final url = await ref.getDownloadURL();
 
-      // upload to cloud firestore
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .collection('gallery')
-          .doc()
-          .set({
-            'id': null,
-            'username': user.displayName,
-            'label': labelC.text,
-            'image_name': imageName,
-            'description': descriptionC.text,
-            'location': locationC.text,
-            'tag': tagList,
-            'type': 'image',
-            'created_at': Timestamp.now(),
-            'image_url': url,
-          })
-          .then((value) => log("gallery added"))
-          .catchError((error) => log("Failed to add gallery: $error"));
-
-      isLoading = false;
-      clearData();
-      notifyListeners();
+    // upload to cloud firestore
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection('gallery')
+        .doc()
+        .set({
+      'id': null,
+      'username': user.displayName,
+      'label': labelC.text,
+      'image_name': imageName,
+      'description': descriptionC.text,
+      'location': locationC.text,
+      'tag': tagList,
+      'type': 'image',
+      'created_at': Timestamp.now(),
+      'image_url': url,
+    }).then((value) {
       Navigator.pop(context);
-
       Helper(ctx: context).showNotif(
         title: 'Success',
         message: 'Image has been uploaded',
         color: MyTheme.colorCyan,
       );
-    } on FirebaseException catch (e) {
-      log('FirebaseException  === $e');
+      log("gallery added");
+    }).catchError((error) {
       Helper(ctx: context).showNotif(
         title: 'Failed',
-        message: 'An error occurred, $e',
+        message: 'Image failed to upload',
       );
-    }
+      log("Failed to add gallery: $error");
+    });
 
-    // month/day/year time
-    // DateFormat.yMd().add_jm().format(DateTime.now())
+    isLoading = false;
+    clearData();
+    notifyListeners();
   }
 
   // handle tag

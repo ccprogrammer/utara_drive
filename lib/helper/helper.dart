@@ -265,13 +265,7 @@ class Helper {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        provider.createAlbum(labelC.text).then((value) {
-                          Navigator.pop(context);
-                          Helper(ctx: context).showNotif(
-                              title: 'Success',
-                              message: 'New album added',
-                              color: MyTheme.colorCyan);
-                        });
+                        provider.createAlbum(context, labelC.text);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: MyTheme.colorCyan,

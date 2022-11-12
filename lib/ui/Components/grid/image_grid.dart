@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +29,6 @@ class ImageGrid extends StatelessWidget {
               color: Colors.transparent,
               child: InkWell(
                 onTap: () {
-                  log('GALLERY DATA === ${data.data()}');
                   Navigator.pushNamed(context, AppRoute.detail,
                       arguments: data);
                 },

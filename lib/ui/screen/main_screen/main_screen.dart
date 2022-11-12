@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:utara_drive/helper/helper.dart';
 import 'package:utara_drive/providers/auth_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
+import 'package:utara_drive/ui/Components/loading_fallback.dart';
 import 'package:utara_drive/ui/screen/main_screen/album_tab/album_tab.dart';
 import 'package:utara_drive/ui/screen/main_screen/home_tab/home_tab.dart';
 import 'package:utara_drive/ui/screen/main_screen/image_tab/image_tab.dart';
@@ -43,11 +44,15 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _appBar(),
-      floatingActionButton: _getFloatingActionButton(),
-      bottomNavigationBar: _buildNavBar(),
-      body: _buildBody(),
+    // final loadingCreateAlbum = Provider.of<AddAlbumProvider>(context).isLoading;
+    return LoadingFallback(
+      isLoading: false,
+      child: Scaffold(
+        appBar: _appBar(),
+        floatingActionButton: _getFloatingActionButton(),
+        bottomNavigationBar: _buildNavBar(),
+        body: _buildBody(),
+      ),
     );
   }
 

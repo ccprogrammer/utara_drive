@@ -34,8 +34,8 @@ class AlbumProvider with ChangeNotifier {
       log('Albums List === ${albumsList.length}');
       isLoading = false;
       notifyListeners();
-    }).onError(
-      (error, stackTrace) {
+    }).catchError(
+      (error) {
         log('Failed to get gallery: $error');
       },
     );

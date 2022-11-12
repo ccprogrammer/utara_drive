@@ -24,8 +24,6 @@ class AuthProvider with ChangeNotifier {
 
   // log in function
   logIn(context) async {
-    if (!validateAuth(context)) return;
-
     isLoading = true;
     notifyListeners();
 
@@ -41,29 +39,18 @@ class AuthProvider with ChangeNotifier {
         color: MyTheme.colorCyan,
       );
 
+      clearTextField();
       log('log in succeed === $credential');
     } on FirebaseAuthException catch (e) {
-      String title = 'Failed';
-      String message = '';
-      if (e.code == 'user-not-found') {
-        message = 'No user found for that email.';
-        log('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        message = 'Wrong password provided for that user.';
-        log('Wrong password provided for that user.');
-      }
-
       Helper(ctx: context).showNotif(
-        title: title,
-        message: message,
-        color: MyTheme.colorRed,
+        title: 'Failed',
+        message: e.message.toString(),
       );
     } catch (e) {
       log(e.toString());
       Helper(ctx: context).showNotif(
-        title: 'Failed',
-        message: e.toString(),
-        color: MyTheme.colorRed,
+        title: 'Error',
+        message: 'An error occurred, please try again',
       );
     }
 
@@ -73,7 +60,6 @@ class AuthProvider with ChangeNotifier {
 
   // sign up function
   signUp(context) async {
-    if (!validateAuth(context)) return;
     isLoading = true;
     notifyListeners();
 
@@ -90,42 +76,30 @@ class AuthProvider with ChangeNotifier {
           .collection('users')
           .doc(credential.user?.uid)
           .set({
-            'id': credential.user?.uid,
-            'email': emailC.text.toLowerCase(),
-            'username': usernameC.text.toLowerCase(),
-          })
-          .then((value) => log("User Added"))
-          .catchError((error) => log("Failed to add user: $error"));
+        'id': credential.user?.uid,
+        'email': emailC.text.toLowerCase(),
+        'username': usernameC.text.toLowerCase(),
+      }).then((value) {
+        Helper(ctx: context).showNotif(
+          title: 'Success',
+          message: 'Sign Up successfully, ',
+          color: MyTheme.colorCyan,
+        );
+        log('sign up success === $credential');
+      });
 
-      Helper(ctx: context).showNotif(
-        title: 'Success',
-        message: 'Sign Up successfully, ',
-        color: MyTheme.colorCyan,
-      );
-
-      log('sign up succeed === $credential');
+      clearTextField();
     } on FirebaseAuthException catch (e) {
-      String title = 'Failed';
-      String message = '';
-      if (e.code == 'weak-password') {
-        message = 'The password provided is too weak.';
-        log('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        message = 'The account already exists for that email.';
-        log('The account already exists for that email.');
-      }
-
       Helper(ctx: context).showNotif(
-        title: title,
-        message: message,
-        color: MyTheme.colorRed,
+        title: 'Failed',
+        message: e.message.toString(),
       );
+      log('sign up failed === $e');
     } catch (e) {
       log(e.toString());
       Helper(ctx: context).showNotif(
-        title: 'Failed',
-        message: e.toString(),
-        color: MyTheme.colorRed,
+        title: 'Error',
+        message: 'An error occurred, please try again',
       );
     }
 
@@ -142,26 +116,9 @@ class AuthProvider with ChangeNotifier {
     );
   }
 
-  // text field validation
-  bool validateAuth(context) {
-    bool isValid = true;
-    String message = '';
-    if (!emailC.text.contains('@')) {
-      message = 'Please enter a valid email address.';
-      isValid = false;
-    } else if (!isLogin && usernameC.text.length < 6) {
-      message = 'Please enter at least 6 characters';
-      isValid = false;
-    } else if (passwordC.text.length < 8) {
-      message = 'Password must be at least 8 characters long.';
-      isValid = false;
-    }
-
-    if (!isValid) {
-      Helper(ctx: context).showNotif(title: 'Alert', message: message);
-    }
-
-    log(message.toString());
-    return isValid;
+  clearTextField() {
+    emailC.clear();
+    usernameC.clear();
+    passwordC.clear();
   }
 }
