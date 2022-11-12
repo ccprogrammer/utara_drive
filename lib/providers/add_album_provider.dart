@@ -53,6 +53,9 @@ class AddAlbumProvider with ChangeNotifier {
   }
 
   Future addToAlbum(context, album, gallery) async {
+// log('DATA === $gallery');
+// log('DATA() === ${gallery.data()}');
+//     return;
     isLoading = true;
     notifyListeners();
 
@@ -66,8 +69,8 @@ class AddAlbumProvider with ChangeNotifier {
         'gallery': [
           ...album['gallery'],
           {
-            ...gallery.data(),
-            'id': gallery.id,
+            ...gallery is QueryDocumentSnapshot ? gallery.data() : gallery,
+            'id': gallery is QueryDocumentSnapshot ? gallery.id : gallery['id'],
           }
         ],
         'display_image': gallery['image_url'],

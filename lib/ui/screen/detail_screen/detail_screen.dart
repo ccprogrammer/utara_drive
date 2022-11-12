@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
@@ -73,12 +74,14 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget buildBody() {
     return Consumer<GalleryProvider>(
       builder: (context, provider, _) {
-        // select gallery item from provider gallery list where selected gallery QuerySnapshot id from previous screen equal to album id in provider
-
         // image from home sending QuerySnapshot object, image from album sending normal object. this widget.data.id is for QuerySnapshot because image from home doesn't have id in the object
 
-        String id = widget.data['id'] ?? widget.data.id;
+        // String id = widget.data['id'] ?? widget.data.id;
+        String id = widget.data is QueryDocumentSnapshot
+            ? widget.data.id
+            : widget.data['id'];
 
+        // select gallery item from provider gallery list where selected gallery QuerySnapshot id from previous screen equal to album id in provider
         dynamic item = provider.galleryList
             .where((element) => element.id == id)
             .toList()[0];
