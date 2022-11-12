@@ -11,6 +11,8 @@ import 'package:utara_drive/helper/remove_string.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 
 class AddGalleryProvider with ChangeNotifier {
+  // COBA CARI CARA UNTUK MEMASUKAN ID KEDALAM OBJECT GALLERY SAAT UPLOAD
+
   late User user = FirebaseAuth.instance.currentUser as User;
 
   bool isLoading = false;

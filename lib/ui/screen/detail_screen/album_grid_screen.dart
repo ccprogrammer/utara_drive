@@ -4,17 +4,17 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 import 'package:utara_drive/providers/album_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
-import 'package:utara_drive/ui/Components/grid/image_grid.dart';
+import 'package:utara_drive/ui/Components/grid/image_grid_item.dart';
 
-class AlbumDetailScreen extends StatefulWidget {
-  const AlbumDetailScreen({super.key, this.data});
+class AlbumGridScreen extends StatefulWidget {
+  const AlbumGridScreen({super.key, this.data});
   final dynamic data;
 
   @override
-  State<AlbumDetailScreen> createState() => _AlbumDetailScreenState();
+  State<AlbumGridScreen> createState() => _AlbumGridScreenState();
 }
 
-class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
+class _AlbumGridScreenState extends State<AlbumGridScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +57,7 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
             childCount: galleryList.length,
             (context, index) {
               var item = albums['gallery'][index];
-              return ImageGrid(data: item);
+              return ImageGridItem(data: item);
             },
           ),
         );

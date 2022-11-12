@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:utara_drive/providers/album_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
-import 'package:utara_drive/ui/Components/grid/album_grid.dart';
+import 'package:utara_drive/ui/Components/grid/album_grid_item.dart';
 
 class AlbumTab extends StatefulWidget {
   const AlbumTab({super.key});
@@ -83,7 +83,7 @@ class _AlbumTabState extends State<AlbumTab> {
                 childCount: provider.albumsList.length,
                 (context, index) {
                   var item = provider.albumsList[index];
-                  return AlbumGrid(item: item);
+                  return AlbumGridItem(item: item);
                 },
               ),
             ),

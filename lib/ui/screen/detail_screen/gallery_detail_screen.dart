@@ -14,15 +14,15 @@ import 'package:utara_drive/ui/Components/add_album_modal.dart';
 import 'package:utara_drive/ui/Components/loading_fallback.dart';
 import 'package:utara_drive/ui/Components/skeleton.dart';
 
-class DetailScreen extends StatefulWidget {
-  const DetailScreen({super.key, this.data});
+class GalleryDetailScreen extends StatefulWidget {
+  const GalleryDetailScreen({super.key, this.data});
   final dynamic data;
 
   @override
-  State<DetailScreen> createState() => _DetailScreenState();
+  State<GalleryDetailScreen> createState() => _GalleryDetailScreenState();
 }
 
-class _DetailScreenState extends State<DetailScreen> {
+class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
   PhotoViewScaleStateController scaleController =
       PhotoViewScaleStateController();
   PhotoViewController controller = PhotoViewController();
@@ -76,7 +76,6 @@ class _DetailScreenState extends State<DetailScreen> {
       builder: (context, provider, _) {
         // image from home sending QuerySnapshot object, image from album sending normal object. this widget.data.id is for QuerySnapshot because image from home doesn't have id in the object
 
-        // String id = widget.data['id'] ?? widget.data.id;
         String id = widget.data is QueryDocumentSnapshot
             ? widget.data.id
             : widget.data['id'];
@@ -95,17 +94,20 @@ class _DetailScreenState extends State<DetailScreen> {
             // gallery content
             CachedNetworkImage(
               imageUrl: item['image_url'],
-              imageBuilder: (context, imageProvider) => PhotoView(
-                customSize: MediaQuery.of(context).size,
-                minScale: PhotoViewComputedScale.contained * 1,
-                maxScale: PhotoViewComputedScale.covered * 1.8,
-                basePosition: Alignment.center,
-                scaleStateChangedCallback: (value) {},
-                controller: controller,
-                scaleStateController: scaleController,
-                backgroundDecoration:
-                    const BoxDecoration(color: MyTheme.colorWhite),
-                imageProvider: imageProvider,
+              imageBuilder: (context, imageProvider) => Hero(
+                tag: id,
+                child: PhotoView(
+                  customSize: MediaQuery.of(context).size,
+                  minScale: PhotoViewComputedScale.contained * 1,
+                  maxScale: PhotoViewComputedScale.covered * 1.8,
+                  basePosition: Alignment.center,
+                  scaleStateChangedCallback: (value) {},
+                  controller: controller,
+                  scaleStateController: scaleController,
+                  backgroundDecoration:
+                      const BoxDecoration(color: MyTheme.colorWhite),
+                  imageProvider: imageProvider,
+                ),
               ),
               placeholder: (context, url) => Shimmer.fromColors(
                 baseColor: Colors.grey[500]!,

@@ -1,9 +1,11 @@
+import 'package:floating_bottom_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_arc_speed_dial/flutter_speed_dial_menu_button.dart';
 import 'package:flutter_arc_speed_dial/main_menu_floating_action_button.dart';
 import 'package:provider/provider.dart';
 import 'package:utara_drive/helper/helper.dart';
 import 'package:utara_drive/providers/auth_provider.dart';
+import 'package:utara_drive/routes/routes.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 import 'package:utara_drive/ui/Components/loading_fallback.dart';
 import 'package:utara_drive/ui/screen/main_screen/album_tab/album_tab.dart';
@@ -48,10 +50,89 @@ class _MainScreenState extends State<MainScreen> {
     return LoadingFallback(
       isLoading: false,
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: _appBar(),
-        floatingActionButton: _getFloatingActionButton(),
-        bottomNavigationBar: _buildNavBar(),
+        bottomNavigationBar: buildBottomNav(),
         body: _buildBody(),
+      ),
+    );
+  }
+
+  buildBottomNav() {
+    return AnimatedBottomNavigationBar(
+      bottomBarItems: [
+        BottomBarItemsModel(
+          icon: const Icon(Icons.home, size: 24),
+          iconSelected:
+              const Icon(Icons.home, color: AppColors.cherryRed, size: 24),
+          title: 'Home',
+          dotColor: Colors.pink,
+          onTap: () => setState(() {
+            currentIndex = 0;
+          }),
+        ),
+        BottomBarItemsModel(
+          icon: const Icon(Icons.image_outlined, size: 24),
+          iconSelected:
+              const Icon(Icons.image_outlined, color: AppColors.cherryRed, size: 24),
+          title: 'Image',
+          dotColor: Colors.pink,
+          onTap: () => setState(() {
+            currentIndex = 1;
+          }),
+        ),
+        BottomBarItemsModel(
+          icon: const Icon(Icons.ondemand_video, size: 24),
+          iconSelected:
+              const Icon(Icons.ondemand_video, color: AppColors.cherryRed, size: 24),
+          title: 'Video',
+          dotColor: Colors.pink,
+          onTap: () => setState(() {
+            currentIndex = 2;
+          }),
+        ),
+        BottomBarItemsModel(
+          icon: const Icon(Icons.photo_library_outlined, size: 24),
+          iconSelected:
+              const Icon(Icons.photo_library_outlined, color: AppColors.cherryRed, size: 24),
+          title: 'Albums',
+          dotColor: Colors.pink,
+          onTap: () => setState(() {
+            currentIndex = 3;
+          }),
+        ),
+      ],
+      bottomBarCenterModel: BottomBarCenterModel(
+        centerBackgroundColor: Colors.pink,
+        centerIcon: const FloatingCenterButton(
+          child: Icon(
+            Icons.add,
+            color: AppColors.white,
+          ),
+        ),
+        centerIconChild: [
+          FloatingCenterButtonChild(
+            child: const Icon(
+              Icons.home,
+              color: AppColors.white,
+            ),
+            onTap: () {},
+          ),
+          FloatingCenterButtonChild(
+            child: const Icon(
+              Icons.home,
+              color: AppColors.white,
+            ),
+            onTap: () {},
+          ),
+          FloatingCenterButtonChild(
+            child: const Icon(
+              Icons.home,
+              color: AppColors.white,
+            ),
+            onTap: () {},
+          ),
+        ],
       ),
     );
   }
@@ -68,19 +149,70 @@ class _MainScreenState extends State<MainScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Row(
             children: [
-              Image.asset(
-                'assets/images/image_logo.png',
-                width: 42,
-              ),
-              const SizedBox(width: 4),
-              const Text(
-                'uDrive',
-                style: TextStyle(
-                  color: MyTheme.colorBlue,
-                  fontStyle: FontStyle.italic,
+              Expanded(
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(5),
+                  onTap: () {
+                    Navigator.pushNamed(context, AppRoute.search);
+                  },
+                  child: Row(
+                    children: [
+                      // button search
+                      Container(
+                        width: 48,
+                        height: 48,
+                        decoration: const BoxDecoration(
+                          color: MyTheme.colorCyan,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(5),
+                            bottomLeft: Radius.circular(5),
+                            topRight: Radius.circular(0),
+                            bottomRight: Radius.circular(0),
+                          ),
+                        ),
+                        child: Center(
+                          child: Image.asset(
+                            'assets/icons/icon_search.png',
+                            width: 18,
+                            height: 18,
+                            color: MyTheme.colorWhite,
+                          ),
+                        ),
+                      ),
+                      // search field
+                      Expanded(
+                        child: Container(
+                          clipBehavior: Clip.antiAlias,
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.only(
+                              topRight: Radius.circular(5),
+                              bottomRight: Radius.circular(5),
+                            ),
+                            border: Border.all(
+                              width: 1,
+                              color: MyTheme.colorGrey,
+                            ),
+                          ),
+                          height: 48,
+                          child: const Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Search',
+                              style: TextStyle(
+                                color: MyTheme.colorDarkGrey,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              const Spacer(),
+
+              const SizedBox(width: 24),
 
               // sign out button
               IconButton(

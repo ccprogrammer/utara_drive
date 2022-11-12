@@ -6,8 +6,8 @@ import 'package:utara_drive/routes/routes.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 import 'package:utara_drive/ui/Components/skeleton.dart';
 
-class AlbumGrid extends StatelessWidget {
-  const AlbumGrid({super.key, this.item});
+class AlbumGridItem extends StatelessWidget {
+  const AlbumGridItem({super.key, this.item});
   final dynamic item;
 
   @override

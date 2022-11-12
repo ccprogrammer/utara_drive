@@ -36,6 +36,7 @@ dependencies:
   firebase_auth: ^4.1.1
   firebase_core: ^2.1.1
   firebase_storage: ^11.0.4
+  floating_bottom_bar: ^0.0.1
   flutter:
     sdk: flutter
   flutter_arc_speed_dial: ^2.0.1

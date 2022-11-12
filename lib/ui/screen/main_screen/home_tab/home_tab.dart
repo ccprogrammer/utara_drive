@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:utara_drive/providers/gallery_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
-import 'package:utara_drive/ui/Components/grid/image_grid.dart';
+import 'package:utara_drive/ui/Components/grid/image_grid_item.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -66,6 +66,7 @@ class _HomeTabState extends State<HomeTab> {
               ),
             ),
             child: GridView.custom(
+              shrinkWrap: true,
               gridDelegate: SliverQuiltedGridDelegate(
                 crossAxisCount: 4,
                 mainAxisSpacing: 4,
@@ -92,7 +93,7 @@ class _HomeTabState extends State<HomeTab> {
                           element.id == provider.galleryList[index].id)
                       .toList()[0];
                       
-                  return ImageGrid(data: item);
+                  return ImageGridItem(data: item);
                 },
               ),
             ),
