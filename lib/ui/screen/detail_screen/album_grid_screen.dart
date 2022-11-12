@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
@@ -93,7 +92,7 @@ class _AlbumGridScreenState extends State<AlbumGridScreen> {
             item['label'],
             style: const TextStyle(
               color: MyTheme.colorCyan,
-              fontSize: 24,
+              fontSize: 20,
               fontWeight: MyTheme.semiBold,
             ),
           ),

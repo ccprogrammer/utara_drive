@@ -3,7 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:utara_drive/helper/helper.dart';
+import 'package:utara_drive/providers/gallery_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 
 class AuthProvider with ChangeNotifier {
@@ -71,6 +73,8 @@ class AuthProvider with ChangeNotifier {
       );
       await credential.user?.updateDisplayName(usernameC.text);
 
+      Provider.of<GalleryProvider>(context, listen: false);
+
       // add user info to cloud firestore
       await FirebaseFirestore.instance
           .collection('users')
@@ -112,6 +116,7 @@ class AuthProvider with ChangeNotifier {
     Helper().showAlertDialog(
       context: context,
       text: 'Are you sure want to log out?',
+      icon: Icons.logout,
       onYes: () async => await FirebaseAuth.instance.signOut(),
     );
   }

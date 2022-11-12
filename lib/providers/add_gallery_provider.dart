@@ -86,6 +86,10 @@ class AddGalleryProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future deleteGallery() async {
+    
+  }
+
   // handle tag
   addTag() {
     if (tagC.text.isNotEmpty) {

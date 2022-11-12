@@ -197,7 +197,7 @@ class _MainScreenState extends State<MainScreen> {
                 padding: EdgeInsets.zero,
                 iconSize: 24,
                 icon: const Icon(Icons.logout),
-                color: MyTheme.colorCyan,
+                color: MyTheme.colorDarkerGrey,
               ),
             ],
           ),

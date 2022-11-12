@@ -42,27 +42,27 @@ class _HomeTabState extends State<HomeTab> {
             onRefresh: onRefresh,
             onLoading: onLoading,
             header: const TwoLevelHeader(
-              decoration: BoxDecoration(color: MyTheme.colorCyan),
-              textStyle: TextStyle(color: MyTheme.colorWhite),
+              decoration: BoxDecoration(color: MyTheme.colorWhite),
+              textStyle: TextStyle(color: MyTheme.colorCyan),
               refreshingIcon: SizedBox(
                 height: 24,
                 width: 24,
                 child: CircularProgressIndicator(
-                  color: MyTheme.colorWhite,
+                  color: MyTheme.colorCyan,
                   strokeWidth: 3,
                 ),
               ),
               idleIcon: Icon(
                 Icons.refresh,
-                color: MyTheme.colorWhite,
+                color: MyTheme.colorCyan,
               ),
               completeIcon: Icon(
                 Icons.check,
-                color: MyTheme.colorWhite,
+                color: MyTheme.colorCyan,
               ),
               releaseIcon: Icon(
                 Icons.arrow_upward,
-                color: MyTheme.colorWhite,
+                color: MyTheme.colorCyan,
               ),
             ),
             child: GridView.custom(

@@ -124,7 +124,7 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 400),
                 width: MediaQuery.of(context).size.width,
-                color: MyTheme.colorWhite.withOpacity(0.3),
+                color: MyTheme.colorWhite.withOpacity(0.6),
                 constraints: BoxConstraints(
                     maxHeight:
                         MediaQuery.of(context).size.height * detailsHeight),
@@ -197,33 +197,41 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
   }
 
   Widget buildBottomBar() {
+    // not using container because the ripple effect from icon button is not showing so i change it to BottomAppBar
+
     return BottomAppBar(
       color: MyTheme.colorWhite,
+      elevation: 0.0,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           IconButton(
+            color: MyTheme.colorDarkerGrey,
             onPressed: () {},
             icon: const Icon(Icons.edit),
           ),
           IconButton(
+            color: MyTheme.colorDarkerGrey,
             onPressed: () {},
             icon: const Icon(Icons.share),
           ),
           IconButton(
+            color: MyTheme.colorDarkerGrey,
             onPressed: () {
               Helper(ctx: context).showCustomModal(
                 context: context,
                 child: AddAlbumModal(gallery: widget.data),
               );
             },
-            icon: const Icon(Icons.add_to_photos),
+            icon: const Icon(Icons.add_box_outlined),
           ),
           IconButton(
+            color: MyTheme.colorDarkerGrey,
             onPressed: () {},
             icon: const Icon(Icons.delete),
           ),
           IconButton(
+            color: MyTheme.colorDarkerGrey,
             onPressed: () {
               handleDetails();
             },

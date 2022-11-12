@@ -78,7 +78,7 @@ class Helper {
                           Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: MyTheme.colorCyan,
+                          backgroundColor: MyTheme.colorDarkGrey,
                         ),
                         child: Text(titleLeft),
                       ),
@@ -165,13 +165,6 @@ class Helper {
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Text(
-                //   isCamera ? 'Take from camera' : 'Take from gallery',
-                //   style: const TextStyle(
-                //     color: MyTheme.colorBlack,
-                //     fontSize: 16,
-                //   ),
-                // ),
                 const SizedBox(height: 16),
                 SizedBox(
                   width: double.infinity,
@@ -237,7 +230,6 @@ class Helper {
 
   // handle album
   Future showAlbumDialog({
-    bool isCamera = false,
     required BuildContext context,
   }) {
     var labelC = TextEditingController();

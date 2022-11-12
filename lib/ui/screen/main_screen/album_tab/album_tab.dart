@@ -41,31 +41,31 @@ class _AlbumTabState extends State<AlbumTab> {
             controller: refreshController,
             onRefresh: onRefresh,
             onLoading: onLoading,
-            header: const TwoLevelHeader(
-              decoration: BoxDecoration(color: MyTheme.colorCyan),
-              textStyle: TextStyle(color: MyTheme.colorWhite),
+       header: const TwoLevelHeader(
+              decoration: BoxDecoration(color: MyTheme.colorWhite),
+              textStyle: TextStyle(color: MyTheme.colorCyan),
               refreshingIcon: SizedBox(
                 height: 24,
                 width: 24,
                 child: CircularProgressIndicator(
-                  color: MyTheme.colorWhite,
+                  color: MyTheme.colorCyan,
                   strokeWidth: 3,
                 ),
               ),
               idleIcon: Icon(
                 Icons.refresh,
-                color: MyTheme.colorWhite,
+                color: MyTheme.colorCyan,
               ),
               completeIcon: Icon(
                 Icons.check,
-                color: MyTheme.colorWhite,
+                color: MyTheme.colorCyan,
               ),
               releaseIcon: Icon(
                 Icons.arrow_upward,
-                color: MyTheme.colorWhite,
+                color: MyTheme.colorCyan,
               ),
             ),
-            child: GridView.custom(
+                 child: GridView.custom(
               padding: const EdgeInsets.all(16),
               gridDelegate: SliverQuiltedGridDelegate(
                 crossAxisCount: 4,

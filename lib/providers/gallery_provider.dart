@@ -6,21 +6,22 @@ import 'package:flutter/widgets.dart';
 
 class GalleryProvider with ChangeNotifier {
   late User user = FirebaseAuth.instance.currentUser as User;
-  List galleryList = [];
 
+  final searchC = TextEditingController();
+
+  List galleryList = [];
   List imageList = [];
   List videoList = [];
+  List searchList = [];
 
   bool isLoading = false;
+  bool isSearchLoading = false;
 
   initData() {
     getGallery();
-    getImage();
-    getVideo();
   }
 
   Future getGallery() async {
-    log('UID NIH === ${user.uid}');
     isLoading = true;
     notifyListeners();
 
@@ -37,20 +38,43 @@ class GalleryProvider with ChangeNotifier {
         tmpGallery.add(doc);
       }
       galleryList = tmpGallery;
-      isLoading = false;
+
+      imageList =
+          tmpGallery.where((element) => element['type'] == 'image').toList();
+      videoList =
+          tmpGallery.where((element) => element['type'] == 'video').toList();
 
       log('Gallery List === ${galleryList.length}');
+      isLoading = false;
       notifyListeners();
     }).catchError(
       (error) {
         log('Failed to get gallery: $error');
+        isLoading = false;
+        notifyListeners();
       },
     );
   }
 
-  Future getImage() async {}
+  Future searchGallery() async {
+    isSearchLoading = true;
+    notifyListeners();
 
-  Future getVideo() async {}
+    searchList = searchC.text != ''
+        ? galleryList
+            .where((element) => element['label']
+                .toLowerCase()
+                .contains(searchC.text.toLowerCase().trim()))
+            .toList()
+        : [];
+
+    for (var item in searchList) {
+      log('SEARCH RESULT: ${item['label']} === ${item.data()}');
+    }
+
+    isSearchLoading = false;
+    notifyListeners();
+  }
 
   // Stream getImage() {
   //   User user = Helper().getUser();

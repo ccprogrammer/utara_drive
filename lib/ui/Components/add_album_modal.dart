@@ -1,8 +1,8 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:utara_drive/helper/helper.dart';
 import 'package:utara_drive/providers/add_album_provider.dart';
 import 'package:utara_drive/providers/album_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
@@ -51,13 +51,38 @@ class _AddAlbumModalState extends State<AddAlbumModal> {
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(width: 16),
+                    if (provider.albumsList.isEmpty)
+                      Container(
+                        width: 82,
+                        height: 82,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            width: 1,
+                            color: MyTheme.colorDarkGrey,
+                          ),
+                        ),
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(12),
+                          onTap: () {
+                            Helper(ctx: context).showAlbumDialog(context: context);
+                          },
+                          child: const Icon(
+                            Icons.add,
+                            color: MyTheme.colorDarkGrey,
+                          ),
+                        ),
+                      ),
 
                     // album modal component
                     for (var item in provider.albumsList)
                       Container(
-                        margin: const EdgeInsets.only(right: 16),
+                        margin: EdgeInsets.only(
+                            left:
+                                provider.albumsList.indexOf(item) == 0 ? 16 : 0,
+                            right: 16),
                         child: Column(
                           children: [
                             CachedNetworkImage(
