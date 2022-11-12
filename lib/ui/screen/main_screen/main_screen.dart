@@ -1,7 +1,5 @@
-import 'package:floating_bottom_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_arc_speed_dial/flutter_speed_dial_menu_button.dart';
-import 'package:flutter_arc_speed_dial/main_menu_floating_action_button.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
 import 'package:utara_drive/helper/helper.dart';
 import 'package:utara_drive/providers/auth_provider.dart';
@@ -23,7 +21,6 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
-  bool _isShowDial = false;
 
   handleFab(String type) {
     switch (type) {
@@ -50,90 +47,67 @@ class _MainScreenState extends State<MainScreen> {
     return LoadingFallback(
       isLoading: false,
       child: Scaffold(
-        backgroundColor: Colors.white,
         appBar: _appBar(),
-        bottomNavigationBar: buildBottomNav(),
+        floatingActionButton: buildFab(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: _buildNavBar(),
         body: _buildBody(),
       ),
     );
   }
 
-  buildBottomNav() {
-    return AnimatedBottomNavigationBar(
-      bottomBarItems: [
-        BottomBarItemsModel(
-          icon: const Icon(Icons.home, size: 24),
-          iconSelected:
-              const Icon(Icons.home, color: AppColors.cherryRed, size: 24),
-          title: 'Home',
-          dotColor: Colors.pink,
-          onTap: () => setState(() {
-            currentIndex = 0;
-          }),
+  Widget buildFab() {
+    return SpeedDial(
+      animatedIcon: AnimatedIcons.menu_close,
+      animatedIconTheme: const IconThemeData(size: 22.0),
+      icon: Icons.add,
+      overlayColor: Colors.white,
+      activeIcon: Icons.close,
+      spacing: 3,
+      mini: false,
+      backgroundColor: MyTheme.colorCyan,
+      childPadding: const EdgeInsets.all(5),
+      spaceBetweenChildren: 4,
+      buttonSize: const Size(56, 56),
+      direction: SpeedDialDirection.up,
+      switchLabelPosition: false,
+      onOpen: () => debugPrint('OPENING DIAL'),
+      onClose: () => debugPrint('DIAL CLOSED'),
+      useRotationAnimation: true,
+      tooltip: 'Open Speed Dial',
+      heroTag: 'speed-dial-hero-tag',
+      elevation: 2.0,
+      animationCurve: Curves.elasticInOut,
+      children: [
+        SpeedDialChild(
+          child: const Icon(
+            Icons.add_to_photos,
+            size: 24,
+          ),
+          backgroundColor: Colors.red,
+          foregroundColor: Colors.white,
+          label: 'Create Album',
+          onTap: () => handleFab('album'),
         ),
-        BottomBarItemsModel(
-          icon: const Icon(Icons.image_outlined, size: 24),
-          iconSelected:
-              const Icon(Icons.image_outlined, color: AppColors.cherryRed, size: 24),
-          title: 'Image',
-          dotColor: Colors.pink,
-          onTap: () => setState(() {
-            currentIndex = 1;
-          }),
+        SpeedDialChild(
+          child: const Icon(Icons.add_a_photo),
+          backgroundColor: Colors.deepOrange,
+          foregroundColor: Colors.white,
+          label: 'Open Camera',
+          onTap: () => handleFab('camera'),
         ),
-        BottomBarItemsModel(
-          icon: const Icon(Icons.ondemand_video, size: 24),
-          iconSelected:
-              const Icon(Icons.ondemand_video, color: AppColors.cherryRed, size: 24),
-          title: 'Video',
-          dotColor: Colors.pink,
-          onTap: () => setState(() {
-            currentIndex = 2;
-          }),
-        ),
-        BottomBarItemsModel(
-          icon: const Icon(Icons.photo_library_outlined, size: 24),
-          iconSelected:
-              const Icon(Icons.photo_library_outlined, color: AppColors.cherryRed, size: 24),
-          title: 'Albums',
-          dotColor: Colors.pink,
-          onTap: () => setState(() {
-            currentIndex = 3;
-          }),
+        SpeedDialChild(
+          child: const Icon(
+            Icons.add_photo_alternate,
+            size: 26,
+          ),
+          backgroundColor: Colors.indigo,
+          foregroundColor: Colors.white,
+          label: 'Open Gallery',
+          visible: true,
+          onTap: () => handleFab('gallery'),
         ),
       ],
-      bottomBarCenterModel: BottomBarCenterModel(
-        centerBackgroundColor: Colors.pink,
-        centerIcon: const FloatingCenterButton(
-          child: Icon(
-            Icons.add,
-            color: AppColors.white,
-          ),
-        ),
-        centerIconChild: [
-          FloatingCenterButtonChild(
-            child: const Icon(
-              Icons.home,
-              color: AppColors.white,
-            ),
-            onTap: () {},
-          ),
-          FloatingCenterButtonChild(
-            child: const Icon(
-              Icons.home,
-              color: AppColors.white,
-            ),
-            onTap: () {},
-          ),
-          FloatingCenterButtonChild(
-            child: const Icon(
-              Icons.home,
-              color: AppColors.white,
-            ),
-            onTap: () {},
-          ),
-        ],
-      ),
     );
   }
 
@@ -232,85 +206,17 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  Widget _getFloatingActionButton() {
-    return SpeedDialMenuButton(
-      //if needed to close the menu after clicking sub-FAB
-      isShowSpeedDial: _isShowDial,
-      //manually open or close menu
-      updateSpeedDialStatus: (isShow) {
-        //return any open or close change within the widget
-        _isShowDial = isShow;
-      },
-      //general init
-      isMainFABMini: false,
-
-      isSpeedDialFABsMini: true,
-      paddingBtwSpeedDialButton: 30.0,
-      mainMenuFloatingActionButton: MainMenuFloatingActionButton(
-        mini: false,
-        child: const Icon(
-          Icons.menu,
-          size: 28,
-        ),
-        onPressed: () {},
-        backgroundColor: MyTheme.colorCyan,
-        closeMenuChild: const Icon(
-          Icons.close,
-          size: 28,
-        ),
-        closeMenuForegroundColor: Colors.white,
-        closeMenuBackgroundColor: MyTheme.colorRed,
-      ),
-
-      floatingActionButtonWidgetChildren: [
-        FloatingActionButton(
-          heroTag: 'album',
-          mini: true,
-          onPressed: () {
-            handleFab('album');
-            _isShowDial = false;
-            setState(() {});
-          },
-          backgroundColor: Colors.orange,
-          child: const Icon(Icons.add_to_photos_rounded),
-        ),
-        FloatingActionButton(
-          heroTag: 'camera',
-          mini: true,
-          onPressed: () {
-            handleFab('camera');
-            _isShowDial = false;
-            setState(() {});
-          },
-          backgroundColor: Colors.pink,
-          child: const Icon(Icons.add_a_photo),
-        ),
-        FloatingActionButton(
-          heroTag: 'gallery',
-          mini: true,
-          onPressed: () {
-            handleFab('gallery');
-            _isShowDial = false;
-            setState(() {});
-          },
-          backgroundColor: Colors.deepPurple,
-          child: const Icon(Icons.add_photo_alternate),
-        ),
-      ],
-    );
-  }
-
   Widget _buildNavBar() {
     return BottomNavigationBar(
-      backgroundColor: MyTheme.colorCyan,
+      backgroundColor: MyTheme.colorWhite,
       type: BottomNavigationBarType.fixed,
-      selectedItemColor: MyTheme.colorWhite,
-      unselectedItemColor: MyTheme.colorWhite.withOpacity(0.6),
+      selectedItemColor: MyTheme.colorCyan,
+      unselectedItemColor: MyTheme.colorDarkerGrey,
       showSelectedLabels: false,
       showUnselectedLabels: false,
       currentIndex: currentIndex,
       onTap: (value) => setState(() {
-        currentIndex = value;
+        if (value != 2) currentIndex = value;
       }),
       items: const [
         BottomNavigationBarItem(
@@ -320,6 +226,10 @@ class _MainScreenState extends State<MainScreen> {
         BottomNavigationBarItem(
           icon: Icon(Icons.image_outlined),
           label: 'Image',
+        ),
+        BottomNavigationBarItem(
+          icon: SizedBox(),
+          label: 'Empty',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.ondemand_video),
@@ -340,8 +250,11 @@ class _MainScreenState extends State<MainScreen> {
       case 1:
         return const ImageTab();
       case 2:
-        return const VideoTab();
+        // nothing to do here
+        break;
       case 3:
+        return const VideoTab();
+      case 4:
         return const AlbumTab();
       default:
     }

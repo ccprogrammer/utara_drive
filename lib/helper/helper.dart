@@ -155,20 +155,23 @@ class Helper {
 
     return showDialog(
         context: context,
+        barrierColor: Colors.white.withOpacity(0.8),
         builder: (BuildContext context) {
           return AlertDialog(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  isCamera ? 'Take from camera' : 'Take from gallery',
-                  style: const TextStyle(
-                    color: MyTheme.colorBlack,
-                    fontSize: 16,
-                  ),
-                ),
+                // Text(
+                //   isCamera ? 'Take from camera' : 'Take from gallery',
+                //   style: const TextStyle(
+                //     color: MyTheme.colorBlack,
+                //     fontSize: 16,
+                //   ),
+                // ),
                 const SizedBox(height: 16),
                 SizedBox(
                   width: double.infinity,
