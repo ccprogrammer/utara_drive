@@ -41,7 +41,7 @@ class _AlbumTabState extends State<AlbumTab> {
             controller: refreshController,
             onRefresh: onRefresh,
             onLoading: onLoading,
-       header: const TwoLevelHeader(
+            header: const TwoLevelHeader(
               decoration: BoxDecoration(color: MyTheme.colorWhite),
               textStyle: TextStyle(color: MyTheme.colorCyan),
               refreshingIcon: SizedBox(
@@ -65,28 +65,49 @@ class _AlbumTabState extends State<AlbumTab> {
                 color: MyTheme.colorCyan,
               ),
             ),
-                 child: GridView.custom(
-              padding: const EdgeInsets.all(16),
-              gridDelegate: SliverQuiltedGridDelegate(
-                crossAxisCount: 4,
-                mainAxisSpacing: 20,
-                crossAxisSpacing: 20,
-                repeatPattern: QuiltedGridRepeatPattern.mirrored,
-                pattern: [
-                  const QuiltedGridTile(2, 2),
-                  const QuiltedGridTile(2, 2),
-                  const QuiltedGridTile(2, 2),
-                  const QuiltedGridTile(2, 2),
-                ],
-              ),
-              childrenDelegate: SliverChildBuilderDelegate(
-                childCount: provider.albumsList.length,
-                (context, index) {
-                  var item = provider.albumsList[index];
-                  return AlbumGridItem(item: item);
-                },
-              ),
-            ),
+            child: provider.albumsList.isNotEmpty
+                ? GridView.custom(
+                    padding: const EdgeInsets.all(16),
+                    gridDelegate: SliverQuiltedGridDelegate(
+                      crossAxisCount: 4,
+                      mainAxisSpacing: 20,
+                      crossAxisSpacing: 20,
+                      repeatPattern: QuiltedGridRepeatPattern.mirrored,
+                      pattern: [
+                        const QuiltedGridTile(2, 2),
+                        const QuiltedGridTile(2, 2),
+                        const QuiltedGridTile(2, 2),
+                        const QuiltedGridTile(2, 2),
+                      ],
+                    ),
+                    childrenDelegate: SliverChildBuilderDelegate(
+                      childCount: provider.albumsList.length,
+                      (context, index) {
+                        var item = provider.albumsList[index];
+                        return AlbumGridItem(item: item);
+                      },
+                    ),
+                  )
+                : Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.image_search,
+                          size: 78,
+                          color: MyTheme.colorDarkerGrey,
+                        ),
+                        SizedBox(height: 16),
+                        Text(
+                          'Albums Empty',
+                          style: TextStyle(
+                            color: MyTheme.colorDarkerGrey,
+                            fontSize: 24,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
           ),
         ),
       );

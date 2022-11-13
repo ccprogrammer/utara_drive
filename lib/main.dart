@@ -54,6 +54,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         initialRoute: AppRoute.initial,
+         theme: ThemeData(
+        fontFamily: 'Montserrat',
+      ),
         onUnknownRoute: (settings) =>
             MaterialPageRoute(builder: (_) => const PageNotFound()),
         onGenerateRoute: GetRoute().generateRoute,

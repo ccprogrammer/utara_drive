@@ -77,9 +77,30 @@ class _HomeTabState extends State<HomeTab> {
                       color: MyTheme.colorCyan,
                     ),
                   ),
-                  child: isGrid
-                      ? galleryGridItem(provider.galleryList)
-                      : galleryTile(provider.galleryList),
+                  child: provider.galleryList.isNotEmpty
+                      ? isGrid
+                          ? galleryGridItem(provider.galleryList)
+                          : galleryTile(provider.galleryList)
+                      : Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Icon(
+                                Icons.image_search,
+                                size: 78,
+                                color: MyTheme.colorDarkerGrey,
+                              ),
+                              SizedBox(height: 16),
+                              Text(
+                                'Gallery Empty',
+                                style: TextStyle(
+                                  color: MyTheme.colorDarkerGrey,
+                                  fontSize: 24,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
                 ),
               ),
             ],
