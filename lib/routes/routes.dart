@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:utara_drive/ui/screen/detail_screen/album_grid_screen.dart';
 import 'package:utara_drive/ui/screen/detail_screen/gallery_detail_screen.dart';
+import 'package:utara_drive/ui/screen/edit_screen.dart/edit_screen.dart';
 import 'package:utara_drive/ui/screen/main_screen/home_tab/home_tab.dart';
 import 'package:utara_drive/ui/screen/initial_screen.dart';
 import 'package:utara_drive/ui/screen/auth_screen/auth_screen.dart';
@@ -18,6 +19,7 @@ abstract class AppRoute {
   static const add = '/add';
   static const search = '/search';
   static const detail = '/detail';
+  static const edit = '/edit';
   static const detailAlbum = '/detail-album';
 }
 
@@ -39,12 +41,17 @@ class GetRoute {
       case AppRoute.auth:
         return CupertinoPageRoute(builder: (context) => const AuthScreen());
 
+      case AppRoute.edit:
+        return CupertinoPageRoute(
+            builder: (context) => EditScreen(data: settings.arguments));
+
       case AppRoute.search:
         return CupertinoPageRoute(builder: (context) => const SearchScreen());
 
       case AppRoute.detail:
         return MaterialPageRoute(
-            builder: (context) => GalleryDetailScreen(data: settings.arguments));
+            builder: (context) =>
+                GalleryDetailScreen(data: settings.arguments));
 
       case AppRoute.detailAlbum:
         return CupertinoPageRoute(

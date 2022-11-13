@@ -14,156 +14,160 @@ class GalleryTileItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+      
       child: CachedNetworkImage(
-          imageUrl: item['image_url'],
-          placeholder: (context, url) => Shimmer.fromColors(
-                baseColor: Colors.grey[500]!,
-                highlightColor: Colors.grey[300]!,
-                child: Column(
-                  children: [
-                    Row(
-                      children: const [
-                        Skeleton(
-                          width: 20,
-                          height: 18,
-                          radius: 4,
-                          marginRight: 8,
-                        ),
-                        Skeleton(
-                          width: 130,
-                          height: 18,
-                          radius: 4,
-                        )
-                      ],
-                    ),
-                    const Skeleton(marginTop: 16),
-                    const Skeleton(
-                      height: 150,
-                      radius: 16,
-                    ),
-                  ],
-                ),
-              ),
-          errorWidget: (context, url, error) => Column(
+        imageUrl: item['image_url'],
+        imageBuilder: (context, imageProvider) {
+          return Column(
+            children: [
+
+              // title tile
+              Row(
                 children: [
-                  Row(
-                    children: [
-                      Icon(
-                        item['type'] == 'image'
-                            ? Icons.image
-                            : Icons.slow_motion_video_rounded,
-                        color: MyTheme.colorDarkerGrey,
-                        size: 24,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        item['label'] != ''
-                            ? item['label']
-                            : item['image_name'],
-                        style: const TextStyle(
-                          color: MyTheme.colorDarkerGrey,
-                        ),
-                      ),
-                    ],
+                  Icon(
+                    item['type'] == 'image'
+                        ? Icons.image
+                        : Icons.slow_motion_video_rounded,
+                    color: MyTheme.colorDarkerGrey,
+                    size: 24,
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 16),
-                    width: MediaQuery.of(context).size.width,
-                    height: 150,
-                    child: const Center(
-                      child: Icon(Icons.error),
+                  const SizedBox(width: 8),
+                  Text(
+                    item['label'] != '' ? item['label'] : item['image_name'],
+                    style: const TextStyle(
+                      color: MyTheme.colorDarkerGrey,
                     ),
                   ),
                 ],
               ),
-          imageBuilder: (context, imageProvider) {
-            return Column(
-              children: [
-                Row(
-                  children: [
-                    Icon(
-                      item['type'] == 'image'
-                          ? Icons.image
-                          : Icons.slow_motion_video_rounded,
-                      color: MyTheme.colorDarkerGrey,
-                      size: 24,
+
+              // image tile
+              Hero(
+                tag: item is QueryDocumentSnapshot ? item.id : item['id'],
+                child: Container(
+                  margin: const EdgeInsets.only(top: 16),
+                  width: MediaQuery.of(context).size.width,
+                  height: 150,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
                     ),
-                    const SizedBox(width: 8),
-                    Text(
-                      item['label'] != '' ? item['label'] : item['image_name'],
-                      style: const TextStyle(
-                        color: MyTheme.colorDarkerGrey,
-                      ),
-                    ),
-                  ],
-                ),
-                Hero(
-                  tag: item is QueryDocumentSnapshot ? item.id : item['id'],
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 16),
-                    width: MediaQuery.of(context).size.width,
-                    height: 150,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    clipBehavior: Clip.antiAlias,
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context, AppRoute.detail,
-                              arguments: item);
-                        },
-                        child: item['type'] == 'video'
-                            ? Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  const Icon(
-                                    Icons.play_arrow_rounded,
-                                    color: MyTheme.colorWhite,
-                                    size: 42,
-                                  ),
-                                  Positioned(
-                                    bottom: 0,
-                                    left: 0,
-                                    child: Container(
-                                      padding: const EdgeInsets.all(10),
-                                      decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(16),
-                                        ),
-                                        color: MyTheme.colorCyan,
+                  ),
+                  clipBehavior: Clip.antiAlias,
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, AppRoute.detail,
+                            arguments: item);
+                      },
+                      child: item['type'] == 'video'
+                          ? Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.play_arrow_rounded,
+                                  color: MyTheme.colorWhite,
+                                  size: 42,
+                                ),
+                                Positioned(
+                                  bottom: 0,
+                                  left: 0,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: const BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(16),
                                       ),
-                                      child: const Text(
-                                        '02:32',
-                                        style: TextStyle(
-                                          color: MyTheme.colorWhite,
-                                          fontSize: 12,
-                                          shadows: [
-                                            Shadow(
-                                              blurRadius: 18.0,
-                                              color: Colors.black54,
-                                              offset: Offset(2.0, 2.0),
-                                            ),
-                                          ],
-                                        ),
+                                      color: MyTheme.colorCyan,
+                                    ),
+                                    child: const Text(
+                                      '02:32',
+                                      style: TextStyle(
+                                        color: MyTheme.colorWhite,
+                                        fontSize: 12,
+                                        shadows: [
+                                          Shadow(
+                                            blurRadius: 18.0,
+                                            color: Colors.black54,
+                                            offset: Offset(2.0, 2.0),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),
-                                ],
-                              )
-                            : const SizedBox(),
-                      ),
+                                ),
+                              ],
+                            )
+                          : const SizedBox(),
                     ),
                   ),
                 ),
+              ),
+            ],
+          );
+        },
+        placeholder: (context, url) => Shimmer.fromColors(
+          baseColor: Colors.grey[500]!,
+          highlightColor: Colors.grey[300]!,
+          child: Column(
+            children: [
+              Row(
+                children: const [
+                  Skeleton(
+                    width: 20,
+                    height: 18,
+                    radius: 4,
+                    marginRight: 8,
+                  ),
+                  Skeleton(
+                    width: 130,
+                    height: 18,
+                    radius: 4,
+                  )
+                ],
+              ),
+              const Skeleton(marginTop: 16),
+              const Skeleton(
+                height: 150,
+                radius: 16,
+              ),
+            ],
+          ),
+        ),
+        errorWidget: (context, url, error) => Column(
+          children: [
+            Row(
+              children: [
+                Icon(
+                  item['type'] == 'image'
+                      ? Icons.image
+                      : Icons.slow_motion_video_rounded,
+                  color: MyTheme.colorDarkerGrey,
+                  size: 24,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  item['label'] != '' ? item['label'] : item['image_name'],
+                  style: const TextStyle(
+                    color: MyTheme.colorDarkerGrey,
+                  ),
+                ),
               ],
-            );
-          }),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 16),
+              width: MediaQuery.of(context).size.width,
+              height: 150,
+              child: const Center(
+                child: Icon(Icons.error),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:utara_drive/providers/gallery_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 import 'package:utara_drive/ui/Components/grid/gallery_grid.dart';
 import 'package:utara_drive/ui/Components/list/gallery_tile.dart';
+import 'package:utara_drive/ui/Components/switch_layout.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -41,40 +42,11 @@ class _HomeTabState extends State<HomeTab> {
         body: SafeArea(
           child: Column(
             children: [
-              Container(
-                margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 16),
-                      child: GestureDetector(
-                        onTap: () => setState(() {
-                          isGrid = true;
-                        }),
-                        child: Icon(
-                          Icons.grid_view_rounded,
-                          color: isGrid
-                              ? MyTheme.colorDarkerGrey
-                              : MyTheme.colorDarkGrey,
-                          size: 18,
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () => setState(() {
-                        isGrid = false;
-                      }),
-                      child: Icon(
-                        Icons.list_rounded,
-                        color: isGrid
-                            ? MyTheme.colorDarkGrey
-                            : MyTheme.colorDarkerGrey,
-                        size: 24,
-                      ),
-                    )
-                  ],
-                ),
+              SwitchLayout(
+                isGrid: isGrid,
+                changeLayout: (value) => setState(() {
+                  isGrid = value;
+                }),
               ),
               Expanded(
                 child: SmartRefresher(
@@ -116,38 +88,4 @@ class _HomeTabState extends State<HomeTab> {
       );
     });
   }
-
-  // Widget galleryGridItem(List galleryList) {
-  //   return GridView.custom(
-  //     shrinkWrap: true,
-  //     gridDelegate: SliverQuiltedGridDelegate(
-  //       crossAxisCount: 4,
-  //       mainAxisSpacing: 4,
-  //       crossAxisSpacing: 4,
-  //       repeatPattern: QuiltedGridRepeatPattern.mirrored,
-  //       pattern: [
-  //         const QuiltedGridTile(2, 2),
-  //         const QuiltedGridTile(1, 1),
-  //         const QuiltedGridTile(1, 1),
-  //         const QuiltedGridTile(1, 1),
-  //         const QuiltedGridTile(1, 1),
-  //         const QuiltedGridTile(1, 1),
-  //         const QuiltedGridTile(1, 1),
-  //         const QuiltedGridTile(2, 2),
-  //         const QuiltedGridTile(1, 1),
-  //         const QuiltedGridTile(1, 1),
-  //       ],
-  //     ),
-  //     childrenDelegate: SliverChildBuilderDelegate(
-  //       childCount: galleryList.length,
-  //       (context, index) {
-  //         dynamic item = galleryList
-  //             .where((element) => element.id == galleryList[index].id)
-  //             .toList()[0];
-
-  //         return GalleryGridItem(data: item);
-  //       },
-  //     ),
-  //   );
-  // }
 }

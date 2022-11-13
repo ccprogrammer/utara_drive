@@ -78,8 +78,6 @@ class _MainScreenState extends State<MainScreen> {
       buttonSize: const Size(56, 56),
       direction: SpeedDialDirection.up,
       switchLabelPosition: false,
-      onOpen: () => debugPrint('OPENING DIAL'),
-      onClose: () => debugPrint('DIAL CLOSED'),
       useRotationAnimation: true,
       tooltip: 'Open Speed Dial',
       heroTag: 'speed-dial-hero-tag',

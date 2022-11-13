@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +7,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:utara_drive/helper/helper.dart';
 import 'package:utara_drive/providers/add_gallery_provider.dart';
 import 'package:utara_drive/providers/gallery_provider.dart';
+import 'package:utara_drive/routes/routes.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 import 'package:utara_drive/ui/Components/add_album_modal.dart';
 import 'package:utara_drive/ui/Components/loading_fallback.dart';
@@ -88,7 +88,6 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
     return Consumer<GalleryProvider>(
       builder: (context, provider, _) {
         // image from home sending QuerySnapshot object, image from album sending normal object. this widget.data.id is for QuerySnapshot because image from home doesn't have id in the object
-
         String id = widget.data is QueryDocumentSnapshot
             ? widget.data.id
             : widget.data['id'];
@@ -222,7 +221,10 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
         children: [
           IconButton(
             color: MyTheme.colorDarkerGrey,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, AppRoute.edit,
+                  arguments: widget.data);
+            },
             icon: const Icon(Icons.edit),
           ),
           IconButton(

@@ -3,8 +3,9 @@ import 'package:photo_view/photo_view.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 
 class ImageFullScreen extends StatefulWidget {
-  const ImageFullScreen({super.key, this.data});
+  const ImageFullScreen({super.key, this.data, this.fileImage = true});
   final dynamic data;
+  final bool fileImage;
 
   @override
   State<ImageFullScreen> createState() => _ImageFullScreenState();
@@ -34,16 +35,17 @@ class _ImageFullScreenState extends State<ImageFullScreen> {
               scaleStateController: scaleController,
               backgroundDecoration:
                   const BoxDecoration(color: MyTheme.colorWhite),
-              imageProvider: FileImage(widget.data),
+              imageProvider: widget.fileImage
+                  ? FileImage(widget.data)
+                  : NetworkImage(widget.data) as ImageProvider<Object>?,
             ),
           ),
-          
           Positioned(
             bottom: 16,
             right: 16,
             child: GestureDetector(
               onTap: () {
-               Navigator.pop(context);
+                Navigator.pop(context);
               },
               child: Container(
                 padding: const EdgeInsets.all(8.0),
