@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:utara_drive/ui/screen/detail_screen/album_grid_screen.dart';
+import 'package:utara_drive/ui/screen/detail_screen/album_detail_screen.dart';
 import 'package:utara_drive/ui/screen/detail_screen/gallery_detail_screen.dart';
 import 'package:utara_drive/ui/screen/edit_screen.dart/edit_screen.dart';
 import 'package:utara_drive/ui/screen/main_screen/home_tab/home_tab.dart';
@@ -55,7 +55,7 @@ class GetRoute {
 
       case AppRoute.detailAlbum:
         return CupertinoPageRoute(
-            builder: (context) => AlbumGridScreen(data: settings.arguments));
+            builder: (context) => AlbumDetailScreen(data: settings.arguments));
 
       default:
         return CupertinoPageRoute(

@@ -53,9 +53,6 @@ class AddAlbumProvider with ChangeNotifier {
   }
 
   Future addToAlbum(context, album, gallery) async {
-// log('DATA === $gallery');
-// log('DATA() === ${gallery.data()}');
-//     return;
     isLoading = true;
     notifyListeners();
 
@@ -92,6 +89,43 @@ class AddAlbumProvider with ChangeNotifier {
       isLoading = false;
       notifyListeners();
     });
+
+    isLoading = false;
+    notifyListeners();
+  }
+
+  Future deleteAlbum(context, album) async {
+    isLoading = true;
+    notifyListeners();
+
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .collection('albums')
+          .doc(album.id)
+          .delete()
+          .then((value) {
+        Navigator.pop(context);
+        Helper(ctx: context).showNotif(
+          title: 'Success',
+          message: 'Album deleted',
+          color: MyTheme.colorCyan,
+        );
+
+        Provider.of<AlbumProvider>(context, listen: false).getAlbum();
+      }).catchError((onError) {
+        Helper(ctx: context).showNotif(
+          title: 'Failed',
+          message: 'Failed to delete album',
+        );
+      });
+    } on FirebaseException catch (e) {
+      Helper(ctx: context).showNotif(
+        title: 'Failed',
+        message: 'Failed to delete album: ${e.message}',
+      );
+    }
 
     isLoading = false;
     notifyListeners();

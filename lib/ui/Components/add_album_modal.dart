@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -53,6 +54,7 @@ class _AddAlbumModalState extends State<AddAlbumModal> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    // create new album if no album
                     if (provider.albumsList.isEmpty)
                       Container(
                         width: 82,
@@ -67,7 +69,8 @@ class _AddAlbumModalState extends State<AddAlbumModal> {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(12),
                           onTap: () {
-                            Helper(ctx: context).showAlbumDialog(context: context);
+                            Helper(ctx: context)
+                                .showAlbumDialog(context: context);
                           },
                           child: const Icon(
                             Icons.add,
@@ -76,66 +79,99 @@ class _AddAlbumModalState extends State<AddAlbumModal> {
                         ),
                       ),
 
-                    // album modal component
-                    for (var item in provider.albumsList)
-                      Container(
-                        margin: EdgeInsets.only(
-                            left:
-                                provider.albumsList.indexOf(item) == 0 ? 16 : 0,
-                            right: 16),
-                        child: Column(
-                          children: [
-                            CachedNetworkImage(
-                              imageUrl: item['display_image'] ??
-                                  'https://webcolours.ca/wp-content/uploads/2020/10/webcolours-unknown.png',
-                              imageBuilder: (context, imageProvider) =>
-                                  Container(
-                                width: 82,
-                                height: 82,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    alignment: Alignment.center,
-                                    image: imageProvider,
-                                  ),
-                                ),
-                                child: Material(
-                                  color: Colors.transparent,
-                                  child: InkWell(
-                                    onTap: () {
-                                      addAlbum.addToAlbum(
-                                        context,
-                                        item,
-                                        widget.gallery,
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ),
-                              placeholder: (context, url) => Shimmer.fromColors(
-                                baseColor: Colors.grey[500]!,
-                                highlightColor: Colors.grey[300]!,
-                                child: const Skeleton(
-                                  radius: 12,
+                    Row(
+                      children: provider.albumsList.map((item) {
+                        bool isSaved = false;
+
+                        String docId = widget.gallery is QueryDocumentSnapshot
+                            ? widget.gallery.id
+                            : widget.gallery['id'];
+                        for (var gallery in item['gallery']) {
+                          if (gallery['id'] == docId) {
+                            isSaved = true;
+                          }
+                        }
+                        return Container(
+                          margin: EdgeInsets.only(
+                              left: provider.albumsList.indexOf(item) == 0
+                                  ? 16
+                                  : 0,
+                              right: 16),
+                          child: Column(
+                            children: [
+                              CachedNetworkImage(
+                                imageUrl: item['display_image'] ??
+                                    'https://webcolours.ca/wp-content/uploads/2020/10/webcolours-unknown.png',
+                                imageBuilder: (context, imageProvider) =>
+                                    Container(
                                   width: 82,
                                   height: 82,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      alignment: Alignment.center,
+                                      image: imageProvider,
+                                    ),
+                                  ),
+                                  clipBehavior: Clip.antiAlias,
+                                  child: Material(
+                                    color: isSaved
+                                        ? Colors.black38
+                                        : Colors.transparent,
+                                    child: InkWell(
+                                      onTap: () {
+                                        isSaved
+                                            ? Helper(ctx: context).showNotif(
+                                                title: 'Hello,',
+                                                message:
+                                                    'Image already in the album, remove feature is still not available',
+                                                    color: MyTheme.colorCyan,
+                                              )
+                                            : addAlbum.addToAlbum(
+                                                context,
+                                                item,
+                                                widget.gallery,
+                                              );
+                                      },
+                                      child: isSaved
+                                          ? const Center(
+                                              child: Icon(
+                                                Icons.check,
+                                                color: Colors.white,
+                                                size: 42,
+                                              ),
+                                            )
+                                          : const SizedBox(),
+                                    ),
+                                  ),
                                 ),
+                                placeholder: (context, url) =>
+                                    Shimmer.fromColors(
+                                  baseColor: Colors.grey[500]!,
+                                  highlightColor: Colors.grey[300]!,
+                                  child: const Skeleton(
+                                    radius: 12,
+                                    width: 82,
+                                    height: 82,
+                                  ),
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    const Center(child: Icon(Icons.error)),
                               ),
-                              errorWidget: (context, url, error) =>
-                                  const Center(child: Icon(Icons.error)),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              item['label'],
-                              style: const TextStyle(
-                                color: MyTheme.colorBlack,
-                                fontSize: 12,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
+                              const SizedBox(height: 8),
+                              Text(
+                                item['label'],
+                                style: const TextStyle(
+                                  color: MyTheme.colorBlack,
+                                  fontSize: 12,
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                    ),
                   ],
                 ),
               ),

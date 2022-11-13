@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
 import 'package:utara_drive/helper/helper.dart';
@@ -8,8 +9,6 @@ import 'package:utara_drive/themes/my_themes.dart';
 import 'package:utara_drive/ui/Components/loading_fallback.dart';
 import 'package:utara_drive/ui/screen/main_screen/album_tab/album_tab.dart';
 import 'package:utara_drive/ui/screen/main_screen/home_tab/home_tab.dart';
-import 'package:utara_drive/ui/screen/main_screen/image_tab/image_tab.dart';
-import 'package:utara_drive/ui/screen/main_screen/video_tab/video_tab.dart';
 import 'package:utara_drive/ui/screen/page_not_found.dart';
 
 class MainScreen extends StatefulWidget {
@@ -51,14 +50,21 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     // final loadingCreateAlbum = Provider.of<AddAlbumProvider>(context).isLoading;
-    return LoadingFallback(
-      isLoading: false,
-      child: Scaffold(
-        appBar: _appBar(),
-        floatingActionButton: buildFab(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: _buildNavBar(),
-        body: _buildBody(),
+    return WillPopScope(
+      onWillPop: () async {
+        SystemNavigator.pop();
+        return true;
+      },
+      child: LoadingFallback(
+        isLoading: false,
+        child: Scaffold(
+          appBar: _appBar(),
+          floatingActionButton: buildFab(),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          bottomNavigationBar: _buildNavBar(),
+          body: _buildBody(),
+        ),
       ),
     );
   }
@@ -84,6 +90,7 @@ class _MainScreenState extends State<MainScreen> {
       elevation: 2.0,
       animationCurve: Curves.elasticInOut,
       children: [
+        // create album
         SpeedDialChild(
           child: const Icon(
             Icons.add_to_photos,
@@ -94,17 +101,21 @@ class _MainScreenState extends State<MainScreen> {
           label: 'Create Album',
           onTap: () => handleFab('album'),
         ),
-        SpeedDialChild(
-          child: const Icon(
-            Icons.video_call_rounded,
-            size: 26,
-          ),
-          backgroundColor: Colors.indigo,
-          foregroundColor: Colors.white,
-          label: 'Record video',
-          visible: true,
-          onTap: () => handleFab('record'),
-        ),
+
+        // record video
+        // SpeedDialChild(
+        //   child: const Icon(
+        //     Icons.video_call_rounded,
+        //     size: 26,
+        //   ),
+        //   backgroundColor: Colors.indigo,
+        //   foregroundColor: Colors.white,
+        //   label: 'Record video',
+        //   visible: true,
+        //   onTap: () => handleFab('record'),
+        // ),
+
+        // take a photo
         SpeedDialChild(
           child: const Icon(Icons.add_a_photo),
           backgroundColor: Colors.deepOrange,
@@ -112,17 +123,21 @@ class _MainScreenState extends State<MainScreen> {
           label: 'Take a photo',
           onTap: () => handleFab('photo'),
         ),
-        SpeedDialChild(
-          child: const Icon(
-            Icons.video_collection_rounded,
-            size: 26,
-          ),
-          backgroundColor: Colors.pink,
-          foregroundColor: Colors.white,
-          label: 'Add video',
-          visible: true,
-          onTap: () => handleFab('video'),
-        ),
+
+        // open video gallery
+        // SpeedDialChild(
+        //   child: const Icon(
+        //     Icons.video_collection_rounded,
+        //     size: 26,
+        //   ),
+        //   backgroundColor: Colors.pink,
+        //   foregroundColor: Colors.white,
+        //   label: 'Add video',
+        //   visible: true,
+        //   onTap: () => handleFab('video'),
+        // ),
+
+        // open image gallery
         SpeedDialChild(
           child: const Icon(
             Icons.add_photo_alternate,
@@ -247,21 +262,21 @@ class _MainScreenState extends State<MainScreen> {
       }),
       items: const [
         BottomNavigationBarItem(
-          icon: Icon(Icons.home_outlined),
+          icon: Icon(Icons.image_outlined),
           label: 'Home',
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.image_outlined),
-          label: 'Image',
-        ),
-        BottomNavigationBarItem(
-          icon: SizedBox(),
-          label: 'Empty',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.ondemand_video),
-          label: 'Video',
-        ),
+        // BottomNavigationBarItem(
+        //   icon: Icon(Icons.image_outlined),
+        //   label: 'Image',
+        // ),
+        // BottomNavigationBarItem(
+        //   icon: SizedBox(),
+        //   label: 'Empty',
+        // ),
+        // BottomNavigationBarItem(
+        //   icon: Icon(Icons.ondemand_video),
+        //   label: 'Video',
+        // ),
         BottomNavigationBarItem(
           icon: Icon(Icons.photo_library_outlined),
           label: 'Album',
@@ -275,14 +290,18 @@ class _MainScreenState extends State<MainScreen> {
       case 0:
         return const HomeTab();
       case 1:
-        return const ImageTab();
-      case 2:
-        // nothing to do here
-        break;
-      case 3:
-        return const VideoTab();
-      case 4:
         return const AlbumTab();
+      // case 0:
+      //   return const HomeTab();
+      // case 1:
+      //   return const ImageTab();
+      // case 2:
+      //   // nothing to do here
+      //   break;
+      // case 3:
+      //   return const VideoTab();
+      // case 4:
+      //   return const AlbumTab();
       default:
     }
     return const PageNotFound();

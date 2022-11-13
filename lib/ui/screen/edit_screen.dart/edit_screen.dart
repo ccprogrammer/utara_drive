@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:utara_drive/providers/add_gallery_provider.dart';
 import 'package:utara_drive/providers/edit_gallery_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 import 'package:utara_drive/ui/Components/custom_text_field2.dart';
@@ -180,11 +179,11 @@ class _EditScreenState extends State<EditScreen> {
         ),
       ),
       actions: [
-        Consumer<AddGalleryProvider>(
+        Consumer<EditGalleryProvider>(
           builder: (context, provider, _) {
             return IconButton(
               onPressed: () {
-                // provider.addGallery(context, widget.image);
+                provider.editGallery(context, widget.data);
               },
               constraints: const BoxConstraints(),
               padding: EdgeInsets.zero,

@@ -1,15 +1,23 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:another_flushbar/flushbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:utara_drive/providers/add_album_provider.dart';
 import 'package:utara_drive/providers/gallery_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 import 'package:utara_drive/ui/Components/custom_text_field2.dart';
 import 'package:utara_drive/ui/screen/add_screen/add_screen.dart';
+import 'package:http/http.dart' as http;
 
 class Helper {
   Helper({this.ctx});
@@ -104,6 +112,37 @@ class Helper {
         }).then((value) => onClose != null ? onClose() : null);
   }
 
+  // share image
+  shareContent({image}) async {
+    final imageUrl = Uri.parse(image['image_url']);
+
+    final response = await http.get(imageUrl);
+    final bytes = response.bodyBytes;
+
+    final temp = await getTemporaryDirectory();
+    final path = '${temp.path}/${image['image_name']}';
+
+    File(path).writeAsBytes(bytes);
+    // ignore: deprecated_member_use
+    await Share.shareFiles([path], subject: 'Image', text: 'Check this image');
+  }
+
+  downloadFileFromUrl({url}) async {
+    await Permission.storage.request();
+    final Directory directory = await getApplicationDocumentsDirectory();
+
+    final taskId = await FlutterDownloader.enqueue(
+      url: url,
+      savedDir:
+          Platform.isAndroid ? '/storage/emulated/0/Download/' : directory.path,
+      showNotification:
+          true, // show download progress in status bar (for Android)
+      openFileFromNotification:
+          true, // click on notification to open downloaded file (for Android)
+    );
+    log('taskId $taskId');
+  }
+
   //  handle camera/gallery
   Future openGalleryPhoto(BuildContext context) async {
     final ImagePicker picker = ImagePicker();
@@ -176,99 +215,6 @@ class Helper {
           Provider.of<GalleryProvider>(context, listen: false).getGallery(),
     );
   }
-
-/*
-  Future showImageDialog({
-    required BuildContext context,
-    bool isCamera = false,
-  }) {
-    getGallery(image, String type) {
-      Navigator.push(
-        context,
-        CupertinoPageRoute(
-          builder: (context) => AddScreen(image: image, imageType: type),
-        ),
-      ).then(
-        (value) =>
-            Provider.of<GalleryProvider>(context, listen: false).getGallery(),
-      );
-    }
-
-    return showDialog(
-        context: context,
-        barrierColor: Colors.white.withOpacity(0.8),
-        builder: (BuildContext context) {
-          return AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(height: 16),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      isCamera
-                          ? openCameraPhoto().then(
-                              (image) {
-                                Navigator.pop(context);
-                                if (image != null) {
-                                  getGallery(image, 'image');
-                                }
-                              },
-                            )
-                          : openGalleryPhoto(context).then(
-                              (image) {
-                                Navigator.pop(context);
-                                if (image != null) {
-                                  getGallery(image, 'image');
-                                }
-                              },
-                            );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: MyTheme.colorCyan,
-                    ),
-                    child: Text(isCamera ? 'Photo' : 'Image'),
-                  ),
-                ),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      isCamera
-                          ? openCameraVideo().then(
-                              (image) {
-                                Navigator.pop(context);
-                                if (image != null) {
-                                  getGallery(image, 'video');
-                                }
-                              },
-                            )
-                          : openGalleryVideo().then(
-                              (image) {
-                                Navigator.pop(context);
-                                if (image != null) {
-                                  getGallery(image, 'video');
-                                }
-                              },
-                            );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: MyTheme.colorCyan,
-                    ),
-                    child: const Text('Video'),
-                  ),
-                ),
-              ],
-            ),
-          );
-        });
-  }
-*/
 
   // handle album
   Future showAlbumDialog({

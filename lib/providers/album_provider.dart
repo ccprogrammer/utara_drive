@@ -14,7 +14,6 @@ class AlbumProvider with ChangeNotifier {
   }
 
   Future getAlbum() async {
-    log('UID NIH === ${user.uid}');
     isLoading = true;
     notifyListeners();
 
@@ -39,5 +38,16 @@ class AlbumProvider with ChangeNotifier {
         log('Failed to get gallery: $error');
       },
     );
+  }
+
+  Future removeGalleryInAlbum(context, gallery) async {
+    String docId =
+        gallery is QueryDocumentSnapshot ? gallery.id : gallery['id'];
+
+    // delete gallery from album
+    for (var item in albumsList) {
+      item['gallery'].removeWhere((element) => element['id'] == docId);
+    }
+    
   }
 }

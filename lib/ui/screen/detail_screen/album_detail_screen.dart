@@ -1,19 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
+import 'package:utara_drive/helper/helper.dart';
+import 'package:utara_drive/providers/add_album_provider.dart';
 import 'package:utara_drive/providers/album_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 import 'package:utara_drive/ui/Components/grid/gallery_grid_item.dart';
 
-class AlbumGridScreen extends StatefulWidget {
-  const AlbumGridScreen({super.key, this.data});
+class AlbumDetailScreen extends StatefulWidget {
+  const AlbumDetailScreen({super.key, this.data});
   final dynamic data;
 
   @override
-  State<AlbumGridScreen> createState() => _AlbumGridScreenState();
+  State<AlbumDetailScreen> createState() => _AlbumDetailScreenState();
 }
 
-class _AlbumGridScreenState extends State<AlbumGridScreen> {
+class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
+  handleDeleteAlbum() {
+    Helper(ctx: context).showAlertDialog(
+      context: context,
+      icon: Icons.delete_outline_rounded,
+      text: 'Delete album?',
+      onYes: () {
+        Provider.of<AddAlbumProvider>(context, listen: false)
+            .deleteAlbum(context, widget.data);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,13 +102,24 @@ class _AlbumGridScreenState extends State<AlbumGridScreen> {
             ),
           ),
           const SizedBox(width: 12),
-          Text(
-            item['label'],
-            style: const TextStyle(
-              color: MyTheme.colorCyan,
-              fontSize: 20,
-              fontWeight: MyTheme.semiBold,
+          Expanded(
+            child: Text(
+              item['label'],
+              style: const TextStyle(
+                color: MyTheme.colorCyan,
+                fontSize: 20,
+                fontWeight: MyTheme.semiBold,
+              ),
             ),
+          ),
+          IconButton(
+            onPressed: () {
+              handleDeleteAlbum();
+            },
+            constraints: const BoxConstraints(),
+            color: MyTheme.colorRed,
+            iconSize: 20,
+            icon: const Icon(Icons.delete),
           ),
         ],
       ),

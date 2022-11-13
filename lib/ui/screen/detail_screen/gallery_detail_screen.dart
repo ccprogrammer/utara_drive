@@ -1,6 +1,10 @@
+import 'dart:isolate';
+import 'dart:ui';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -58,9 +62,23 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
         .deleteGallery(context, docId, widget.data['image_name']);
   }
 
+  handleDownload() {
+    Helper().downloadFileFromUrl(url: widget.data['image_url']);
+  }
+
+  static void downloadCallback(
+      String id, DownloadTaskStatus status, int progress) {
+    final SendPort? send =
+        IsolateNameServer.lookupPortByName('downloader_send_port');
+    send!.send([id, status, progress]);
+  }
+
   @override
   void initState() {
     super.initState();
+
+    FlutterDownloader.registerCallback(downloadCallback);
+
     // controller.addIgnorableListener(() {
     //   var width = MediaQuery.of(context).size.width / 1000;
     //   double? scale = controller.scale;
@@ -70,6 +88,12 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
     //     });
     //   }
     // });
+  }
+
+  @override
+  void dispose() {
+    IsolateNameServer.removePortNameMapping('downloader_send_port');
+    super.dispose();
   }
 
   @override
@@ -110,12 +134,15 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
                   tag: id,
                   child: PhotoView(
                     minScale: PhotoViewComputedScale.contained * 1,
-                    maxScale: PhotoViewComputedScale.covered * 1.8,
+                    maxScale: PhotoViewComputedScale.covered * 2,
                     basePosition: Alignment.center,
                     customSize: orientation == Orientation.portrait
                         ? MediaQuery.of(context).size
                         : null,
                     scaleStateChangedCallback: (value) {},
+                    onTapUp: (context, details, controllerValue) {
+                      handleDetails();
+                    },
                     controller: controller,
                     scaleStateController: scaleController,
                     backgroundDecoration:
@@ -136,7 +163,7 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
               Positioned(
                 bottom: 0,
                 child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 400),
+                  duration: const Duration(milliseconds: 300),
                   width: MediaQuery.of(context).size.width,
                   color: MyTheme.colorWhite.withOpacity(0.6),
                   constraints: BoxConstraints(
@@ -223,7 +250,8 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
           IconButton(
             color: MyTheme.colorDarkerGrey,
             onPressed: () async {
-              Provider.of<EditGalleryProvider>(context, listen: false).initTextController(
+              Provider.of<EditGalleryProvider>(context, listen: false)
+                  .initTextController(
                 label: widget.data['label'],
                 description: widget.data['description'],
                 location: widget.data['location'],
@@ -235,7 +263,9 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
           ),
           IconButton(
             color: MyTheme.colorDarkerGrey,
-            onPressed: () {},
+            onPressed: () {
+              Helper(ctx: context).shareContent(image: widget.data);
+            },
             icon: const Icon(Icons.share),
           ),
           IconButton(
@@ -255,10 +285,9 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
           IconButton(
             color: MyTheme.colorDarkerGrey,
             onPressed: () {
-              handleDetails();
+              handleDownload();
             },
-            icon: Icon(
-                seeDetails ? Icons.arrow_circle_down : Icons.arrow_circle_up),
+            icon: const Icon(Icons.file_download_outlined),
           ),
         ],
       ),

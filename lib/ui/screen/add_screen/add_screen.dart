@@ -27,7 +27,6 @@ class _AddScreenState extends State<AddScreen> {
   Widget build(BuildContext context) {
     return LoadingFallback(
       isLoading: Provider.of<AddGalleryProvider>(context).isLoading,
-      loadingLabel: 'Loading ...',
       child: Scaffold(
         appBar: _buildAppBar(),
         body: _buildBody(),
