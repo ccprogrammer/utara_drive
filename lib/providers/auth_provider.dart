@@ -14,9 +14,9 @@ class AuthProvider with ChangeNotifier {
   bool isLogin = true;
   bool isLoading = false;
 
-  var emailC = TextEditingController(text: 'test2@test.com');
-  var usernameC = TextEditingController(text: 'tester2');
-  var passwordC = TextEditingController(text: '12345678');
+  var emailC = TextEditingController();
+  var usernameC = TextEditingController();
+  var passwordC = TextEditingController();
 
   // switch log in to sign up
   switchLogin() {
