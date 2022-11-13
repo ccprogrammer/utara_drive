@@ -105,38 +105,79 @@ class Helper {
   }
 
   //  handle camera/gallery
-  Future openGalleryPhoto() async {
+  Future openGalleryPhoto(BuildContext context) async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedImage =
         await picker.pickImage(source: ImageSource.gallery);
 
-    return pickedImage;
+    // ignore: use_build_context_synchronously
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) =>
+            AddScreen(image: pickedImage!, imageType: 'image'),
+      ),
+    ).then(
+      (value) =>
+          Provider.of<GalleryProvider>(context, listen: false).getGallery(),
+    );
   }
 
-  Future openGalleryVideo() async {
+  Future openGalleryVideo(context) async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedImage =
         await picker.pickVideo(source: ImageSource.gallery);
 
-    return pickedImage;
+    // ignore: use_build_context_synchronously
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) =>
+            AddScreen(image: pickedImage!, imageType: 'video'),
+      ),
+    ).then(
+      (value) =>
+          Provider.of<GalleryProvider>(context, listen: false).getGallery(),
+    );
   }
 
-  Future openCameraPhoto() async {
+  Future openCameraPhoto(context) async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedImage =
         await picker.pickImage(source: ImageSource.camera);
 
-    return pickedImage;
+    // ignore: use_build_context_synchronously
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) =>
+            AddScreen(image: pickedImage!, imageType: 'image'),
+      ),
+    ).then(
+      (value) =>
+          Provider.of<GalleryProvider>(context, listen: false).getGallery(),
+    );
   }
 
-  Future openCameraVideo() async {
+  Future openCameraVideo(context) async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedImage =
         await picker.pickVideo(source: ImageSource.camera);
 
-    return pickedImage;
+    // ignore: use_build_context_synchronously
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) =>
+            AddScreen(image: pickedImage!, imageType: 'video'),
+      ),
+    ).then(
+      (value) =>
+          Provider.of<GalleryProvider>(context, listen: false).getGallery(),
+    );
   }
 
+/*
   Future showImageDialog({
     required BuildContext context,
     bool isCamera = false,
@@ -179,7 +220,7 @@ class Helper {
                                 }
                               },
                             )
-                          : openGalleryPhoto().then(
+                          : openGalleryPhoto(context).then(
                               (image) {
                                 Navigator.pop(context);
                                 if (image != null) {
@@ -227,6 +268,7 @@ class Helper {
           );
         });
   }
+*/
 
   // handle album
   Future showAlbumDialog({

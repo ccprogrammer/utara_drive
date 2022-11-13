@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:utara_drive/providers/gallery_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
-import 'package:utara_drive/ui/Components/grid/image_grid_item.dart';
+import 'package:utara_drive/ui/Components/grid/gallery_grid_item.dart';
 import 'package:utara_drive/ui/Components/search_app_bar.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -101,7 +101,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             element.id == provider.searchList[index].id)
                         .toList()[0];
 
-                    return ImageGridItem(data: item);
+                    return GalleryGridItem(data: item);
                   },
                 ),
               ),

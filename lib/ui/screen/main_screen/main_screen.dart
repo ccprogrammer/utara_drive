@@ -24,15 +24,22 @@ class _MainScreenState extends State<MainScreen> {
 
   handleFab(String type) {
     switch (type) {
-      case 'gallery':
-        Helper(ctx: context).showImageDialog(context: context);
+      case 'image':
+        Helper(ctx: context).openGalleryPhoto(context);
         break;
 
-      case 'camera':
-        Helper(ctx: context).showImageDialog(context: context, isCamera: true);
+      case 'video':
+        Helper(ctx: context).openGalleryVideo(context);
         break;
 
-      // Navigator.pushNamed(context, AppRoute.search);
+      case 'photo':
+        Helper(ctx: context).openCameraPhoto(context);
+        break;
+
+      case 'record':
+        Helper(ctx: context).openCameraVideo(context);
+        break;
+
       case 'album':
         Helper(ctx: context).showAlbumDialog(context: context);
         break;
@@ -84,28 +91,50 @@ class _MainScreenState extends State<MainScreen> {
             Icons.add_to_photos,
             size: 24,
           ),
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.blueGrey,
           foregroundColor: Colors.white,
           label: 'Create Album',
           onTap: () => handleFab('album'),
         ),
         SpeedDialChild(
+          child: const Icon(
+            Icons.video_call_rounded,
+            size: 26,
+          ),
+          backgroundColor: Colors.indigo,
+          foregroundColor: Colors.white,
+          label: 'Record video',
+          visible: true,
+          onTap: () => handleFab('record'),
+        ),
+        SpeedDialChild(
           child: const Icon(Icons.add_a_photo),
           backgroundColor: Colors.deepOrange,
           foregroundColor: Colors.white,
-          label: 'Open Camera',
-          onTap: () => handleFab('camera'),
+          label: 'Take a photo',
+          onTap: () => handleFab('photo'),
+        ),
+        SpeedDialChild(
+          child: const Icon(
+            Icons.video_collection_rounded,
+            size: 26,
+          ),
+          backgroundColor: Colors.pink,
+          foregroundColor: Colors.white,
+          label: 'Add video',
+          visible: true,
+          onTap: () => handleFab('video'),
         ),
         SpeedDialChild(
           child: const Icon(
             Icons.add_photo_alternate,
             size: 26,
           ),
-          backgroundColor: Colors.indigo,
+          backgroundColor: Colors.lightGreen,
           foregroundColor: Colors.white,
-          label: 'Open Gallery',
+          label: 'Add image',
           visible: true,
-          onTap: () => handleFab('gallery'),
+          onTap: () => handleFab('image'),
         ),
       ],
     );

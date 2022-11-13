@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,7 +6,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:utara_drive/helper/helper.dart';
-import 'package:utara_drive/providers/add_album_provider.dart';
+import 'package:utara_drive/providers/add_gallery_provider.dart';
 import 'package:utara_drive/providers/gallery_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 import 'package:utara_drive/ui/Components/add_album_modal.dart';
@@ -43,6 +42,21 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
     });
   }
 
+  handlSaveToAlbum() {
+    Helper(ctx: context).showCustomModal(
+      context: context,
+      child: AddAlbumModal(gallery: widget.data),
+    );
+  }
+
+  handleDelete() {
+    String docId = widget.data is QueryDocumentSnapshot
+        ? widget.data.id
+        : widget.data['id'];
+    Provider.of<AddGalleryProvider>(context, listen: false)
+        .deleteGallery(context, docId, widget.data['image_name']);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -60,8 +74,7 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return LoadingFallback(
-      isLoading: Provider.of<AddAlbumProvider>(context).isLoading,
-      loadingLabel: 'Loading',
+      isLoading: Provider.of<AddGalleryProvider>(context).isLoading,
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: appBar(),
@@ -85,83 +98,86 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
             .where((element) => element.id == id)
             .toList()[0];
 
-        log('GALLERYY === ${item.data()}');
-
         final date = Helper().convertTimestamp(item['created_at']);
 
-        return Stack(
-          children: [
-            // gallery content
-            CachedNetworkImage(
-              imageUrl: item['image_url'],
-              imageBuilder: (context, imageProvider) => Hero(
-                tag: id,
-                child: PhotoView(
-                  minScale: PhotoViewComputedScale.contained * 1,
-                  maxScale: PhotoViewComputedScale.covered * 1.8,
-                  basePosition: Alignment.center,
-                  scaleStateChangedCallback: (value) {},
-                  controller: controller,
-                  scaleStateController: scaleController,
-                  backgroundDecoration:
-                      const BoxDecoration(color: MyTheme.colorWhite),
-                  imageProvider: imageProvider,
+        return OrientationBuilder(builder: (context, orientation) {
+          return Stack(
+            children: [
+              // gallery content
+              CachedNetworkImage(
+                imageUrl: item['image_url'],
+                imageBuilder: (context, imageProvider) => Hero(
+                  tag: id,
+                  child: PhotoView(
+                    minScale: PhotoViewComputedScale.contained * 1,
+                    maxScale: PhotoViewComputedScale.covered * 1.8,
+                    basePosition: Alignment.center,
+                    customSize: orientation == Orientation.portrait
+                        ? MediaQuery.of(context).size
+                        : null,
+                    scaleStateChangedCallback: (value) {},
+                    controller: controller,
+                    scaleStateController: scaleController,
+                    backgroundDecoration:
+                        const BoxDecoration(color: MyTheme.colorWhite),
+                    imageProvider: imageProvider,
+                  ),
                 ),
+                placeholder: (context, url) => Shimmer.fromColors(
+                  baseColor: Colors.grey[500]!,
+                  highlightColor: Colors.grey[300]!,
+                  child: const Skeleton(),
+                ),
+                errorWidget: (context, url, error) =>
+                    const Center(child: Icon(Icons.error)),
               ),
-              placeholder: (context, url) => Shimmer.fromColors(
-                baseColor: Colors.grey[500]!,
-                highlightColor: Colors.grey[300]!,
-                child: const Skeleton(),
-              ),
-              errorWidget: (context, url, error) =>
-                  const Center(child: Icon(Icons.error)),
-            ),
 
-            // details modal
-            Positioned(
-              bottom: 0,
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 400),
-                width: MediaQuery.of(context).size.width,
-                color: MyTheme.colorWhite.withOpacity(0.6),
-                constraints: BoxConstraints(
-                    maxHeight:
-                        MediaQuery.of(context).size.height * detailsHeight),
-                padding: const EdgeInsets.all(16),
-                child: ListView(
-                  shrinkWrap: true,
-                  children: [
-                    buildDetails(
-                      label: 'Label',
-                      desc: item['label'],
-                      marginTop: 0,
-                    ),
-                    buildDetails(
-                      label: 'Description',
-                      desc: item['description'],
-                    ),
-                    buildDetails(
-                      label: 'Name',
-                      desc: item['image_name'],
-                    ),
-                    buildDetails(
-                      label: 'Location',
-                      desc: item['location'],
-                    ),
-                    buildDetails(
-                      label: 'Tag',
-                      desc: 'Tagggggggg',
-                    ),
-                    buildDetails(
-                      label: 'Date',
-                      desc: date,
-                    ),
-                  ],
+              // details modal
+              Positioned(
+                bottom: 0,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 400),
+                  width: MediaQuery.of(context).size.width,
+                  color: MyTheme.colorWhite.withOpacity(0.6),
+                  constraints: BoxConstraints(
+                      maxHeight:
+                          MediaQuery.of(context).size.height * detailsHeight),
+                  padding: const EdgeInsets.all(16),
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: [
+                      buildDetails(
+                        label: 'Label',
+                        desc: item['label'],
+                        marginTop: 0,
+                      ),
+                      buildDetails(
+                        label: 'Description',
+                        desc: item['description'],
+                      ),
+                      buildDetails(
+                        label: 'Name',
+                        desc: item['image_name'],
+                      ),
+                      buildDetails(
+                        label: 'Location',
+                        desc: item['location'],
+                      ),
+                      buildDetails(
+                        label: 'Tag',
+                        desc: 'Tagggggggg',
+                      ),
+                      buildDetails(
+                        label: 'Date',
+                        desc: date,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            )
-          ],
-        );
+              )
+            ],
+          );
+        });
       },
     );
   }
@@ -217,16 +233,15 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
           IconButton(
             color: MyTheme.colorDarkerGrey,
             onPressed: () {
-              Helper(ctx: context).showCustomModal(
-                context: context,
-                child: AddAlbumModal(gallery: widget.data),
-              );
+              handlSaveToAlbum();
             },
             icon: const Icon(Icons.add_box_outlined),
           ),
           IconButton(
             color: MyTheme.colorDarkerGrey,
-            onPressed: () {},
+            onPressed: () {
+              handleDelete();
+            },
             icon: const Icon(Icons.delete),
           ),
           IconButton(

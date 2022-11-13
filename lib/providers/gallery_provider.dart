@@ -44,7 +44,6 @@ class GalleryProvider with ChangeNotifier {
       videoList =
           tmpGallery.where((element) => element['type'] == 'video').toList();
 
-      log('Gallery List === ${galleryList.length}');
       isLoading = false;
       notifyListeners();
     }).catchError(

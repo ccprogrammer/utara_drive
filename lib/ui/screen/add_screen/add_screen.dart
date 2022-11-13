@@ -7,6 +7,7 @@ import 'package:utara_drive/ui/Components/custom_text_field2.dart';
 import 'dart:io';
 
 import 'package:utara_drive/ui/Components/loading_fallback.dart';
+import 'package:utara_drive/ui/screen/image_full_screen/image_full_screen.dart';
 
 class AddScreen extends StatefulWidget {
   const AddScreen({
@@ -40,12 +41,45 @@ class _AddScreenState extends State<AddScreen> {
       builder: (context, provider, _) {
         return ListView(
           children: [
-            Image.file(
-              image,
-              width: double.infinity,
-              height: 250,
-              fit: BoxFit.cover,
-              alignment: Alignment.center,
+            Stack(
+              children: [
+                Hero(
+                  tag: 'add_image',
+                  child: Image.file(
+                    image,
+                    width: double.infinity,
+                    height: 250,
+                    fit: BoxFit.cover,
+                    alignment: Alignment.center,
+                  ),
+                ),
+                Positioned(
+                  bottom: 16,
+                  right: 16,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ImageFullScreen(data: image),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: MyTheme.colorDarkerGrey,
+                      ),
+                      child: const Icon(
+                        Icons.fullscreen,
+                        color: MyTheme.colorWhite,
+                        size: 16,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 24),
             CustomTextField2(

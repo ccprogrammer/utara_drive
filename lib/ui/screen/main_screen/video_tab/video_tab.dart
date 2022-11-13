@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:utara_drive/providers/gallery_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
-import 'package:utara_drive/ui/Components/grid/image_grid_item.dart';
+import 'package:utara_drive/ui/Components/grid/gallery_grid_item.dart';
 
 class VideoTab extends StatefulWidget {
   const VideoTab({super.key});
@@ -93,7 +93,7 @@ class _VideoTabState extends State<VideoTab> {
                           element.id == provider.galleryList[index].id)
                       .toList()[0];
                       
-                  return ImageGridItem(data: item);
+                  return GalleryGridItem(data: item);
                 },
               ),
             ),

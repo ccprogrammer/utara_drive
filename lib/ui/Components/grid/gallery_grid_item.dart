@@ -8,8 +8,8 @@ import 'package:utara_drive/routes/routes.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 import 'package:utara_drive/ui/Components/skeleton.dart';
 
-class ImageGridItem extends StatelessWidget {
-  const ImageGridItem({super.key, this.data});
+class GalleryGridItem extends StatelessWidget {
+  const GalleryGridItem({super.key, this.data});
   final dynamic data;
 
   @override

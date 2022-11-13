@@ -6,8 +6,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:utara_drive/helper/helper.dart';
 import 'package:utara_drive/helper/remove_string.dart';
+import 'package:utara_drive/providers/gallery_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 
 class AddGalleryProvider with ChangeNotifier {
@@ -86,8 +88,54 @@ class AddGalleryProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future deleteGallery() async {
-    
+  Future deleteGallery(
+      BuildContext context, String docId, String imageName) async {
+    isLoading = true;
+    notifyListeners();
+
+    try {
+      // create storage ref
+      var ref = FirebaseStorage.instance
+          .ref()
+          .child('${user.displayName}_${user.uid}')
+          .child('images')
+          .child(imageName);
+
+      // Delete the file
+      await ref.delete();
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .collection('gallery')
+          .doc(docId)
+          .delete()
+          .then((value) {
+        Navigator.pop(context);
+        Provider.of<GalleryProvider>(context, listen: false).getGallery();
+
+        Helper(ctx: context).showNotif(
+          title: 'Success',
+          message: 'Image has been deleted',
+          color: MyTheme.colorCyan,
+        );
+      }).catchError((error) {
+        Helper(ctx: context).showNotif(
+          title: 'Failed',
+          message: 'Image failed to delete,',
+          color: MyTheme.colorCyan,
+        );
+        log('Image failed to delete === $error');
+      });
+    } on FirebaseException catch (e) {
+      Helper(ctx: context).showNotif(
+        title: 'Failed',
+        message: 'Cannot delete image, ${e.message!.toLowerCase()}',
+      );
+    }
+
+    isLoading = false;
+    notifyListeners();
   }
 
   // handle tag
