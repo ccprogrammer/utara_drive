@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:utara_drive/helper/helper.dart';
 import 'package:utara_drive/providers/add_gallery_provider.dart';
+import 'package:utara_drive/providers/edit_gallery_provider.dart';
 import 'package:utara_drive/providers/gallery_provider.dart';
 import 'package:utara_drive/routes/routes.dart';
 import 'package:utara_drive/themes/my_themes.dart';
@@ -221,7 +222,12 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
         children: [
           IconButton(
             color: MyTheme.colorDarkerGrey,
-            onPressed: () {
+            onPressed: () async {
+              Provider.of<EditGalleryProvider>(context, listen: false).initTextController(
+                label: widget.data['label'],
+                description: widget.data['description'],
+                location: widget.data['location'],
+              );
               Navigator.pushNamed(context, AppRoute.edit,
                   arguments: widget.data);
             },

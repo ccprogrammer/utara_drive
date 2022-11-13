@@ -6,6 +6,7 @@ import 'package:utara_drive/providers/add_album_provider.dart';
 import 'package:utara_drive/providers/add_gallery_provider.dart';
 import 'package:utara_drive/providers/album_provider.dart';
 import 'package:utara_drive/providers/auth_provider.dart';
+import 'package:utara_drive/providers/edit_gallery_provider.dart';
 import 'package:utara_drive/providers/gallery_provider.dart';
 import 'package:utara_drive/routes/routes.dart';
 import 'package:utara_drive/ui/screen/page_not_found.dart';
@@ -40,6 +41,8 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => AlbumProvider(),
+        ),  ChangeNotifierProvider(
+          create: (context) => EditGalleryProvider(),
         ),
       ],
       child: MaterialApp(

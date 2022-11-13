@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:utara_drive/providers/add_gallery_provider.dart';
+import 'package:utara_drive/providers/edit_gallery_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 import 'package:utara_drive/ui/Components/custom_text_field2.dart';
 
@@ -34,7 +35,7 @@ class _EditScreenState extends State<EditScreen> {
   }
 
   Widget _buildBody() {
-    return Consumer<AddGalleryProvider>(
+    return Consumer<EditGalleryProvider>(
       builder: (context, provider, _) {
         return ListView(
           children: [
@@ -102,16 +103,16 @@ class _EditScreenState extends State<EditScreen> {
             const SizedBox(height: 24),
             CustomTextField2(
               hint: 'Add label',
-              controller: TextEditingController(),
+              controller: provider.labelC,
             ),
             CustomTextField2(
               hint: 'Write a description',
-              controller: TextEditingController(),
+              controller: provider.descriptionC,
               maxLines: null,
             ),
             CustomTextField2(
               hint: 'Add location',
-              controller: TextEditingController(),
+              controller: provider.locationC,
               inputAction: TextInputAction.next,
             ),
             // if (provider.tagList.isNotEmpty)
