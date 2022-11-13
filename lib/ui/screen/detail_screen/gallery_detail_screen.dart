@@ -97,7 +97,6 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
               imageBuilder: (context, imageProvider) => Hero(
                 tag: id,
                 child: PhotoView(
-                  customSize: MediaQuery.of(context).size,
                   minScale: PhotoViewComputedScale.contained * 1,
                   maxScale: PhotoViewComputedScale.covered * 1.8,
                   basePosition: Alignment.center,

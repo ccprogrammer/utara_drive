@@ -62,9 +62,15 @@ class GalleryProvider with ChangeNotifier {
 
     searchList = searchC.text != ''
         ? galleryList
-            .where((element) => element['label']
-                .toLowerCase()
-                .contains(searchC.text.toLowerCase().trim()))
+            .where(
+              (element) =>
+                  element['label'].toLowerCase().contains(
+                        searchC.text.toLowerCase().trim(),
+                      ) ||
+                  element['description'].toLowerCase().contains(
+                        searchC.text.toLowerCase().trim(),
+                      ),
+            )
             .toList()
         : [];
 
@@ -76,6 +82,10 @@ class GalleryProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  clearSearch() {
+    searchC.clear();
+    searchList.clear();
+  }
   // Stream getImage() {
   //   User user = Helper().getUser();
   //   int i = 0;
