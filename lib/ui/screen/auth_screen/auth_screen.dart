@@ -20,7 +20,7 @@ class _AuthScreenState extends State<AuthScreen> {
     return WillPopScope(
       onWillPop: () async {
         SystemNavigator.pop();
-        return true;
+        return false;
       },
       child: Scaffold(
         backgroundColor: MyTheme.colorCyan,

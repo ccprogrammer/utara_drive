@@ -124,7 +124,7 @@ class Helper {
 
     File(path).writeAsBytes(bytes);
     // ignore: deprecated_member_use
-    await Share.shareFiles([path], subject: 'Image', text: 'Check this image');
+    await Share.shareFiles([path], subject: 'Image', text: '');
   }
 
   downloadFileFromUrl({url}) async {
@@ -157,8 +157,9 @@ class Helper {
             AddScreen(image: pickedImage!, imageType: 'image'),
       ),
     ).then(
-      (value) =>
-          Provider.of<GalleryProvider>(context, listen: false).getGallery(),
+      (value) => pickedImage != null
+          ? Provider.of<GalleryProvider>(context, listen: false).getGallery()
+          : null,
     );
   }
 
@@ -175,8 +176,9 @@ class Helper {
             AddScreen(image: pickedImage!, imageType: 'video'),
       ),
     ).then(
-      (value) =>
-          Provider.of<GalleryProvider>(context, listen: false).getGallery(),
+      (value) => pickedImage != null
+          ? Provider.of<GalleryProvider>(context, listen: false).getGallery()
+          : null,
     );
   }
 
@@ -193,8 +195,9 @@ class Helper {
             AddScreen(image: pickedImage!, imageType: 'image'),
       ),
     ).then(
-      (value) =>
-          Provider.of<GalleryProvider>(context, listen: false).getGallery(),
+      (value) => pickedImage != null
+          ? Provider.of<GalleryProvider>(context, listen: false).getGallery()
+          : null,
     );
   }
 
@@ -211,8 +214,9 @@ class Helper {
             AddScreen(image: pickedImage!, imageType: 'video'),
       ),
     ).then(
-      (value) =>
-          Provider.of<GalleryProvider>(context, listen: false).getGallery(),
+      (value) => pickedImage != null
+          ? Provider.of<GalleryProvider>(context, listen: false).getGallery()
+          : null,
     );
   }
 

@@ -53,7 +53,7 @@ class _MainScreenState extends State<MainScreen> {
     return WillPopScope(
       onWillPop: () async {
         SystemNavigator.pop();
-        return true;
+        return false;
       },
       child: LoadingFallback(
         isLoading: false,
