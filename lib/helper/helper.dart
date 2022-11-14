@@ -149,18 +149,19 @@ class Helper {
     final XFile? pickedImage =
         await picker.pickImage(source: ImageSource.gallery);
 
-    // ignore: use_build_context_synchronously
-    Navigator.push(
-      context,
-      CupertinoPageRoute(
-        builder: (context) =>
-            AddScreen(image: pickedImage!, imageType: 'image'),
-      ),
-    ).then(
-      (value) => pickedImage != null
-          ? Provider.of<GalleryProvider>(context, listen: false).getGallery()
-          : null,
-    );
+    if (pickedImage != null) {
+      // ignore: use_build_context_synchronously
+      Navigator.push(
+        context,
+        CupertinoPageRoute(
+          builder: (context) =>
+              AddScreen(image: pickedImage, imageType: 'image'),
+        ),
+      ).then(
+        (value) =>
+            Provider.of<GalleryProvider>(context, listen: false).getGallery(),
+      );
+    }
   }
 
   Future openGalleryVideo(context) async {
@@ -168,18 +169,19 @@ class Helper {
     final XFile? pickedImage =
         await picker.pickVideo(source: ImageSource.gallery);
 
-    // ignore: use_build_context_synchronously
-    Navigator.push(
-      context,
-      CupertinoPageRoute(
-        builder: (context) =>
-            AddScreen(image: pickedImage!, imageType: 'video'),
-      ),
-    ).then(
-      (value) => pickedImage != null
-          ? Provider.of<GalleryProvider>(context, listen: false).getGallery()
-          : null,
-    );
+    if (pickedImage != null) {
+      // ignore: use_build_context_synchronously
+      Navigator.push(
+        context,
+        CupertinoPageRoute(
+          builder: (context) =>
+              AddScreen(image: pickedImage, imageType: 'video'),
+        ),
+      ).then(
+        (value) =>
+            Provider.of<GalleryProvider>(context, listen: false).getGallery(),
+      );
+    }
   }
 
   Future openCameraPhoto(context) async {
@@ -187,18 +189,19 @@ class Helper {
     final XFile? pickedImage =
         await picker.pickImage(source: ImageSource.camera);
 
-    // ignore: use_build_context_synchronously
-    Navigator.push(
-      context,
-      CupertinoPageRoute(
-        builder: (context) =>
-            AddScreen(image: pickedImage!, imageType: 'image'),
-      ),
-    ).then(
-      (value) => pickedImage != null
-          ? Provider.of<GalleryProvider>(context, listen: false).getGallery()
-          : null,
-    );
+    if (pickedImage != null) {
+      // ignore: use_build_context_synchronously
+      Navigator.push(
+        context,
+        CupertinoPageRoute(
+          builder: (context) =>
+              AddScreen(image: pickedImage, imageType: 'image'),
+        ),
+      ).then(
+        (value) =>
+            Provider.of<GalleryProvider>(context, listen: false).getGallery(),
+      );
+    }
   }
 
   Future openCameraVideo(context) async {
@@ -206,18 +209,19 @@ class Helper {
     final XFile? pickedImage =
         await picker.pickVideo(source: ImageSource.camera);
 
-    // ignore: use_build_context_synchronously
-    Navigator.push(
-      context,
-      CupertinoPageRoute(
-        builder: (context) =>
-            AddScreen(image: pickedImage!, imageType: 'video'),
-      ),
-    ).then(
-      (value) => pickedImage != null
-          ? Provider.of<GalleryProvider>(context, listen: false).getGallery()
-          : null,
-    );
+    if (pickedImage != null) {
+      // ignore: use_build_context_synchronously
+      Navigator.push(
+        context,
+        CupertinoPageRoute(
+          builder: (context) =>
+              AddScreen(image: pickedImage, imageType: 'video'),
+        ),
+      ).then(
+        (value) =>
+            Provider.of<GalleryProvider>(context, listen: false).getGallery(),
+      );
+    }
   }
 
   // handle album

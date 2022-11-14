@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         initialRoute: AppRoute.initial,
          theme: ThemeData(
-        fontFamily: 'Montserrat',
+        fontFamily: 'Nunito',
       ),
         onUnknownRoute: (settings) =>
             MaterialPageRoute(builder: (_) => const PageNotFound()),
