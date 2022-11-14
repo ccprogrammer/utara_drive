@@ -5,7 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:utara_drive/helper/helper.dart';
+import 'package:utara_drive/providers/album_provider.dart';
 import 'package:utara_drive/providers/gallery_provider.dart';
+import 'package:utara_drive/routes/routes.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 
 class AuthProvider with ChangeNotifier {
@@ -113,6 +115,10 @@ class AuthProvider with ChangeNotifier {
 
   // sign out function
   signOut(context) {
+    // clear providers data on sign out
+    Provider.of<GalleryProvider>(context, listen: false).galleryList.clear();
+    Provider.of<AlbumProvider>(context, listen: false).albumsList.clear();
+
     Helper().showAlertDialog(
       context: context,
       text: 'Are you sure want to log out?',
@@ -125,5 +131,22 @@ class AuthProvider with ChangeNotifier {
     emailC.clear();
     usernameC.clear();
     passwordC.clear();
+  }
+
+  // auth state change
+  authState(BuildContext context) {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      log('authStateChanges === $user');
+      if (user == null) {
+        Navigator.pushNamed(context, AppRoute.auth);
+        log('User is currently signed out!');
+      } else {
+        Provider.of<GalleryProvider>(context, listen: false).initData();
+        Provider.of<AlbumProvider>(context, listen: false).initData();
+
+        Navigator.pushNamed(context, AppRoute.mainScreen);
+        log('User is signed in!');
+      }
+    });
   }
 }

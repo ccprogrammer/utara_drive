@@ -5,11 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 
 class AlbumProvider with ChangeNotifier {
-  late User user = FirebaseAuth.instance.currentUser as User;
+  late User user;
   List albumsList = [];
   bool isLoading = false;
 
   initData() {
+    user = FirebaseAuth.instance.currentUser as User;
     getAlbum();
   }
 
@@ -48,6 +49,5 @@ class AlbumProvider with ChangeNotifier {
     for (var item in albumsList) {
       item['gallery'].removeWhere((element) => element['id'] == docId);
     }
-    
   }
 }

@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 
 class GalleryProvider with ChangeNotifier {
-  late User user = FirebaseAuth.instance.currentUser as User;
+  late User user;
 
   final searchC = TextEditingController();
 
@@ -18,6 +18,7 @@ class GalleryProvider with ChangeNotifier {
   bool isSearchLoading = false;
 
   initData() {
+    user = FirebaseAuth.instance.currentUser as User;
     getGallery();
   }
 
