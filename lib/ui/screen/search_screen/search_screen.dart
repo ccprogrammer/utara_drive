@@ -73,42 +73,99 @@ class _SearchScreenState extends State<SearchScreen> {
                   color: MyTheme.colorCyan,
                 ),
               ),
-              child: GridView.custom(
-                shrinkWrap: true,
-                gridDelegate: SliverQuiltedGridDelegate(
-                  crossAxisCount: 4,
-                  mainAxisSpacing: 4,
-                  crossAxisSpacing: 4,
-                  repeatPattern: QuiltedGridRepeatPattern.mirrored,
-                  pattern: [
-                    const QuiltedGridTile(2, 2),
-                    const QuiltedGridTile(1, 1),
-                    const QuiltedGridTile(1, 1),
-                    const QuiltedGridTile(1, 1),
-                    const QuiltedGridTile(1, 1),
-                    const QuiltedGridTile(1, 1),
-                    const QuiltedGridTile(1, 1),
-                    const QuiltedGridTile(2, 2),
-                    const QuiltedGridTile(1, 1),
-                    const QuiltedGridTile(1, 1),
-                  ],
-                ),
-                childrenDelegate: SliverChildBuilderDelegate(
-                  childCount: provider.searchList.length,
-                  (context, index) {
-                    dynamic item = provider.searchList
-                        .where((element) =>
-                            element.id == provider.searchList[index].id)
-                        .toList()[0];
-
-                    return GalleryGridItem(data: item);
-                  },
-                ),
-              ),
+              child: buildBody(),
             ),
           ),
         ),
       );
     });
+  }
+
+  buildBody() {
+    return Consumer<GalleryProvider>(
+      builder: (context, provider, _) {
+        // if search empty
+        if (provider.searchC.text == '' && provider.searchList.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Icon(
+                  Icons.image_search,
+                  size: 78,
+                  color: MyTheme.colorDarkerGrey,
+                ),
+                SizedBox(height: 16),
+                Text(
+                  'Search Image',
+                  style: TextStyle(
+                    color: MyTheme.colorDarkerGrey,
+                    fontSize: 24,
+                  ),
+                )
+              ],
+            ),
+          );
+        }
+
+        // if search not found
+        if (provider.searchC.text != '' && provider.searchList.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Icon(
+                  Icons.image_search,
+                  size: 78,
+                  color: MyTheme.colorDarkerGrey,
+                ),
+                SizedBox(height: 16),
+                Text(
+                  'Image not found',
+                  style: TextStyle(
+                    color: MyTheme.colorDarkerGrey,
+                    fontSize: 24,
+                  ),
+                )
+              ],
+            ),
+          );
+        }
+
+        // if search not empty
+        return GridView.custom(
+          shrinkWrap: true,
+          gridDelegate: SliverQuiltedGridDelegate(
+            crossAxisCount: 4,
+            mainAxisSpacing: 4,
+            crossAxisSpacing: 4,
+            repeatPattern: QuiltedGridRepeatPattern.mirrored,
+            pattern: [
+              const QuiltedGridTile(2, 2),
+              const QuiltedGridTile(1, 1),
+              const QuiltedGridTile(1, 1),
+              const QuiltedGridTile(1, 1),
+              const QuiltedGridTile(1, 1),
+              const QuiltedGridTile(1, 1),
+              const QuiltedGridTile(1, 1),
+              const QuiltedGridTile(2, 2),
+              const QuiltedGridTile(1, 1),
+              const QuiltedGridTile(1, 1),
+            ],
+          ),
+          childrenDelegate: SliverChildBuilderDelegate(
+            childCount: provider.searchList.length,
+            (context, index) {
+              dynamic item = provider.searchList
+                  .where(
+                      (element) => element.id == provider.searchList[index].id)
+                  .toList()[0];
+
+              return GalleryGridItem(data: item);
+            },
+          ),
+        );
+      },
+    );
   }
 }

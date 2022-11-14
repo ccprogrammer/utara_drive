@@ -124,7 +124,7 @@ class _HomeTabState extends State<HomeTab> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
                 Icon(
-                  Icons.image_search,
+                  Icons.image_not_supported_outlined,
                   size: 78,
                   color: MyTheme.colorDarkerGrey,
                 ),

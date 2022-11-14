@@ -110,7 +110,7 @@ class _AlbumTabState extends State<AlbumTab> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
                 Icon(
-                  Icons.image_search,
+                  Icons.hide_image_outlined,
                   size: 78,
                   color: MyTheme.colorDarkerGrey,
                 ),
