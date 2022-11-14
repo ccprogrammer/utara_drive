@@ -55,6 +55,7 @@ class Helper {
     Function? onClose,
     Function? onYes,
     Function? onNo,
+    bool oneButton = false,
   }) {
     return showDialog(
         context: context,
@@ -91,19 +92,20 @@ class Helper {
                         child: Text(titleLeft),
                       ),
                     ),
-                    const SizedBox(width: 24),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          onYes != null ? onYes() : null;
-                          Navigator.pop(context);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: MyTheme.colorRed,
+                    if (!oneButton) const SizedBox(width: 24),
+                    if (!oneButton)
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            onYes != null ? onYes() : null;
+                            Navigator.pop(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: MyTheme.colorRed,
+                          ),
+                          child: Text(titleRight),
                         ),
-                        child: Text(titleRight),
                       ),
-                    ),
                   ],
                 ),
               ],
