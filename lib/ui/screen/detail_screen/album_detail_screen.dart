@@ -22,6 +22,7 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
       icon: Icons.delete_outline_rounded,
       text: 'Delete album?',
       onYes: () {
+        Navigator.pop(context);
         Provider.of<AddAlbumProvider>(context, listen: false)
             .deleteAlbum(context, widget.data);
       },

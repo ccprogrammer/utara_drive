@@ -49,7 +49,6 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final loadingCreateAlbum = Provider.of<AddAlbumProvider>(context).isLoading;
     return WillPopScope(
       onWillPop: () async {
         SystemNavigator.pop();

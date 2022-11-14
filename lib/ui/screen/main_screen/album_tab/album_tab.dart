@@ -65,52 +65,92 @@ class _AlbumTabState extends State<AlbumTab> {
                 color: MyTheme.colorCyan,
               ),
             ),
-            child: provider.albumsList.isNotEmpty
-                ? GridView.custom(
-                    padding: const EdgeInsets.all(16),
-                    gridDelegate: SliverQuiltedGridDelegate(
-                      crossAxisCount: 4,
-                      mainAxisSpacing: 20,
-                      crossAxisSpacing: 20,
-                      repeatPattern: QuiltedGridRepeatPattern.mirrored,
-                      pattern: [
-                        const QuiltedGridTile(2, 2),
-                        const QuiltedGridTile(2, 2),
-                        const QuiltedGridTile(2, 2),
-                        const QuiltedGridTile(2, 2),
-                      ],
-                    ),
-                    childrenDelegate: SliverChildBuilderDelegate(
-                      childCount: provider.albumsList.length,
-                      (context, index) {
-                        var item = provider.albumsList[index];
-                        return AlbumGridItem(item: item);
-                      },
-                    ),
-                  )
-                : Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(
-                          Icons.image_search,
-                          size: 78,
-                          color: MyTheme.colorDarkerGrey,
-                        ),
-                        SizedBox(height: 16),
-                        Text(
-                          'Albums Empty',
-                          style: TextStyle(
-                            color: MyTheme.colorDarkerGrey,
-                            fontSize: 24,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+            child: buildContent(),
           ),
         ),
       );
     });
+  }
+
+  buildContent() {
+    return Consumer<AlbumProvider>(
+      builder: (context, provider, _) {
+
+        // on loading
+        if (provider.isLoading && provider.albumsList.isNotEmpty) {
+          return Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                SizedBox(
+                  width: 26,
+                  height: 26,
+                  child: CircularProgressIndicator(
+                    color: MyTheme.colorCyan,
+                  ),
+                ),
+                SizedBox(width: 10),
+                Text(
+                  'Loading',
+                  style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black),
+                ),
+              ],
+            ),
+          );
+        }
+
+        // if albums empty
+        if (provider.albumsList.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Icon(
+                  Icons.image_search,
+                  size: 78,
+                  color: MyTheme.colorDarkerGrey,
+                ),
+                SizedBox(height: 16),
+                Text(
+                  'Albums Empty',
+                  style: TextStyle(
+                    color: MyTheme.colorDarkerGrey,
+                    fontSize: 24,
+                  ),
+                )
+              ],
+            ),
+          );
+        }
+
+        // if albums not empty
+        return GridView.custom(
+          padding: const EdgeInsets.all(16),
+          gridDelegate: SliverQuiltedGridDelegate(
+            crossAxisCount: 4,
+            mainAxisSpacing: 20,
+            crossAxisSpacing: 20,
+            repeatPattern: QuiltedGridRepeatPattern.mirrored,
+            pattern: [
+              const QuiltedGridTile(2, 2),
+              const QuiltedGridTile(2, 2),
+              const QuiltedGridTile(2, 2),
+              const QuiltedGridTile(2, 2),
+            ],
+          ),
+          childrenDelegate: SliverChildBuilderDelegate(
+            childCount: provider.albumsList.length,
+            (context, index) {
+              var item = provider.albumsList[index];
+              return AlbumGridItem(item: item);
+            },
+          ),
+        );
+      },
+    );
   }
 }

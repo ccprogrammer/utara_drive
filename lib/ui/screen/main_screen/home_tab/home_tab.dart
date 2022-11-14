@@ -77,30 +77,7 @@ class _HomeTabState extends State<HomeTab> {
                       color: MyTheme.colorCyan,
                     ),
                   ),
-                  child: provider.galleryList.isNotEmpty
-                      ? isGrid
-                          ? galleryGridItem(provider.galleryList)
-                          : galleryTile(provider.galleryList)
-                      : Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Icon(
-                                Icons.image_search,
-                                size: 78,
-                                color: MyTheme.colorDarkerGrey,
-                              ),
-                              SizedBox(height: 16),
-                              Text(
-                                'Gallery Empty',
-                                style: TextStyle(
-                                  color: MyTheme.colorDarkerGrey,
-                                  fontSize: 24,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
+                  child: buildContent(),
                 ),
               ),
             ],
@@ -108,5 +85,67 @@ class _HomeTabState extends State<HomeTab> {
         ),
       );
     });
+  }
+
+  buildContent() {
+    return Consumer<GalleryProvider>(
+      builder: (context, provider, _) {
+        // on loading
+        if (provider.isLoading && provider.galleryList.isEmpty) {
+          return Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                SizedBox(
+                  width: 26,
+                  height: 26,
+                  child: CircularProgressIndicator(
+                    color: MyTheme.colorCyan,
+                  ),
+                ),
+                SizedBox(width: 10),
+                Text(
+                  'Loading',
+                  style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black),
+                ),
+              ],
+            ),
+          );
+        }
+
+        // if gallery empty
+        if (provider.galleryList.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Icon(
+                  Icons.image_search,
+                  size: 78,
+                  color: MyTheme.colorDarkerGrey,
+                ),
+                SizedBox(height: 16),
+                Text(
+                  'Gallery Empty',
+                  style: TextStyle(
+                    color: MyTheme.colorDarkerGrey,
+                    fontSize: 24,
+                  ),
+                )
+              ],
+            ),
+          );
+        }
+
+        // if gallery not empty
+        return isGrid
+            ? galleryGridItem(provider.galleryList)
+            : galleryTile(provider.galleryList);
+      },
+    );
   }
 }

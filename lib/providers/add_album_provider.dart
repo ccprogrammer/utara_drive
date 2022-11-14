@@ -106,7 +106,7 @@ class AddAlbumProvider with ChangeNotifier {
           .doc(album.id)
           .delete()
           .then((value) {
-        Navigator.pop(context);
+        // Navigator.pop(context);
         Helper(ctx: context).showNotif(
           title: 'Success',
           message: 'Album deleted',
