@@ -19,8 +19,14 @@ class GalleryTile extends StatelessWidget {
             .where((element) => element.id == galleryList[index].id)
             .toList()[0];
 
-        return GalleryTileItem(
-          item: item,
+        int idx = galleryList.indexOf(item);
+
+        return Padding(
+          padding:
+              EdgeInsets.only(bottom: idx == galleryList.length - 1 ? 42 : 0),
+          child: GalleryTileItem(
+            item: item,
+          ),
         );
       },
     );
