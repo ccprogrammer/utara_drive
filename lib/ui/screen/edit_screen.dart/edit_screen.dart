@@ -27,6 +27,7 @@ class _EditScreenState extends State<EditScreen> {
     return LoadingFallback(
       isLoading: false,
       child: Scaffold(
+        backgroundColor: MyTheme.colorDarkPurple,
         appBar: _buildAppBar(),
         body: _buildBody(),
       ),
@@ -169,13 +170,13 @@ class _EditScreenState extends State<EditScreen> {
 
   PreferredSizeWidget _buildAppBar() {
     return AppBar(
-      backgroundColor: MyTheme.colorCyan,
+      backgroundColor: MyTheme.colorBlueGrey,
       elevation: 0,
-      iconTheme: const IconThemeData(color: MyTheme.colorDarkPurple),
+      iconTheme: const IconThemeData(color: MyTheme.colorGrey),
       title: const Text(
         'Edit Gallery',
         style: TextStyle(
-          color: MyTheme.colorDarkPurple,
+          color: MyTheme.colorGrey,
         ),
       ),
       actions: [

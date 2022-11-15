@@ -13,7 +13,7 @@ class MyTheme {
   static const Color colorRed = Color(0xffFF1E00);
   static const Color colorPurple = Color(0xff6C5ECF);
 
-  static const Color colorBlueGrey = Color(0xff252836);
+  static const Color colorBlueGrey = Color.fromARGB(255, 54, 59, 78);
   static const Color colorDarkPurple = Color(0xff1F1D2B);
 
 

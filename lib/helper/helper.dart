@@ -297,7 +297,7 @@ class Helper {
   }) {
     showModalBottomSheet(
       elevation: elevation,
-      backgroundColor: Colors.white,
+      backgroundColor: MyTheme.colorBlueGrey,
       context: context,
       builder: (context) => child,
     );

@@ -23,23 +23,13 @@ class _AuthScreenState extends State<AuthScreen> {
         return false;
       },
       child: Scaffold(
-        backgroundColor: MyTheme.colorCyan,
         body: Consumer<AuthProvider>(builder: (context, provider, _) {
           return SafeArea(
             child: Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
-              decoration: const BoxDecoration(
-                // image: DecorationImage(
-                //   image: AssetImage("assets/images/image_background.png"),
-                //   fit: BoxFit.cover,
-                // ),
-                gradient: LinearGradient(
-                  colors: [
-                    Color(0xff56CCF2),
-                    Color(0xff2F80ED),
-                  ],
-                ),
+              decoration:  const BoxDecoration(
+              color: MyTheme.colorDarkPurple,
               ),
               child: Center(
                 child: ListView(
@@ -59,7 +49,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       child: Text(
                         provider.isLogin ? 'Log In' : 'Sign Up',
                         style: const TextStyle(
-                          color: MyTheme.colorDarkPurple,
+                          color: MyTheme.colorGrey,
                           fontSize: 42,
                           fontWeight: MyTheme.bold,
                           fontStyle: FontStyle.italic,
@@ -68,15 +58,17 @@ class _AuthScreenState extends State<AuthScreen> {
                     ),
                     Card(
                       margin: const EdgeInsets.symmetric(horizontal: 42),
+                      
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(22),
                       ),
                       elevation: 2,
                       clipBehavior: Clip.antiAlias,
+                      color: MyTheme.colorBlueGrey,
                       child: Container(
                         padding: const EdgeInsets.fromLTRB(23, 31, 23, 27),
                         width: double.infinity,
-                        color: MyTheme.colorDarkPurple,
+                        color: MyTheme.colorBlueGrey,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -119,7 +111,7 @@ class _AuthScreenState extends State<AuthScreen> {
                               padding: EdgeInsets.only(top: 12, bottom: 6),
                               child: Text(
                                 'OR',
-                                style: TextStyle(color: MyTheme.colorGrey),
+                                style: TextStyle(color: MyTheme.colorDarkGrey),
                               ),
                             ),
 
@@ -131,13 +123,13 @@ class _AuthScreenState extends State<AuthScreen> {
                                         ? 'Create new account '
                                         : 'Have an account? Cool! ',
                                     style: const TextStyle(
-                                      color: MyTheme.colorBlack,
+                                      color: MyTheme.colorDarkGrey,
                                     ),
                                   ),
                                   TextSpan(
                                     text: provider.isLogin ? 'here' : 'log in',
                                     style: const TextStyle(
-                                      color: MyTheme.colorBlue,
+                                      color: MyTheme.colorCyan,
                                     ),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () => provider.switchLogin(),

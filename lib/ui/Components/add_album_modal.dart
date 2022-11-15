@@ -36,7 +36,7 @@ class _AddAlbumModalState extends State<AddAlbumModal> {
                   child: const Text(
                     'Save to',
                     style: TextStyle(
-                      color: Colors.black,
+                      color: MyTheme.colorGrey,
                       fontWeight: FontWeight.w800,
                       fontSize: 18,
                     ),
@@ -44,11 +44,8 @@ class _AddAlbumModalState extends State<AddAlbumModal> {
                   ),
                 ),
               ),
-              const Divider(
-                thickness: 1,
-                height: 26,
-                color: MyTheme.colorGrey,
-              ),
+
+              const SizedBox(height: 16),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -126,7 +123,7 @@ class _AddAlbumModalState extends State<AddAlbumModal> {
                                                 title: 'Hello,',
                                                 message:
                                                     'Image already in the album, remove feature is still not available',
-                                                    color: MyTheme.colorCyan,
+                                                color: MyTheme.colorCyan,
                                               )
                                             : addAlbum.addToAlbum(
                                                 context,
@@ -159,11 +156,11 @@ class _AddAlbumModalState extends State<AddAlbumModal> {
                                 errorWidget: (context, url, error) =>
                                     const Center(child: Icon(Icons.error)),
                               ),
-                              const SizedBox(height: 8),
+                              const SizedBox(height: 12),
                               Text(
                                 item['label'],
                                 style: const TextStyle(
-                                  color: MyTheme.colorBlack,
+                                  color: MyTheme.colorGrey,
                                   fontSize: 12,
                                 ),
                               )
@@ -175,12 +172,7 @@ class _AddAlbumModalState extends State<AddAlbumModal> {
                   ],
                 ),
               ),
-
-              const Divider(
-                thickness: 1,
-                height: 26,
-                color: MyTheme.colorGrey,
-              ),
+              const SizedBox(height: 16),
 
               TextButton(
                 onPressed: () {
@@ -188,7 +180,7 @@ class _AddAlbumModalState extends State<AddAlbumModal> {
                 },
                 child: const Text(
                   'Cancel',
-                  style: TextStyle(color: MyTheme.colorBlack),
+                  style: TextStyle(color: MyTheme.colorGrey),
                 ),
               ),
             ],

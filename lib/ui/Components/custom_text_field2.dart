@@ -42,7 +42,7 @@ class _CustomTextField2State extends State<CustomTextField2> {
             child: TextFormField(
                 maxLines: widget.maxLines,
                 controller: widget.controller,
-                style: const TextStyle(fontSize: 13),
+                style: const TextStyle(fontSize: 13, color: MyTheme.colorGrey),
                 textInputAction: widget.inputAction,
                 decoration: InputDecoration.collapsed(
                   hintText: widget.hint,
