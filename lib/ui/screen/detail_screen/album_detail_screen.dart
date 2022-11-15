@@ -94,11 +94,11 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
               Navigator.pop(context);
             },
             style:
-                ElevatedButton.styleFrom(backgroundColor: MyTheme.colorDarkPurple),
+                ElevatedButton.styleFrom(backgroundColor: MyTheme.colorBlueGrey),
             child: const Text(
               'Back',
               style: TextStyle(
-                color: MyTheme.colorCyan,
+                color: MyTheme.colorGrey,
               ),
             ),
           ),
@@ -107,7 +107,7 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
             child: Text(
               item['label'],
               style: const TextStyle(
-                color: MyTheme.colorCyan,
+                color: MyTheme.colorGrey,
                 fontSize: 20,
                 fontWeight: MyTheme.semiBold,
               ),

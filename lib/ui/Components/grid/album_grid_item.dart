@@ -53,11 +53,11 @@ class AlbumGridItem extends StatelessWidget {
                     shadows: [
                       Shadow(
                         blurRadius: 18.0,
-                        color: Colors.black,
+                        color: MyTheme.colorBlueGrey,
                         offset: Offset(4.0, 3.0),
                       ),
                     ],
-                    color: MyTheme.colorDarkPurple,
+                    color: MyTheme.colorGrey,
                     fontSize: 16,
                     fontWeight: MyTheme.semiBold,
                   ),

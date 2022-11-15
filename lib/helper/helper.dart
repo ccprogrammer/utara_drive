@@ -61,6 +61,7 @@ class Helper {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
+            backgroundColor: MyTheme.colorBlueGrey,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             content: Column(
@@ -74,7 +75,7 @@ class Helper {
                 const SizedBox(height: 24),
                 Text(
                   text,
-                  style: const TextStyle(),
+                  style: const TextStyle(color: MyTheme.colorGrey),
                 ),
                 const SizedBox(height: 24),
                 Row(
@@ -235,6 +236,7 @@ class Helper {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
+            backgroundColor: MyTheme.colorBlueGrey,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             content:
@@ -245,7 +247,7 @@ class Helper {
                   const Text(
                     'Create an album',
                     style: TextStyle(
-                      color: MyTheme.colorBlack,
+                      color: MyTheme.colorGrey,
                       fontSize: 16,
                     ),
                   ),
@@ -269,12 +271,15 @@ class Helper {
                               height: 16,
                               child: Center(
                                 child: CircularProgressIndicator(
-                                  color: MyTheme.colorDarkPurple,
+                                  color: Colors.white,
                                   strokeWidth: 2,
                                 ),
                               ),
                             )
-                          : const Text('Create'),
+                          : const Text(
+                              'Create',
+                              style: TextStyle(color: Colors.white),
+                            ),
                     ),
                   ),
                 ],
