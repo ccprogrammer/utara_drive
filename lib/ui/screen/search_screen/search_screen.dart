@@ -5,7 +5,6 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:utara_drive/providers/gallery_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 import 'package:utara_drive/ui/Components/grid/gallery_grid_item.dart';
-import 'package:utara_drive/ui/Components/search_app_bar.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -19,9 +18,10 @@ class _SearchScreenState extends State<SearchScreen> {
       RefreshController(initialRefresh: false);
 
   // refresher
-  onRefresh() async {
+  onRefresh() {
     // monitor network fetch
-    await Provider.of<GalleryProvider>(context, listen: false).getGallery();
+    Provider.of<GalleryProvider>(context, listen: false).getGallery();
+    Provider.of<GalleryProvider>(context, listen: false).searchGallery();
     refreshController.refreshCompleted();
   }
 
@@ -79,6 +79,90 @@ class _SearchScreenState extends State<SearchScreen> {
         ),
       );
     });
+  }
+
+  PreferredSizeWidget searchAppBar() {
+    return AppBar(
+      automaticallyImplyLeading: false,
+      backgroundColor: MyTheme.colorDarkPurple,
+      toolbarHeight: 82,
+      elevation: 0,
+      titleSpacing: 0,
+      title: Consumer<GalleryProvider>(builder: (context, provider, _) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            children: [
+              // search button
+              SizedBox(
+                width: 48,
+                height: 48,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    backgroundColor: MyTheme.colorCyan,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(5),
+                        bottomLeft: Radius.circular(5),
+                        topRight: Radius.circular(0),
+                        bottomRight: Radius.circular(0),
+                      ),
+                    ),
+                  ),
+                  child: provider.isSearchLoading
+                      ? const SizedBox(
+                          width: 18,
+                          height: 18,
+                          child: CircularProgressIndicator(
+                            color: MyTheme.colorDarkPurple,
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : Image.asset(
+                          'assets/icons/icon_search.png',
+                          width: 18,
+                          height: 18,
+                          color: Colors.white,
+                        ),
+                ),
+              ),
+
+              // search field
+              Expanded(
+                child: Container(
+                  clipBehavior: Clip.antiAlias,
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(5),
+                      bottomRight: Radius.circular(5),
+                    ),
+                    border: Border.all(
+                      width: 1,
+                      color: MyTheme.colorDarkerGrey,
+                    ),
+                  ),
+                  height: 48,
+                  child: Center(
+                    child: TextFormField(
+                      controller: provider.searchC,
+                      style: const TextStyle(color: MyTheme.colorGrey),
+                      decoration: const InputDecoration.collapsed(
+                        hintText: 'Search',
+                        hintStyle: TextStyle(color: MyTheme.colorDarkerGrey),
+                      ),
+                      onChanged: (value) => provider.searchGallery(),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      }),
+    );
   }
 
   buildBody() {
