@@ -72,7 +72,7 @@ class _AddScreenState extends State<AddScreen> {
                       ),
                       child: const Icon(
                         Icons.fullscreen,
-                        color: MyTheme.colorWhite,
+                        color: MyTheme.colorDarkPurple,
                         size: 16,
                       ),
                     ),
@@ -151,11 +151,11 @@ class _AddScreenState extends State<AddScreen> {
     return AppBar(
       backgroundColor: MyTheme.colorCyan,
       elevation: 0,
-      iconTheme: const IconThemeData(color: MyTheme.colorWhite),
+      iconTheme: const IconThemeData(color: MyTheme.colorDarkPurple),
       title: const Text(
         'New Image',
         style: TextStyle(
-          color: MyTheme.colorWhite,
+          color: MyTheme.colorDarkPurple,
         ),
       ),
       actions: [

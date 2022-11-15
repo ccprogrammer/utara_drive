@@ -42,7 +42,7 @@ class _SearchScreenState extends State<SearchScreen> {
           return true;
         },
         child: Scaffold(
-          backgroundColor: MyTheme.colorWhite,
+          backgroundColor: MyTheme.colorDarkPurple,
           appBar: searchAppBar(),
           body: SafeArea(
             child: SmartRefresher(
@@ -50,7 +50,7 @@ class _SearchScreenState extends State<SearchScreen> {
               onRefresh: onRefresh,
               onLoading: onLoading,
               header: const TwoLevelHeader(
-                decoration: BoxDecoration(color: MyTheme.colorWhite),
+                decoration: BoxDecoration(color: MyTheme.colorDarkPurple),
                 textStyle: TextStyle(color: MyTheme.colorCyan),
                 refreshingIcon: SizedBox(
                   height: 24,
@@ -93,7 +93,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 Icon(
                   Icons.image_search,
                   size: 78,
-                  color: MyTheme.colorDarkerGrey,
+                  color: MyTheme.colorCyan,
                 ),
                 SizedBox(height: 16),
                 Text(

@@ -57,7 +57,7 @@ class AlbumGridItem extends StatelessWidget {
                         offset: Offset(4.0, 3.0),
                       ),
                     ],
-                    color: MyTheme.colorWhite,
+                    color: MyTheme.colorDarkPurple,
                     fontSize: 16,
                     fontWeight: MyTheme.semiBold,
                   ),

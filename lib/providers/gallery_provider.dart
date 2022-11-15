@@ -8,6 +8,7 @@ class GalleryProvider with ChangeNotifier {
   late User user;
 
   final searchC = TextEditingController();
+  bool isGrid = true;
 
   List galleryList = [];
   List imageList = [];
@@ -85,6 +86,11 @@ class GalleryProvider with ChangeNotifier {
   clearSearch() {
     searchC.clear();
     searchList.clear();
+  }
+
+  switchLayout() {
+    isGrid = !isGrid;
+    notifyListeners();
   }
   // Stream getImage() {
   //   User user = Helper().getUser();

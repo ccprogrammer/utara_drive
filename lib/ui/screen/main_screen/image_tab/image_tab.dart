@@ -3,8 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:utara_drive/providers/gallery_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
-import 'package:utara_drive/ui/Components/grid/gallery_grid.dart';
-import 'package:utara_drive/ui/Components/list/gallery_tile.dart';
 import 'package:utara_drive/ui/Components/switch_layout.dart';
 
 class ImageTab extends StatefulWidget {
@@ -38,7 +36,7 @@ class _ImageTabState extends State<ImageTab> {
   Widget build(BuildContext context) {
     return Consumer<GalleryProvider>(builder: (context, provider, _) {
       return Scaffold(
-        backgroundColor: MyTheme.colorWhite,
+        backgroundColor: MyTheme.colorDarkPurple,
         body: SafeArea(
           child: Column(
             children: [
@@ -54,7 +52,7 @@ class _ImageTabState extends State<ImageTab> {
                   onRefresh: onRefresh,
                   onLoading: onLoading,
                   header: const TwoLevelHeader(
-                    decoration: BoxDecoration(color: MyTheme.colorWhite),
+                    decoration: BoxDecoration(color: MyTheme.colorDarkPurple),
                     textStyle: TextStyle(color: MyTheme.colorCyan),
                     refreshingIcon: SizedBox(
                       height: 24,
@@ -77,9 +75,7 @@ class _ImageTabState extends State<ImageTab> {
                       color: MyTheme.colorCyan,
                     ),
                   ),
-                  child: isGrid
-                      ? galleryGridItem(provider.imageList)
-                      : galleryTile(provider.imageList),
+                  child: const SizedBox(),
                 ),
               ),
             ],

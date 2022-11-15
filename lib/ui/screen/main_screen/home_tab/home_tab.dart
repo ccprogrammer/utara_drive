@@ -18,6 +18,8 @@ class _HomeTabState extends State<HomeTab> {
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
 
+  final ScrollController scrollController = ScrollController();
+
   bool isGrid = true;
 
   // refresher
@@ -36,62 +38,60 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<GalleryProvider>(builder: (context, provider, _) {
-      return Scaffold(
-        backgroundColor: MyTheme.colorWhite,
-        body: SafeArea(
-          child: Column(
-            children: [
-              SwitchLayout(
-                isGrid: isGrid,
-                changeLayout: (value) => setState(() {
-                  isGrid = value;
-                }),
-              ),
-              Expanded(
-                child: SmartRefresher(
-                  controller: refreshController,
-                  onRefresh: onRefresh,
-                  onLoading: onLoading,
-                  header: const TwoLevelHeader(
-                    decoration: BoxDecoration(color: MyTheme.colorWhite),
-                    textStyle: TextStyle(color: MyTheme.colorCyan),
-                    refreshingIcon: SizedBox(
-                      height: 24,
-                      width: 24,
-                      child: CircularProgressIndicator(
-                        color: MyTheme.colorCyan,
-                        strokeWidth: 3,
-                      ),
-                    ),
-                    idleIcon: Icon(
-                      Icons.refresh,
+    return Scaffold(
+      backgroundColor: MyTheme.colorDarkPurple,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Consumer<GalleryProvider>(builder: (context, provider, _) {
+              return SwitchLayout(
+                isGrid: provider.isGrid,
+                changeLayout: (value) => provider.switchLayout(),
+              );
+            }),
+            Expanded(
+              child: SmartRefresher(
+                controller: refreshController,
+                onRefresh: onRefresh,
+                onLoading: onLoading,
+                header: const TwoLevelHeader(
+                  decoration: BoxDecoration(color: MyTheme.colorDarkPurple),
+                  textStyle: TextStyle(color: MyTheme.colorCyan),
+                  refreshingIcon: SizedBox(
+                    height: 24,
+                    width: 24,
+                    child: CircularProgressIndicator(
                       color: MyTheme.colorCyan,
-                    ),
-                    completeIcon: Icon(
-                      Icons.check,
-                      color: MyTheme.colorCyan,
-                    ),
-                    releaseIcon: Icon(
-                      Icons.arrow_upward,
-                      color: MyTheme.colorCyan,
+                      strokeWidth: 3,
                     ),
                   ),
-                  child: buildContent(),
+                  idleIcon: Icon(
+                    Icons.refresh,
+                    color: MyTheme.colorCyan,
+                  ),
+                  completeIcon: Icon(
+                    Icons.check,
+                    color: MyTheme.colorCyan,
+                  ),
+                  releaseIcon: Icon(
+                    Icons.arrow_upward,
+                    color: MyTheme.colorCyan,
+                  ),
                 ),
+                child: buildContent(),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      );
-    });
+      ),
+    );
   }
 
   buildContent() {
     return Consumer<GalleryProvider>(
       builder: (context, provider, _) {
         // on loading
-        if (provider.isLoading && provider.galleryList.isEmpty) {
+        if (provider.isLoading && provider.galleryList.isNotEmpty) {
           return Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -108,9 +108,10 @@ class _HomeTabState extends State<HomeTab> {
                 Text(
                   'Loading',
                   style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black),
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                    color: MyTheme.colorGrey,
+                  ),
                 ),
               ],
             ),
@@ -126,7 +127,7 @@ class _HomeTabState extends State<HomeTab> {
                 Icon(
                   Icons.image_not_supported_outlined,
                   size: 78,
-                  color: MyTheme.colorDarkerGrey,
+                  color: MyTheme.colorCyan,
                 ),
                 SizedBox(height: 16),
                 Text(
@@ -142,9 +143,17 @@ class _HomeTabState extends State<HomeTab> {
         }
 
         // if gallery not empty
-        return isGrid
-            ? galleryGridItem(provider.galleryList)
-            : galleryTile(provider.galleryList);
+        if (provider.isGrid) {
+          return GalleryGrid(
+            scrollController: scrollController,
+            galleryList: provider.galleryList,
+          );
+        } else {
+          return GalleryTile(
+            scrollController: scrollController,
+            galleryList: provider.galleryList,
+          );
+        }
       },
     );
   }

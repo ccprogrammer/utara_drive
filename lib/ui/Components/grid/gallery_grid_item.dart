@@ -45,7 +45,7 @@ class GalleryGridItem extends StatelessWidget {
                             data['type'] == 'image'
                                 ? Icons.image
                                 : Icons.play_arrow,
-                            color: MyTheme.colorWhite,
+                            color: MyTheme.colorDarkPurple,
                             size: 18,
                           ),
                           if (data['type'] == 'video')
@@ -54,7 +54,7 @@ class GalleryGridItem extends StatelessWidget {
                               child: const Text(
                                 '02:42',
                                 style: TextStyle(
-                                  color: MyTheme.colorWhite,
+                                  color: MyTheme.colorDarkPurple,
                                   fontSize: 12,
                                 ),
                               ),

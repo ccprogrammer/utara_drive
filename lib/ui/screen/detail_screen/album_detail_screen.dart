@@ -32,7 +32,7 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyTheme.colorWhite,
+      backgroundColor: MyTheme.colorDarkPurple,
       appBar: appBar(),
       body: buildBody(),
     );
@@ -84,7 +84,7 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
 
     return AppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: MyTheme.colorWhite,
+      backgroundColor: MyTheme.colorDarkPurple,
       toolbarHeight: 80,
       elevation: 0,
       title: Row(
@@ -94,7 +94,7 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
               Navigator.pop(context);
             },
             style:
-                ElevatedButton.styleFrom(backgroundColor: MyTheme.colorWhite),
+                ElevatedButton.styleFrom(backgroundColor: MyTheme.colorDarkPurple),
             child: const Text(
               'Back',
               style: TextStyle(

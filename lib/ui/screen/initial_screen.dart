@@ -38,8 +38,8 @@ class _InitialScreenState extends State<InitialScreen> {
             // ),
             gradient: LinearGradient(
           colors: [
-            Color(0xff56CCF2),
-            Color(0xff2F80ED),
+            MyTheme.colorBlueGrey,
+            MyTheme.colorDarkPurple,
           ],
         )),
         padding: const EdgeInsets.symmetric(vertical: 80),
@@ -57,14 +57,14 @@ class _InitialScreenState extends State<InitialScreen> {
             const Text(
               'Welcome to',
               style: TextStyle(
-                color: MyTheme.colorWhite,
+                color: Colors.white,
                 fontSize: 32,
               ),
             ),
             const Text(
               'uDrive',
               style: TextStyle(
-                color: MyTheme.colorWhite,
+                color: Colors.white,
                 fontSize: 72,
                 fontStyle: FontStyle.italic,
                 fontWeight: MyTheme.bold,

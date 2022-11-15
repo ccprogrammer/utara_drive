@@ -59,7 +59,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       child: Text(
                         provider.isLogin ? 'Log In' : 'Sign Up',
                         style: const TextStyle(
-                          color: MyTheme.colorWhite,
+                          color: MyTheme.colorDarkPurple,
                           fontSize: 42,
                           fontWeight: MyTheme.bold,
                           fontStyle: FontStyle.italic,
@@ -76,7 +76,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       child: Container(
                         padding: const EdgeInsets.fromLTRB(23, 31, 23, 27),
                         width: double.infinity,
-                        color: MyTheme.colorWhite,
+                        color: MyTheme.colorDarkPurple,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [

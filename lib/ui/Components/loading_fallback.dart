@@ -20,7 +20,7 @@ class LoadingFallback extends StatelessWidget {
       return Container(
         padding: const EdgeInsets.all(16),
         decoration: const BoxDecoration(
-          color: Colors.white,
+          color: MyTheme.colorBlueGrey,
           borderRadius: BorderRadius.all(
             Radius.circular(8.0),
           ),
@@ -41,7 +41,7 @@ class LoadingFallback extends StatelessWidget {
               style: const TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
-                  color: Colors.black),
+                  color: Colors.white),
               child: Text(
                 loadingLabel ?? 'Loading',
               ),

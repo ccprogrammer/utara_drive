@@ -73,7 +73,7 @@ class _MainScreenState extends State<MainScreen> {
       animatedIcon: AnimatedIcons.menu_close,
       animatedIconTheme: const IconThemeData(size: 22.0),
       icon: Icons.add,
-      overlayColor: Colors.white,
+      overlayColor: MyTheme.colorDarkPurple,
       activeIcon: Icons.close,
       spacing: 3,
       mini: false,
@@ -155,7 +155,7 @@ class _MainScreenState extends State<MainScreen> {
   PreferredSizeWidget _appBar() {
     return AppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: MyTheme.colorWhite,
+      backgroundColor: MyTheme.colorDarkPurple,
       toolbarHeight: 80,
       elevation: 0,
       titleSpacing: 0,
@@ -190,7 +190,7 @@ class _MainScreenState extends State<MainScreen> {
                             'assets/icons/icon_search.png',
                             width: 18,
                             height: 18,
-                            color: MyTheme.colorWhite,
+                            color: Colors.white,
                           ),
                         ),
                       ),
@@ -206,7 +206,7 @@ class _MainScreenState extends State<MainScreen> {
                             ),
                             border: Border.all(
                               width: 1,
-                              color: MyTheme.colorGrey,
+                              color: MyTheme.colorDarkerGrey,
                             ),
                           ),
                           height: 48,
@@ -215,7 +215,7 @@ class _MainScreenState extends State<MainScreen> {
                             child: Text(
                               'Search',
                               style: TextStyle(
-                                color: MyTheme.colorDarkGrey,
+                                color: MyTheme.colorDarkerGrey,
                                 fontSize: 14,
                               ),
                             ),
@@ -249,7 +249,7 @@ class _MainScreenState extends State<MainScreen> {
 
   Widget _buildNavBar() {
     return BottomNavigationBar(
-      backgroundColor: MyTheme.colorWhite,
+      backgroundColor: MyTheme.colorBlueGrey,
       type: BottomNavigationBarType.fixed,
       selectedItemColor: MyTheme.colorCyan,
       unselectedItemColor: MyTheme.colorDarkerGrey,

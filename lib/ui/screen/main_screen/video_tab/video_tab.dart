@@ -35,14 +35,14 @@ class _VideoTabState extends State<VideoTab> {
   Widget build(BuildContext context) {
     return Consumer<GalleryProvider>(builder: (context, provider, _) {
       return Scaffold(
-        backgroundColor: MyTheme.colorWhite,
+        backgroundColor: MyTheme.colorDarkPurple,
         body: SafeArea(
           child: SmartRefresher(
             controller: refreshController,
             onRefresh: onRefresh,
             onLoading: onLoading,
            header: const TwoLevelHeader(
-              decoration: BoxDecoration(color: MyTheme.colorWhite),
+              decoration: BoxDecoration(color: MyTheme.colorDarkPurple),
               textStyle: TextStyle(color: MyTheme.colorCyan),
               refreshingIcon: SizedBox(
                 height: 24,

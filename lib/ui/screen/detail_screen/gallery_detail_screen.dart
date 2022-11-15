@@ -146,7 +146,7 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
                     controller: controller,
                     scaleStateController: scaleController,
                     backgroundDecoration:
-                        const BoxDecoration(color: MyTheme.colorWhite),
+                        const BoxDecoration(color: MyTheme.colorDarkPurple),
                     imageProvider: imageProvider,
                   ),
                 ),
@@ -165,7 +165,7 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
                   width: MediaQuery.of(context).size.width,
-                  color: MyTheme.colorWhite.withOpacity(0.6),
+                  color: MyTheme.colorDarkPurple.withOpacity(0.6),
                   constraints: BoxConstraints(
                       maxHeight:
                           MediaQuery.of(context).size.height * detailsHeight),
@@ -224,6 +224,7 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
             style: const TextStyle(
               fontSize: 14,
               fontWeight: MyTheme.semiBold,
+              color: MyTheme.colorDarkGrey,
             ),
           ),
           const SizedBox(height: 2),
@@ -231,6 +232,7 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
             desc,
             style: const TextStyle(
               fontSize: 13,
+              color: MyTheme.colorDarkGrey,
             ),
           ),
         ],
@@ -242,13 +244,13 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
     // not using container because the ripple effect from icon button is not showing so i change it to BottomAppBar
 
     return BottomAppBar(
-      color: MyTheme.colorWhite,
+      color: MyTheme.colorBlueGrey,
       elevation: 0.0,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           IconButton(
-            color: MyTheme.colorDarkerGrey,
+            color: MyTheme.colorGrey,
             onPressed: () async {
               Provider.of<EditGalleryProvider>(context, listen: false)
                   .initTextController(
@@ -262,28 +264,28 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
             icon: const Icon(Icons.edit),
           ),
           IconButton(
-            color: MyTheme.colorDarkerGrey,
+            color: MyTheme.colorGrey,
             onPressed: () {
               Helper(ctx: context).shareContent(image: widget.data);
             },
             icon: const Icon(Icons.share),
           ),
           IconButton(
-            color: MyTheme.colorDarkerGrey,
+            color: MyTheme.colorGrey,
             onPressed: () {
               handlSaveToAlbum();
             },
             icon: const Icon(Icons.add_box_outlined),
           ),
           IconButton(
-            color: MyTheme.colorDarkerGrey,
+            color: MyTheme.colorGrey,
             onPressed: () {
               handleDelete();
             },
             icon: const Icon(Icons.delete),
           ),
           IconButton(
-            color: MyTheme.colorDarkerGrey,
+            color: MyTheme.colorGrey,
             onPressed: () {
               handleDownload();
             },
@@ -297,17 +299,17 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
   PreferredSizeWidget appBar() {
     return AppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: MyTheme.colorWhite,
+      backgroundColor: MyTheme.colorDarkPurple,
       elevation: 0,
       title: ElevatedButton(
         onPressed: () {
           Navigator.pop(context);
         },
-        style: ElevatedButton.styleFrom(backgroundColor: MyTheme.colorWhite),
+        style: ElevatedButton.styleFrom(backgroundColor: MyTheme.colorBlueGrey),
         child: const Text(
           'Back',
           style: TextStyle(
-            color: MyTheme.colorCyan,
+            color: MyTheme.colorGrey,
           ),
         ),
       ),

@@ -269,7 +269,7 @@ class Helper {
                               height: 16,
                               child: Center(
                                 child: CircularProgressIndicator(
-                                  color: MyTheme.colorWhite,
+                                  color: MyTheme.colorDarkPurple,
                                   strokeWidth: 2,
                                 ),
                               ),

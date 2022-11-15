@@ -28,14 +28,14 @@ class GalleryTileItem extends StatelessWidget {
                     item['type'] == 'image'
                         ? Icons.image
                         : Icons.slow_motion_video_rounded,
-                    color: MyTheme.colorDarkerGrey,
+                    color: MyTheme.colorDarkGrey,
                     size: 24,
                   ),
                   const SizedBox(width: 8),
                   Text(
                     item['label'] != '' ? item['label'] : item['image_name'],
                     style: const TextStyle(
-                      color: MyTheme.colorDarkerGrey,
+                      color: MyTheme.colorDarkGrey,
                     ),
                   ),
                 ],
@@ -69,7 +69,7 @@ class GalleryTileItem extends StatelessWidget {
                               children: [
                                 const Icon(
                                   Icons.play_arrow_rounded,
-                                  color: MyTheme.colorWhite,
+                                  color: MyTheme.colorDarkPurple,
                                   size: 42,
                                 ),
                                 Positioned(
@@ -86,7 +86,7 @@ class GalleryTileItem extends StatelessWidget {
                                     child: const Text(
                                       '02:32',
                                       style: TextStyle(
-                                        color: MyTheme.colorWhite,
+                                        color: MyTheme.colorDarkPurple,
                                         fontSize: 12,
                                         shadows: [
                                           Shadow(

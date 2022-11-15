@@ -26,9 +26,8 @@ class _SwitchLayoutState extends State<SwitchLayout> {
               onTap: () => widget.changeLayout(true),
               child: Icon(
                 Icons.grid_view_rounded,
-                color: widget.isGrid
-                    ? MyTheme.colorDarkerGrey
-                    : MyTheme.colorDarkGrey,
+                color:
+                    widget.isGrid ? MyTheme.colorGrey : MyTheme.colorDarkerGrey,
                 size: 18,
               ),
             ),
@@ -37,9 +36,8 @@ class _SwitchLayoutState extends State<SwitchLayout> {
             onTap: () => widget.changeLayout(false),
             child: Icon(
               Icons.list_rounded,
-              color: widget.isGrid
-                  ? MyTheme.colorDarkGrey
-                  : MyTheme.colorDarkerGrey,
+              color:
+                  widget.isGrid ? MyTheme.colorDarkerGrey : MyTheme.colorGrey,
               size: 24,
             ),
           )

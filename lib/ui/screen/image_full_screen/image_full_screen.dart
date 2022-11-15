@@ -34,7 +34,7 @@ class _ImageFullScreenState extends State<ImageFullScreen> {
               controller: controller,
               scaleStateController: scaleController,
               backgroundDecoration:
-                  const BoxDecoration(color: MyTheme.colorWhite),
+                  const BoxDecoration(color: MyTheme.colorDarkPurple),
               imageProvider: widget.fileImage
                   ? FileImage(widget.data)
                   : NetworkImage(widget.data) as ImageProvider<Object>?,
@@ -55,7 +55,7 @@ class _ImageFullScreenState extends State<ImageFullScreen> {
                 ),
                 child: const Icon(
                   Icons.fullscreen_exit,
-                  color: MyTheme.colorWhite,
+                  color: MyTheme.colorDarkPurple,
                   size: 16,
                 ),
               ),

@@ -35,14 +35,14 @@ class _AlbumTabState extends State<AlbumTab> {
   Widget build(BuildContext context) {
     return Consumer<AlbumProvider>(builder: (context, provider, _) {
       return Scaffold(
-        backgroundColor: MyTheme.colorWhite,
+        backgroundColor: MyTheme.colorDarkPurple,
         body: SafeArea(
           child: SmartRefresher(
             controller: refreshController,
             onRefresh: onRefresh,
             onLoading: onLoading,
             header: const TwoLevelHeader(
-              decoration: BoxDecoration(color: MyTheme.colorWhite),
+              decoration: BoxDecoration(color: MyTheme.colorDarkPurple),
               textStyle: TextStyle(color: MyTheme.colorCyan),
               refreshingIcon: SizedBox(
                 height: 24,
@@ -75,9 +75,8 @@ class _AlbumTabState extends State<AlbumTab> {
   buildContent() {
     return Consumer<AlbumProvider>(
       builder: (context, provider, _) {
-
         // on loading
-        if (provider.isLoading && provider.albumsList.isNotEmpty) {
+        if (provider.isLoading && provider.albumsList.isEmpty) {
           return Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -94,9 +93,10 @@ class _AlbumTabState extends State<AlbumTab> {
                 Text(
                   'Loading',
                   style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black),
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                    color: MyTheme.colorGrey,
+                  ),
                 ),
               ],
             ),
@@ -112,7 +112,7 @@ class _AlbumTabState extends State<AlbumTab> {
                 Icon(
                   Icons.hide_image_outlined,
                   size: 78,
-                  color: MyTheme.colorDarkerGrey,
+                  color: MyTheme.colorCyan,
                 ),
                 SizedBox(height: 16),
                 Text(

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 PreferredSizeWidget searchAppBar() {
   return AppBar(
     automaticallyImplyLeading: false,
-    backgroundColor: MyTheme.colorWhite,
+    backgroundColor: MyTheme.colorDarkPurple,
     toolbarHeight: 82,
     elevation: 0,
     titleSpacing: 0,
@@ -38,7 +38,7 @@ PreferredSizeWidget searchAppBar() {
                         width: 18,
                         height: 18,
                         child: CircularProgressIndicator(
-                          color: MyTheme.colorWhite,
+                          color: MyTheme.colorDarkPurple,
                           strokeWidth: 2,
                         ),
                       )
@@ -46,7 +46,7 @@ PreferredSizeWidget searchAppBar() {
                         'assets/icons/icon_search.png',
                         width: 18,
                         height: 18,
-                        color: MyTheme.colorWhite,
+                        color: Colors.white,
                       ),
               ),
             ),
@@ -63,7 +63,7 @@ PreferredSizeWidget searchAppBar() {
                   ),
                   border: Border.all(
                     width: 1,
-                    color: MyTheme.colorGrey,
+                    color: MyTheme.colorDarkerGrey,
                   ),
                 ),
                 height: 48,
@@ -72,7 +72,7 @@ PreferredSizeWidget searchAppBar() {
                     controller: provider.searchC,
                     decoration: const InputDecoration.collapsed(
                       hintText: 'Search',
-                      hintStyle: TextStyle(color: MyTheme.colorDarkGrey),
+                      hintStyle: TextStyle(color: MyTheme.colorDarkerGrey),
                     ),
                     onChanged: (value) => provider.searchGallery(),
                   ),
