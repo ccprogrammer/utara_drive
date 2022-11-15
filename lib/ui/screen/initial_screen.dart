@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:utara_drive/providers/auth_provider.dart';
@@ -32,16 +31,8 @@ class _InitialScreenState extends State<InitialScreen> {
       body: Container(
         width: double.infinity,
         decoration: const BoxDecoration(
-            // image: DecorationImage(
-            //   image: AssetImage("assets/images/image_splash.png"),
-            //   fit: BoxFit.cover,
-            // ),
-            gradient: LinearGradient(
-          colors: [
-            MyTheme.colorBlueGrey,
-            MyTheme.colorDarkPurple,
-          ],
-        )),
+          color: MyTheme.colorDarkPurple,
+        ),
         padding: const EdgeInsets.symmetric(vertical: 80),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
