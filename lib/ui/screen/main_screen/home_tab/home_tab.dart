@@ -91,7 +91,7 @@ class _HomeTabState extends State<HomeTab> {
     return Consumer<GalleryProvider>(
       builder: (context, provider, _) {
         // on loading
-        if (provider.isLoading && provider.galleryList.isNotEmpty) {
+        if (provider.isLoading && provider.galleryList.isEmpty) {
           return Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
