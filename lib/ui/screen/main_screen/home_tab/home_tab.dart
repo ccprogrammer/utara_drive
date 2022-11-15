@@ -46,7 +46,7 @@ class _HomeTabState extends State<HomeTab> {
             Consumer<GalleryProvider>(builder: (context, provider, _) {
               return SwitchLayout(
                 isGrid: provider.isGrid,
-                changeLayout: (value) => provider.switchLayout(),
+                changeLayout: (value) => provider.switchLayout(value),
               );
             }),
             Expanded(

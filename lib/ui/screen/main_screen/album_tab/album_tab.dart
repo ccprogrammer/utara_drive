@@ -17,6 +17,8 @@ class _AlbumTabState extends State<AlbumTab> {
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
 
+  final ScrollController scrollController = ScrollController();
+
   // refresher
   onRefresh() async {
     // monitor network fetch
@@ -76,7 +78,7 @@ class _AlbumTabState extends State<AlbumTab> {
     return Consumer<AlbumProvider>(
       builder: (context, provider, _) {
         // on loading
-        if (provider.isLoading && provider.albumsList.isEmpty) {
+        if (provider.isLoading) {
           return Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -130,6 +132,7 @@ class _AlbumTabState extends State<AlbumTab> {
         // if albums not empty
         return GridView.custom(
           padding: const EdgeInsets.all(16),
+          controller: scrollController,
           gridDelegate: SliverQuiltedGridDelegate(
             crossAxisCount: 4,
             mainAxisSpacing: 20,

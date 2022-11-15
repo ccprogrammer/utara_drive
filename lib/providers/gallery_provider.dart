@@ -88,8 +88,8 @@ class GalleryProvider with ChangeNotifier {
     searchList.clear();
   }
 
-  switchLayout() {
-    isGrid = !isGrid;
+  switchLayout(value) {
+    isGrid = value;
     notifyListeners();
   }
   // Stream getImage() {
