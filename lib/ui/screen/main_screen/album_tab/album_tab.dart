@@ -46,13 +46,10 @@ class _AlbumTabState extends State<AlbumTab> {
             header: const TwoLevelHeader(
               decoration: BoxDecoration(color: MyTheme.colorDarkPurple),
               textStyle: TextStyle(color: MyTheme.colorCyan),
+              refreshingText: '',
               refreshingIcon: SizedBox(
                 height: 24,
                 width: 24,
-                child: CircularProgressIndicator(
-                  color: MyTheme.colorCyan,
-                  strokeWidth: 3,
-                ),
               ),
               idleIcon: Icon(
                 Icons.refresh,
