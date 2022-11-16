@@ -5,7 +5,7 @@ import 'package:utara_drive/helper/helper.dart';
 import 'package:utara_drive/providers/add_album_provider.dart';
 import 'package:utara_drive/providers/album_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
-import 'package:utara_drive/ui/Components/grid/gallery_grid_item.dart';
+import 'package:utara_drive/ui/Components/grid/gallery_grid_image_item.dart';
 
 class AlbumDetailScreen extends StatefulWidget {
   const AlbumDetailScreen({super.key, this.data});
@@ -71,7 +71,7 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
             childCount: galleryList.length,
             (context, index) {
               var item = albums['gallery'][index];
-              return GalleryGridItem(data: item);
+              return GalleryGridImageItem(data: item);
             },
           ),
         );

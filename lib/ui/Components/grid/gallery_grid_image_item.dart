@@ -8,8 +8,8 @@ import 'package:utara_drive/routes/routes.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 import 'package:utara_drive/ui/Components/skeleton.dart';
 
-class GalleryGridItem extends StatelessWidget {
-  const GalleryGridItem({super.key, this.data});
+class GalleryGridImageItem extends StatelessWidget {
+  const GalleryGridImageItem({super.key, this.data});
   final dynamic data;
 
   @override
@@ -17,7 +17,7 @@ class GalleryGridItem extends StatelessWidget {
     return Consumer<GalleryProvider>(
       builder: (context, provider, _) {
         return CachedNetworkImage(
-          imageUrl: data['image_url'],
+          imageUrl: data['file_url'],
           imageBuilder: (context, imageProvider) => Hero(
             tag: data is QueryDocumentSnapshot ? data.id : data['id'],
             child: Container(
@@ -32,40 +32,20 @@ class GalleryGridItem extends StatelessWidget {
                 color: Colors.transparent,
                 child: InkWell(
                   onTap: () {
-                    // if (data['type'] == 'image') {
-                    //   Navigator.pushNamed(context, AppRoute.detailImage,
-                    //       arguments: data);
-                    // } else
-                    
-                     if (data['type'] == 'image') {
-                      Navigator.pushNamed(context, AppRoute.detailVideo,
-                          arguments: data);
-                    }
+                    Navigator.pushNamed(context, AppRoute.detailImage,
+                        arguments: data);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Align(
                       alignment: Alignment.bottomCenter,
                       child: Row(
-                        children: [
+                        children: const [
                           Icon(
-                            data['type'] == 'image'
-                                ? Icons.image
-                                : Icons.play_arrow,
+                            Icons.image,
                             color: MyTheme.colorGrey,
                             size: 18,
                           ),
-                          if (data['type'] == 'video')
-                            Container(
-                              margin: const EdgeInsets.only(left: 6),
-                              child: const Text(
-                                '02:42',
-                                style: TextStyle(
-                                  color: MyTheme.colorGrey,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
                         ],
                       ),
                     ),

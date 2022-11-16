@@ -37,7 +37,7 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
 
   Future<void> initializePlayer() async {
     _videoPlayerController = VideoPlayerController.network(
-        "https://assets.mixkit.co/videos/preview/mixkit-spinning-around-the-earth-29351-large.mp4");
+        widget.data['file_url']);
 
     await Future.wait([
       _videoPlayerController.initialize(),

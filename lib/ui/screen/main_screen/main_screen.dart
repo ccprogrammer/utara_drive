@@ -102,17 +102,17 @@ class _MainScreenState extends State<MainScreen> {
         ),
 
         // record video
-        // SpeedDialChild(
-        //   child: const Icon(
-        //     Icons.video_call_rounded,
-        //     size: 26,
-        //   ),
-        //   backgroundColor: Colors.indigo,
-        //   foregroundColor: Colors.white,
-        //   label: 'Record video',
-        //   visible: true,
-        //   onTap: () => handleFab('record'),
-        // ),
+        SpeedDialChild(
+          child: const Icon(
+            Icons.video_call_rounded,
+            size: 26,
+          ),
+          backgroundColor: Colors.indigo,
+          foregroundColor: Colors.white,
+          label: 'Record video',
+          visible: true,
+          onTap: () => handleFab('record'),
+        ),
 
         // take a photo
         SpeedDialChild(
@@ -124,17 +124,17 @@ class _MainScreenState extends State<MainScreen> {
         ),
 
         // open video gallery
-        // SpeedDialChild(
-        //   child: const Icon(
-        //     Icons.video_collection_rounded,
-        //     size: 26,
-        //   ),
-        //   backgroundColor: Colors.pink,
-        //   foregroundColor: Colors.white,
-        //   label: 'Add video',
-        //   visible: true,
-        //   onTap: () => handleFab('video'),
-        // ),
+        SpeedDialChild(
+          child: const Icon(
+            Icons.video_collection_rounded,
+            size: 26,
+          ),
+          backgroundColor: Colors.pink,
+          foregroundColor: Colors.white,
+          label: 'Add video',
+          visible: true,
+          onTap: () => handleFab('video'),
+        ),
 
         // open image gallery
         SpeedDialChild(

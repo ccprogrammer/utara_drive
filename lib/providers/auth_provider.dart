@@ -28,6 +28,8 @@ class AuthProvider with ChangeNotifier {
 
   // log in function
   logIn(context) async {
+    FocusScope.of(context).unfocus();
+
     isLoading = true;
     notifyListeners();
 
@@ -64,6 +66,8 @@ class AuthProvider with ChangeNotifier {
 
   // sign up function
   signUp(context) async {
+    FocusScope.of(context).unfocus();
+
     isLoading = true;
     notifyListeners();
 

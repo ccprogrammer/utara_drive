@@ -117,7 +117,7 @@ class Helper {
 
   // share image
   shareContent({image}) async {
-    final imageUrl = Uri.parse(image['image_url']);
+    final imageUrl = Uri.parse(image['file_url']);
 
     final response = await http.get(imageUrl);
     final bytes = response.bodyBytes;

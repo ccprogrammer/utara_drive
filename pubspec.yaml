@@ -55,6 +55,7 @@ dependencies:
   share_plus: ^6.2.0
   shimmer: ^2.0.0
   video_player: ^2.4.7
+  video_thumbnail: ^0.5.3
 
 dev_dependencies:
   flutter_lints: ^2.0.0

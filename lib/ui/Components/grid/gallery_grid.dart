@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:utara_drive/ui/Components/grid/gallery_grid_item.dart';
+import 'package:utara_drive/ui/Components/grid/gallery_grid_image_item.dart';
+import 'package:utara_drive/ui/Components/grid/gallery_grid_video_item.dart';
 
 class GalleryGrid extends StatelessWidget {
   const GalleryGrid(
@@ -38,7 +39,12 @@ class GalleryGrid extends StatelessWidget {
               .where((element) => element.id == galleryList[index].id)
               .toList()[0];
 
-          return GalleryGridItem(data: item);
+          if (item['type'] == 'image') {
+            return GalleryGridImageItem(data: item);
+          } else if (item['type'] == 'video') {
+            return GalleryGridVideoItem(data: item);
+          }
+          return null;
         },
       ),
     );

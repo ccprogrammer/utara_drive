@@ -70,7 +70,7 @@ class AddAlbumProvider with ChangeNotifier {
             'id': gallery is QueryDocumentSnapshot ? gallery.id : gallery['id'],
           }
         ],
-        'display_image': gallery['image_url'],
+        'display_image': gallery['file_url'],
       },
     ).then((value) {
       Navigator.pop(context);

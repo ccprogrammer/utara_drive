@@ -16,7 +16,7 @@ class GalleryTileItem extends StatelessWidget {
       margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
       
       child: CachedNetworkImage(
-        imageUrl: item['image_url'],
+        imageUrl: item['file_url'],
         imageBuilder: (context, imageProvider) {
           return Column(
             children: [

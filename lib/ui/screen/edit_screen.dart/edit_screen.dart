@@ -42,7 +42,7 @@ class _EditScreenState extends State<EditScreen> {
             Stack(
               children: [
                 CachedNetworkImage(
-                    imageUrl: widget.data['image_url'],
+                    imageUrl: widget.data['file_url'],
                     placeholder: (context, url) => Shimmer.fromColors(
                           baseColor: Colors.grey[500]!,
                           highlightColor: Colors.grey[300]!,
@@ -78,7 +78,7 @@ class _EditScreenState extends State<EditScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => ImageFullScreen(
-                            data: widget.data['image_url'],
+                            data: widget.data['file_url'],
                             fileImage: false,
                           ),
                         ),

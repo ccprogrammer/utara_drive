@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:provider/provider.dart';
 import 'package:utara_drive/firebase_options.dart';
@@ -14,6 +15,7 @@ import 'package:utara_drive/providers/auth_provider.dart';
 import 'package:utara_drive/providers/edit_gallery_provider.dart';
 import 'package:utara_drive/providers/gallery_provider.dart';
 import 'package:utara_drive/routes/routes.dart';
+import 'package:utara_drive/themes/my_themes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +30,9 @@ void main() async {
           true // option: set to false to disable working with http links (default: false)
       );
 
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: MyTheme.colorBlueGrey, // status bar color
+  ));
   runApp(const MyApp());
 }
 

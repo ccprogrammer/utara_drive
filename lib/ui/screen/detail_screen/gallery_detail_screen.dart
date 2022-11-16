@@ -63,7 +63,7 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
   }
 
   handleDownload() {
-    Helper().downloadFileFromUrl(url: widget.data['image_url']);
+    Helper().downloadFileFromUrl(url: widget.data['file_url']);
   }
 
   static void downloadCallback(
@@ -129,7 +129,7 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
             children: [
               // gallery content
               CachedNetworkImage(
-                imageUrl: item['image_url'],
+                imageUrl: item['file_url'],
                 imageBuilder: (context, imageProvider) => Hero(
                   tag: id,
                   child: PhotoView(

@@ -26,7 +26,7 @@ class AddGalleryProvider with ChangeNotifier {
   var tagC = TextEditingController();
 
   // upload gallery to firebase
-  Future addGallery(context, XFile xImage) async {
+  Future addGallery(context, XFile xImage, String imageType) async {
     isLoading = true;
     notifyListeners();
 
@@ -64,9 +64,9 @@ class AddGalleryProvider with ChangeNotifier {
       'description': descriptionC.text,
       'location': locationC.text,
       'tag': tagList,
-      'type': 'image',
+      'type': imageType,
       'created_at': Timestamp.now(),
-      'image_url': url,
+      'file_url': url,
     }).then((value) {
       Navigator.pop(context);
       Helper(ctx: context).showNotif(
