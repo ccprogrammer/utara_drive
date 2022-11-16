@@ -60,7 +60,7 @@ class GalleryTileItem extends StatelessWidget {
                     color: Colors.transparent,
                     child: InkWell(
                       onTap: () {
-                        Navigator.pushNamed(context, AppRoute.detail,
+                        Navigator.pushNamed(context, AppRoute.detailImage,
                             arguments: item);
                       },
                       child: item['type'] == 'video'

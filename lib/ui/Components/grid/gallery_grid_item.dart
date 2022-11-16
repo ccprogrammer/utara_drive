@@ -32,8 +32,15 @@ class GalleryGridItem extends StatelessWidget {
                 color: Colors.transparent,
                 child: InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, AppRoute.detail,
-                        arguments: data);
+                    // if (data['type'] == 'image') {
+                    //   Navigator.pushNamed(context, AppRoute.detailImage,
+                    //       arguments: data);
+                    // } else
+                    
+                     if (data['type'] == 'image') {
+                      Navigator.pushNamed(context, AppRoute.detailVideo,
+                          arguments: data);
+                    }
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),

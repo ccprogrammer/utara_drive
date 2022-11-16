@@ -14,7 +14,6 @@ import 'package:utara_drive/providers/auth_provider.dart';
 import 'package:utara_drive/providers/edit_gallery_provider.dart';
 import 'package:utara_drive/providers/gallery_provider.dart';
 import 'package:utara_drive/routes/routes.dart';
-import 'package:utara_drive/ui/screen/page_not_found.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,32 +39,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late StreamSubscription<ConnectivityResult> connectivityPlus;
-
-  // connectivity listener
-  connectivityListener() {
-    connectivityPlus = Connectivity()
-        .onConnectivityChanged
-        .listen((ConnectivityResult result) {
-      if (ConnectivityResult.none == result) {
-        Helper(ctx: context).showAlertDialog(
-          context: context,
-          icon: Icons.wifi_off_rounded,
-          text: 'Please check your internet connection',
-          titleLeft: 'Close',
-          oneButton: true,
-        );
-      } else if (ConnectivityResult.mobile == result) {
-      } else if (ConnectivityResult.wifi == result) {}
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    connectivityListener();
-  }
+  late StreamSubscription<ConnectivityResult> connectivityPlus =
+      Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+    if (ConnectivityResult.none == result) {
+      Helper(ctx: context).showAlertDialog(
+        context: context,
+        icon: Icons.wifi_off_rounded,
+        text: 'Please check your internet connection',
+        titleLeft: 'Close',
+        oneButton: true,
+      );
+    } else if (ConnectivityResult.mobile == result) {
+    } else if (ConnectivityResult.wifi == result) {}
+  });
 
   @override
   void dispose() {
@@ -98,12 +84,11 @@ class _MyAppState extends State<MyApp> {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: AppRoute.initial,
         theme: ThemeData(
           fontFamily: 'Nunito',
         ),
-        onUnknownRoute: (settings) =>
-            MaterialPageRoute(builder: (_) => const PageNotFound()),
+        initialRoute: AppRoute.initial,
+        routes: GetRoute.routes,
         onGenerateRoute: GetRoute().generateRoute,
       ),
     );

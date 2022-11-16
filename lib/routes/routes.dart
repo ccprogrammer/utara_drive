@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:utara_drive/ui/screen/detail_screen/album_detail_screen.dart';
 import 'package:utara_drive/ui/screen/detail_screen/gallery_detail_screen.dart';
+import 'package:utara_drive/ui/screen/detail_screen/video_detail_screen.dart';
 import 'package:utara_drive/ui/screen/edit_screen.dart/edit_screen.dart';
 import 'package:utara_drive/ui/screen/main_screen/home_tab/home_tab.dart';
 import 'package:utara_drive/ui/screen/initial_screen.dart';
@@ -18,17 +19,20 @@ abstract class AppRoute {
   static const home = '/home';
   static const add = '/add';
   static const search = '/search';
-  static const detail = '/detail';
+  static const detailImage = '/detail-image';
+  static const detailVideo = '/detail-video';
   static const edit = '/edit';
   static const detailAlbum = '/detail-album';
 }
 
 class GetRoute {
+  static final routes = {
+    AppRoute.pageNotFound: (BuildContext context) => const PageNotFound(),
+    AppRoute.auth: (BuildContext context) => const AuthScreen(),
+  };
+
   Route generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case AppRoute.pageNotFound:
-        return CupertinoPageRoute(builder: (context) => const PageNotFound());
-
       case AppRoute.initial:
         return CupertinoPageRoute(builder: (context) => const InitialScreen());
 
@@ -38,9 +42,6 @@ class GetRoute {
       case AppRoute.home:
         return CupertinoPageRoute(builder: (context) => const HomeTab());
 
-      case AppRoute.auth:
-        return CupertinoPageRoute(builder: (context) => const AuthScreen());
-
       case AppRoute.edit:
         return CupertinoPageRoute(
             builder: (context) => EditScreen(data: settings.arguments));
@@ -48,10 +49,14 @@ class GetRoute {
       case AppRoute.search:
         return CupertinoPageRoute(builder: (context) => const SearchScreen());
 
-      case AppRoute.detail:
+      case AppRoute.detailImage:
         return MaterialPageRoute(
             builder: (context) =>
                 GalleryDetailScreen(data: settings.arguments));
+
+      case AppRoute.detailVideo:
+        return MaterialPageRoute(
+            builder: (context) => VideoDetailScreen(data: settings.arguments));
 
       case AppRoute.detailAlbum:
         return CupertinoPageRoute(
