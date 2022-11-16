@@ -25,7 +25,7 @@ class AddScreen extends StatefulWidget {
 }
 
 class _AddScreenState extends State<AddScreen> {
-  late final fileName;
+  late final Uint8List? fileName;
 
   generateThumbnail() async {
     if (widget.imageType == 'video') {
@@ -185,6 +185,8 @@ class _AddScreenState extends State<AddScreen> {
                   alignment: Alignment.center,
                 ),
         ),
+
+        // if image
         if (file is File)
           Positioned(
             bottom: 16,
@@ -212,6 +214,8 @@ class _AddScreenState extends State<AddScreen> {
               ),
             ),
           ),
+
+        //  if video
         if (file is Uint8List)
           Positioned(
             bottom: 0,
