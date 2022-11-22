@@ -4,7 +4,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:utara_drive/providers/gallery_provider.dart';
 import 'package:utara_drive/themes/my_themes.dart';
 import 'package:utara_drive/ui/Components/grid/gallery_grid.dart';
-import 'package:utara_drive/ui/Components/list/gallery_tile.dart';
+import 'package:utara_drive/ui/Components/tile/gallery_tile.dart';
 import 'package:utara_drive/ui/Components/switch_layout.dart';
 
 class HomeTab extends StatefulWidget {

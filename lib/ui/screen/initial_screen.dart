@@ -36,23 +36,23 @@ class _InitialScreenState extends State<InitialScreen> {
         padding: const EdgeInsets.symmetric(vertical: 80),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Hero(
-              tag: 'logo',
-              child: Image.asset(
-                'assets/images/image_logo.png',
-                width: 140,
-                height: 140,
-              ),
-            ),
-            const Text(
+          children: const [
+            // Hero(
+            //   tag: 'logo',
+            //   child: Image.asset(
+            //     'assets/images/image_logo.png',
+            //     width: 140,
+            //     height: 140,
+            //   ),
+            // ),
+            Text(
               'Welcome to',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 32,
               ),
             ),
-            const Text(
+            Text(
               'uDrive',
               style: TextStyle(
                 color: Colors.white,

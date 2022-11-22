@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:utara_drive/ui/Components/list/gallery_tile_item.dart';
+import 'package:utara_drive/ui/Components/tile/gallery_tile_image_item.dart';
+import 'package:utara_drive/ui/Components/tile/gallery_tile_video_item.dart';
 
 class GalleryTile extends StatelessWidget {
   const GalleryTile(
@@ -21,13 +22,20 @@ class GalleryTile extends StatelessWidget {
 
         int idx = galleryList.indexOf(item);
 
-        return Padding(
-          padding:
-              EdgeInsets.only(bottom: idx == galleryList.length - 1 ? 42 : 0),
-          child: GalleryTileItem(
+        if (item['type'] == 'image') {
+          return Padding(
+            padding:
+                EdgeInsets.only(bottom: idx == galleryList.length - 1 ? 42 : 0),
+            child: GalleryTileImageItem(
+              item: item,
+            ),
+          );
+        } else if (item['type'] == 'video') {
+          return GalleryTileVideoItem(
             item: item,
-          ),
-        );
+          );
+        }
+        return const SizedBox();
       },
     );
   }

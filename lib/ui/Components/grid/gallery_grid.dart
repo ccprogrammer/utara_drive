@@ -44,7 +44,7 @@ class GalleryGrid extends StatelessWidget {
           } else if (item['type'] == 'video') {
             return GalleryGridVideoItem(data: item);
           }
-          return null;
+          return const SizedBox();
         },
       ),
     );
